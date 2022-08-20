@@ -1,5 +1,12 @@
 package com.ontask.model
 
+/**
+ * User
+ *
+ * @property name
+ * @property dateOfBirth
+ * @constructor Create empty User
+ */
 open class User(var name: String, var dateOfBirth: String) {
     var userID: Int = 0
     var chooseTheme: Theme? = null
