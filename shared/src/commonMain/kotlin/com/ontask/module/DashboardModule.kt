@@ -121,7 +121,7 @@ class DashboardModule {
      * @param dateOfBirth the date of birth he/she wants to change to
      * @return
      */
-    fun editProfile(user: User, name: String, dateOfBirth: String): Boolean{
+    fun editProfile(user: Child, name: String, dateOfBirth: String): Boolean{
         return false
     }
 

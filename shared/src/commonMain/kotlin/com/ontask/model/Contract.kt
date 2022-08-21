@@ -11,6 +11,10 @@ package com.ontask.model
  * @property detail
  * @constructor Create empty Contract
  */
-class Contract(var name: String, var sponser: Parent, var receiver: Child, var maxPoint: Int, var rewards: HashMap<Int, Reward>, var detail: String?) {
-
-}
+data class Contract(
+    var name: String,
+    var sponser: Parent,
+    var receiver: Child,
+    var maxPoint: Int,
+    var rewards: HashMap<Int, Reward>,
+    var detail: String?)

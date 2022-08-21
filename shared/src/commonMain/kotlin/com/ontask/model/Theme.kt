@@ -6,6 +6,6 @@ package com.ontask.model
  * @property name
  * @constructor Create empty Theme
  */
-class Theme(var name: String) {
+data class Theme(var name: String) {
     var message: String? = null
 }

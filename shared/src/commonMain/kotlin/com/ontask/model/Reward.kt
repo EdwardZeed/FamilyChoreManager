@@ -7,6 +7,6 @@ package com.ontask.model
  * @property image
  * @constructor Create empty Reward
  */
-class Reward(var name: String, var image: String?) {
-
-}
+data class Reward(
+    var name: String,
+    var image: String?)

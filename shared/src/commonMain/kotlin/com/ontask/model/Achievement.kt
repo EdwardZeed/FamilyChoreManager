@@ -7,6 +7,6 @@ package com.ontask.model
  * @property message
  * @constructor Create empty Achievement
  */
-class Achievement(var points: Int, var message: String) {
-
-}
+data class Achievement(
+    var points: Int, 
+    var message: String)

@@ -9,7 +9,12 @@ package com.ontask.model
  * @param name
  * @param dateOfBirth
  */
-class Child(name: String, dateOfBirth: String): User(name, dateOfBirth) {
+data class Child(
+    val userID: Int = 0,
+    var name: String,
+    var dateOfBirth: String,
+    var chooseTheme: Theme?,
+    var avatarPic: String?){
     var qrCode: QRcode ?= null
     var totalCreditPoint: Int = 0
 
