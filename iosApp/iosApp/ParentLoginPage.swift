@@ -16,17 +16,19 @@ struct ParentLoginPage: View {
     
     var body: some View {
         
+        
+        
         ZStack {
             Image("Background").resizable().scaledToFill().ignoresSafeArea()
             VStack {
-           
+                
                 ShowUserImage()
                 
                 TextField("userName", text:  $username)
                     .padding(.horizontal, 100)
                     .background(Image("userNameTextField"))
                     .padding(.bottom, 50)
-        
+                
                 
                 SecureField("password", text:  $password)
                     .padding(.horizontal, 100)
@@ -39,12 +41,12 @@ struct ParentLoginPage: View {
                 ShowSignUpBtn()
                 
                 
-                    
-
-                
             }
         }
+        
+        
     }
+        
 }
 
 struct  ParentLoginPage_Previews: PreviewProvider {
@@ -70,10 +72,27 @@ struct ShowLoginBtn: View {
 
 struct ShowSignUpBtn: View {
     var body: some View {
-        Button(" "){}
-            .background(Image("signUpBtn"))
-            .padding(.top, 50)
+//        Button(" "){}
+//            .background(Image("signUpBtn"))
+//            .padding(.top, 50)
+//        Button(action: goToSignUp, label: {
+//            Image("signUpBtn")
+//        })
+//        .padding(.top, 50)
+        
+        NavigationLink(destination: SignUpPage(), label: {
+            Image("signUpBtn")
+                .padding(.top, 50)
+        })
     
+    }
+    
+    func goToSignUp(){
+        if let window = UIApplication.shared.windows.first
+            {
+                window.rootViewController = UIHostingController(rootView: SignUpPage())
+                window.makeKeyAndVisible()
+            }
     }
 }
 
