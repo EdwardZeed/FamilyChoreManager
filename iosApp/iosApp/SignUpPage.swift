@@ -12,102 +12,71 @@ struct SignUpPage: View {
     @State var name = ""
     @State var email = ""
     @State var password = ""
-    @State var re_password = ""
+    @State var dateOfBirth = ""
     
     var body: some View {
-        
+        ZStack{
+            Image("Background").resizable().scaledToFill().ignoresSafeArea().opacity(0.2)
             
-//            read parent view's size
-        GeometryReader { proxy in
-            VStack {
-                Spacer()
-//                    name input field
-                VStack{
-                    Text("Name:")
-                        .font(.title)
-                        .fontWeight(.regular)
-                        .frame(width: proxy.size.width*0.75, alignment: .leading)
-                        .padding(.bottom, -1)
-
-                        
-                    Image("Textfield")
-                        .overlay(Image("usersign").frame(width: proxy.size.width*0.70, alignment: .leading))
-                        .overlay(TextField("name", text: $name).frame(width: proxy.size.width*0.45))
-                        .frame(width:proxy.size.width, alignment: .center)
-                }
-
-//                    email input field
-                VStack{
-                    Text("Email:")
-                        .font(.title)
-                        .fontWeight(.regular)
-                        .frame(width: proxy.size.width*0.75, alignment: .leading)
-                        .padding(.bottom, -1)
-                        
-                    Image("Textfield")
-                        .overlay(Image("atsign").frame(width: proxy.size.width*0.70, alignment: .leading))
-                        .overlay(TextField("email", text: $email).frame(width: proxy.size.width*0.45))
-                        .frame(width:proxy.size.width, alignment: .center)
-                        
-                }
+            VStack{
                 
-//                    password input field
-                VStack{
-                    Text("Password:")
-                        .font(.title)
-                        .fontWeight(.regular)
-                        .frame(width: proxy.size.width*0.75, alignment: .leading)
-                        .padding(.bottom, -1)
-                        
-                        
-                    Image("Textfield")
-                        .overlay(Image("locksign").frame(width: proxy.size.width*0.70, alignment: .leading))
-                        .overlay(SecureField("password", text: $password).frame(width: proxy.size.width*0.45))
-                        .frame(width:proxy.size.width, alignment: .center)
+                Text("Let's Get Started")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
                 
+                Text("Create account with On Task Achievers")
+                    .font(.caption2)
+                    .fontWeight(.thin)
+                    .padding(.bottom)
+                
+                
+                CustomizedTextField(inputStream: $email, label: "Email: ", placeholder: "email")
+                
+                CustomizedTextField(inputStream: $password, label: "Password: ", placeholder: "password")
+                
+                CustomizedTextField(inputStream: $name, label: "Name: ", placeholder: "name")
+               
+                CustomizedTextField(inputStream: $dateOfBirth, label: "Date of birth: ", placeholder: "date")
+                
+                
+                HStack {
+                    Text("Have an account? ")
+                        .font(.footnote)
+                        .fontWeight(.thin)
+                    
+                    Button(action: {}, label: {
+                        Text("Login")
+                            .font(.footnote)
+                            .fontWeight(.thin)
+                    })
                 }
+                .frame(width: UIScreen.main.bounds.width*0.8, alignment: .leading)
                 
-//                    confirm password input field
-                VStack{
-                    Text("Confirm password:")
-                        .font(.title)
-                        .fontWeight(.regular)
-                        .frame(width: proxy.size.width*0.75, alignment: .leading)
-                        .padding(.bottom, -1)
-                        
-                    Image("Textfield")
-                        .overlay(Image("locksign").frame(width: proxy.size.width*0.70, alignment: .leading))
-                        .overlay(SecureField("password", text: $re_password)
-                            .frame(width: proxy.size.width*0.45))
-                        .frame(width:proxy.size.width, alignment: .center)
-                }
-                
-//                Spacer()
                 
                 Button(action: {}, label: {
                     Image("signUpBtn")
                 })
-                .padding(.top, 20)
+                .frame(width: UIScreen.main.bounds.width*0.8)
+                .cornerRadius(8)
                 
-                Spacer()
                 
+                Image("separateLine")
+                
+                
+                HStack{
+                    Spacer()
+                    Image("AppleLoginBtn")
+                    Spacer()
+                    Image("GoogleLoginBtn")
+                    Spacer()
+                    Image("FacebookLoginBtn")
+                    Spacer()
+                }
+                
+            
             }
-            
         }
-        .background(Image("Background")
-        .resizable()
-        .scaledToFill()
-        .ignoresSafeArea())
-//        .navigationTitle("")
-//        .navigationBarHidden(true)
-//        .navigationBarBackButtonHidden(true)
-        
-        
-        
             
-            
-            
-        
     }
 }
 
@@ -116,3 +85,4 @@ struct SignUpPage_Previews: PreviewProvider {
         SignUpPage()
     }
 }
+
