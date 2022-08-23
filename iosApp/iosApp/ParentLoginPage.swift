@@ -35,6 +35,7 @@ struct ParentLoginPage: View {
                     .background(Image("passwordTextField"))
                     .padding(.bottom, 50)
                 
+                
                 ShowLoginBtn()
                 Image("separateLine")
                     .padding(.top, 60)
@@ -141,24 +142,24 @@ struct ButtonContent: View{
 
 struct CustomizedTextField: View{
     @Binding var inputStream: String
+    let label: String
     let placeholder: String
-    let icon: Image
-    let outlinedBorder: Image
     
     var body: some View{
         
-        
-        GeometryReader {proxy in
-            
-            HStack {
-                icon
-            
-                Spacer(minLength: 20)
-                TextField(placeholder, text: $inputStream)
-            }
-            .padding(.horizontal, proxy.size.width*0.1)
-            .background(outlinedBorder)
+        VStack{
+            Text(label)
+                .padding(.horizontal, 0)
+                .frame(width: UIScreen.main.bounds.width*0.8, alignment: .leading)
+                .padding(.bottom, 0)
                 
+
+            TextField(placeholder, text: $inputStream)
+                .padding(.horizontal)
+                .frame(width: UIScreen.main.bounds.width*0.8, height: 40)
+                .cornerRadius(3)
+                .overlay(RoundedRectangle(cornerRadius: 3).stroke(Color.blue, lineWidth: 1))
+
         }
             
     }
@@ -181,7 +182,7 @@ struct CustomizedSecureField: View{
                 Spacer(minLength: 20)
                 SecureField(placeholder, text: $inputStream)
             }
-            .padding(.horizontal, proxy.size.width*0.1)
+            .padding(.horizontal, UIScreen.main.bounds.width*0.1)
             .background(outlinedBorder)
                 
         }
