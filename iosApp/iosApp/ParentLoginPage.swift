@@ -139,3 +139,53 @@ struct ButtonContent: View{
     }
 }
 
+struct CustomizedTextField: View{
+    @Binding var inputStream: String
+    let placeholder: String
+    let icon: Image
+    let outlinedBorder: Image
+    
+    var body: some View{
+        
+        
+        GeometryReader {proxy in
+            
+            HStack {
+                icon
+            
+                Spacer(minLength: 20)
+                TextField(placeholder, text: $inputStream)
+            }
+            .padding(.horizontal, proxy.size.width*0.1)
+            .background(outlinedBorder)
+                
+        }
+            
+    }
+}
+
+struct CustomizedSecureField: View{
+    @Binding var inputStream: String
+    let placeholder: String
+    let icon: Image
+    let outlinedBorder: Image
+    
+    var body: some View{
+        
+        
+        GeometryReader {proxy in
+            
+            HStack {
+                icon
+                    
+                Spacer(minLength: 20)
+                SecureField(placeholder, text: $inputStream)
+            }
+            .padding(.horizontal, proxy.size.width*0.1)
+            .background(outlinedBorder)
+                
+        }
+            
+    }
+}
+
