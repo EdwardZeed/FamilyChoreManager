@@ -159,17 +159,17 @@ fun parentLoginPage() {
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.apple_login_btn),
-                    contentDescription = "QR scan icon",
+                    contentDescription = "Apple logo icon",
                     modifier = Modifier.height(50.dp).width(50.dp).padding(10.dp)
                 )
                 Image(
                     painter = painterResource(id = R.drawable.google_login_btn),
-                    contentDescription = "QR scan icon",
+                    contentDescription = "Google logo icon",
                     modifier = Modifier.height(50.dp).width(50.dp).padding(10.dp)
                 )
                 Image(
                     painter = painterResource(id = R.drawable.facebook_login_btn),
-                    contentDescription = "QR scan icon",
+                    contentDescription = "Facebook logo icon",
                     modifier = Modifier.height(50.dp).width(50.dp).padding(10.dp)
                 )
             }
