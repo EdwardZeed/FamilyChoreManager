@@ -133,7 +133,7 @@ fun Greeting(name: String) {
                 )
             }
 
-
+// TODO: https://developer.android.com/jetpack/compose/layouts/material -- add shadow on the button?
             Button(
                 onClick = {}, modifier = Modifier
                     .fillMaxWidth(0.3f)
@@ -170,7 +170,7 @@ fun usernameInput(modifier: Modifier = Modifier, localFocusManager: FocusManager
         keyboardActions = KeyboardActions(onNext = { localFocusManager.moveFocus(FocusDirection.Down) }),
         modifier = modifier,
         leadingIcon = {
-            Icon(imageVector = Icons.Filled.AccountCircle, contentDescription = "profile leading icon")
+            Icon(imageVector = Icons.Filled.Person, contentDescription = "profile leading icon")
         }
 
     )
@@ -194,7 +194,7 @@ fun emailInput(modifier: Modifier = Modifier, localFocusManager: FocusManager): 
         keyboardActions = KeyboardActions(onNext = { localFocusManager.moveFocus(FocusDirection.Down) }),
         modifier = modifier,
         leadingIcon = {
-            Icon(imageVector = Icons.Filled.Email, contentDescription = "email address leading icon")
+            Icon(imageVector = Icons.Filled.AlternateEmail, contentDescription = "email address leading icon")
         }
 
     )
@@ -231,6 +231,7 @@ fun passwordInput(modifier: Modifier, localFocusManager: FocusManager): String{
 }
 
 // reference: https://www.geeksforgeeks.org/date-picker-in-android-using-jetpack-compose/
+// another one that i didnt use: https://sgkantamani.medium.com/how-to-show-date-picker-in-jetpack-compose-8bc77a3ce408
 @Composable
 fun datePicker() {
     // Fetching the Local Context
