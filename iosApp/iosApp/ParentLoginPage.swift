@@ -7,135 +7,149 @@
 
 import SwiftUI
 
-let lightGreyColor = Color(red: 239.0/255.0, green: 243.0/255.0, blue: 244.0/255.0)
-
 struct ParentLoginPage: View {
     
-    @State var username: String = ""
+    @State var userName: String = ""
     @State var password: String = ""
     
-    var body: some View {
-        
-        
-        
-        ZStack {
-            Image("Background").resizable().scaledToFill().ignoresSafeArea()
-            VStack {
-                
-                ShowUserImage()
-                
-                TextField("userName", text:  $username)
-                    .padding(.horizontal, 100)
-                    .background(Image("userNameTextField"))
-                    .padding(.bottom, 50)
-                
-                
-                SecureField("password", text:  $password)
-                    .padding(.horizontal, 100)
-                    .background(Image("passwordTextField"))
-                    .padding(.bottom, 50)
-                
-                ShowLoginBtn()
-                Image("separateLine")
-                    .padding(.top, 60)
-                ShowSignUpBtn()
-                
-                
-            }
-        }
-        
-        
-    }
-        
-}
-
-struct  ParentLoginPage_Previews: PreviewProvider {
-    static var previews: some View {
-        ZStack{
-            Image("Background").resizable().scaledToFill()
-            ParentLoginPage()
-                
-        }
-    }
-}
-
-
-struct ShowLoginBtn: View {
-    var body: some View {
-        Button(" "){}
-            .background(Image("loginBtn"))
-            .padding(.top, 30)
-    
-    }
-}
-
-
-struct ShowSignUpBtn: View {
-    var body: some View {
-//        Button(" "){}
-//            .background(Image("signUpBtn"))
-//            .padding(.top, 50)
-//        Button(action: goToSignUp, label: {
-//            Image("signUpBtn")
-//        })
-//        .padding(.top, 50)
-        
-        NavigationLink(destination: SignUpPage(), label: {
-            Image("signUpBtn")
-                .padding(.top, 50)
-        })
-    
-    }
-    
-    func goToSignUp(){
-        if let window = UIApplication.shared.windows.first
+    func goToHomeSecond(){
+            if let window = UIApplication.shared.windows.first
             {
-                window.rootViewController = UIHostingController(rootView: SignUpPage())
+                window.rootViewController = UIHostingController(rootView: ChildLoginPage())
                 window.makeKeyAndVisible()
             }
-    }
-}
-
-
-
-
-struct ShowUserImage: View {
+        }
+    
+    
     var body: some View {
-        Image("parentImage")
-            .resizable()
-            .aspectRatio(contentMode: .fill)
-            .frame(width: 150, height: 150)
-            .clipped()
-            .cornerRadius(150)
-            .padding(.top, -30.0)
-            .padding(.bottom, 40.0)
-            .shadow(radius: 5)
+    
+
+       
+        ZStack {
+            Image("Background").resizable().scaledToFill().ignoresSafeArea().opacity(0.2)
+            
+            
+                Button(action: goToHomeSecond, label: {
+                                      Image("QrCodeScan")
+                                   })
+               
+
+//                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height, alignment: .topTrailing)
+                .border(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/, width: /*@START_MENU_TOKEN@*/4/*@END_MENU_TOKEN@*/)
+                .position(x: UIScreen.main.bounds.width*0.9,y:UIScreen.main.bounds.height*0.05)
+                .zIndex(100)
+               
+                .ignoresSafeArea()
+                
+                
+
+            
+            
+            VStack {
+                
+                ZStack{
+                    Image("QrCodeScan")
+                        
+                    
+                    Image("photoframe")
+                        .frame(alignment: .center)
+                        
+                    
+                    Image("userPhoto")
+                        .frame(alignment: .center)
+                }
+                Text("\t\t   Welcome back!\n"+"If you dont have account, Sign up")
+                    .fontWeight(.thin)
+                    .multilineTextAlignment(.leading)
+                    .padding(.bottom, UIScreen.main.bounds.height*0.05)
+                
+              
+                    
+        
+
+                CustomizedTextField(inputStream: $userName, label: "Name: ",placeholder: "Email Address")
+                    .padding(.bottom, UIScreen.main.bounds.height*0.04)
+                
+                CustomizedSecureField(inputStream: $password, label: "Password: ", placeholder: "Password")
+                    .padding(.bottom,UIScreen.main.bounds.height*0.02)
+                
+                
+                Text("Forgot your password?")
+                    .font(.caption)
+                    .fontWeight(.light)
+                    .foregroundColor(Color.blue)
+                    .padding(.bottom, UIScreen.main.bounds.height*0.05)
+                
+                
+                Image("LoginBtn")
+                    .padding(.bottom, UIScreen.main.bounds.height*0.03)
+                
+                Image("separateLine")
+                    .padding(.bottom, UIScreen.main.bounds.height*0.03)
+                
+                HStack{
+                    Spacer()
+                    Image("AppleLoginBtn")
+                    Spacer()
+                    Image("GoogleLoginBtn")
+                    Spacer()
+                    Image("FacebookLoginBtn")
+                    Spacer()
+                }
+                
+            }
+        }
     
     }
 }
 
-struct ShowBackgroundImg: View {
-    var body: some View {
-        Image("Background")
-            .resizable()
-            .scaledToFill()
-            .edgesIgnoringSafeArea(.all)
+struct ParentLoginPage_Previews: PreviewProvider {
+    static var previews: some View {
+        ParentLoginPage()
     }
 }
-//
-//struct ShowUserNameTextField(username: String): View {
-//    var body: some View {
-//        TextField("userName", text: username)
-//            .padding(.horizontal, 80)
-//            .background(Image("userNameTextField"))
-//
-//    }
-//}
 
 
-struct ButtonContent: View{
+
+
+struct CustomizedTextField: View{
+    @Binding var inputStream: String
+    let label: String
+    let placeholder: String
+    
     var body: some View{
-        Text("< back")
+        
+        VStack{
+
+                
+
+            TextField(placeholder, text: $inputStream)
+//                .padding(.horizontal)
+                .background(Image("emailTextField-1"))
+                .frame(width: UIScreen.main.bounds.width*0.69, height: 40)
+
+                
+
+        }
+            
+    }
+}
+
+struct CustomizedSecureField: View{
+    @Binding var inputStream: String
+    let label: String
+    let placeholder: String
+    
+    var body: some View{
+        
+        VStack{
+
+
+            SecureField(placeholder, text: $inputStream)
+//                .padding(.horizontal)
+                .background(Image("passwordTextField-1"))
+                .frame(width: UIScreen.main.bounds.width*0.69, height: 40)
+        }
     }
 }
 
