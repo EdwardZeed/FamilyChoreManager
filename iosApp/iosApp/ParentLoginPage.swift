@@ -26,8 +26,6 @@ struct ParentLoginPage: View {
     
     var body: some View {
         
-        
-        
         NavigationView {
             ZStack {
                 Image("Background").resizable().scaledToFill().ignoresSafeArea().opacity(0.2)
@@ -38,12 +36,13 @@ struct ParentLoginPage: View {
                 }, label: {
                     Image("QrCodeScan")
                 })
-                .frame(width: UIScreen.main.bounds.width*0.9, height: UIScreen.main.bounds.height*0.95, alignment: .topTrailing)
+                .frame(width: UIScreen.main.bounds.width*0.9, height: UIScreen.main.bounds.height*0.9, alignment: .topTrailing)
                 .zIndex(100)
                 
                 NavigationLink(destination: ChildLoginPage(), isActive: $goToScan){
                     EmptyView()
                 }
+                .navigationBarHidden(true)
                 
                 VStack {
                     

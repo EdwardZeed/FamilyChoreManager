@@ -39,8 +39,6 @@ struct SignUpPage: View {
                     .fontWeight(.thin)
                     .padding(.bottom)
                 
-                
-                
                 EntryField(textValue: $email, icon: Image("emailIcon"), placeholder: "email", prompt: emailPrompt, validation: $emailValid, isPassword: false)
 
                 EntryField(textValue: $password, icon: Image("locksign"), placeholder: "password", prompt: "", validation: $valid, isPassword: false)
@@ -75,7 +73,7 @@ struct SignUpPage: View {
                         .fontWeight(.thin)
                     
                     Button(action: {
-                        goToHomeSecond()
+                        goToLogin = true
                     }, label: {
                         Text("Login")
                             .font(.footnote)
