@@ -12,7 +12,8 @@ struct ParentLoginPage: View {
     @State var userName: String = ""
     @State var password: String = ""
     @State var goToScan = false
-
+    @State var valid: Float = 0
+    
     
     
     func goToHomeSecond(){
@@ -51,11 +52,15 @@ struct ParentLoginPage: View {
                     WelcomeAndSignUpText()
                     
                
-                    CustomizedTextField(inputStream: $userName, label: "Name: ",placeholder: "Email Address")
-                        .padding(.bottom, UIScreen.main.bounds.height*0.04)
-                    
-                    CustomizedSecureField(inputStream: $password, label: "Password: ", placeholder: "Password")
-                        .padding(.bottom,UIScreen.main.bounds.height*0.02)
+//                    CustomizedTextField(inputStream: $userName, label: "Name: ",placeholder: "Email Address")
+//                        .padding(.bottom, UIScreen.main.bounds.height*0.04)
+//
+//                    CustomizedSecureField(inputStream: $password, label: "Password: ", placeholder: "Password")
+//                        .padding(.bottom,UIScreen.main.bounds.height*0.02)
+                    EntryField(textValue: $userName, icon: Image("emailIcon"), placeholder: "Email Address", prompt: "", validation: $valid, isPassword: false)
+                        .padding(.bottom, 3)
+                    EntryField(textValue: $password, icon: Image("locksign"), placeholder: "Password: ", prompt: "", validation: $valid, isPassword: true)
+                        
                     
                     
                     Text("Forgot your password?")
@@ -76,8 +81,9 @@ struct ParentLoginPage: View {
                     ThirdPartyLogo()
                 }
             }
-            .navigationBarHidden(true)
+            
         }
+        .navigationBarHidden(true)
         
     }
     

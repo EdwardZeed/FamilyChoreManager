@@ -22,7 +22,7 @@ struct SignUpPage: View {
     @State var textFieldHeight: CGFloat = 0
     @State var goToLogin = false
     
-    
+
     
     var body: some View {
         ZStack{
@@ -30,14 +30,16 @@ struct SignUpPage: View {
             
             VStack{
                 
-                Text("Let's Get Started")
-                    .font(.largeTitle)
+                VStack(alignment: .center) {
+                    Text("Let's Get Started")
+                        .font(.largeTitle)
                     .fontWeight(.bold)
-                
-                Text("Create account with On Task Achievers")
-                    .font(.caption2)
-                    .fontWeight(.thin)
-                    .padding(.bottom)
+                    Text("Create account with On Task Achievers")
+                        .font(.caption2)
+                        .fontWeight(.thin)
+                        .padding(.bottom)
+                }
+                .padding(.bottom, 10)
                 
                 EntryField(textValue: $email, icon: Image("emailIcon"), placeholder: "email", prompt: emailPrompt, validation: $emailValid, isPassword: false)
 
@@ -83,6 +85,8 @@ struct SignUpPage: View {
                     NavigationLink(destination: ParentLoginPage(), isActive: $goToLogin){
                         EmptyView()
                     }
+                    
+                    
                 
                 }
                 .padding(8)
@@ -109,8 +113,8 @@ struct SignUpPage: View {
                     Spacer()
                 }
                 
-                
             }
+            
         }
         
     }
