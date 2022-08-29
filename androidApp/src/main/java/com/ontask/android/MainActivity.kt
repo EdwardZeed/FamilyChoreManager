@@ -107,7 +107,7 @@ fun parentLoginPage() {
             }
 
             val localFocusManager = LocalFocusManager.current
-            Modifier.padding(padding)
+            Modifier.padding(3.dp)
                 .fillMaxWidth(0.8f)
                 .onFocusChanged { focused ->
                     if (focused.isFocused) {
@@ -183,7 +183,7 @@ fun emailInput(modifier: Modifier = Modifier, localFocusManager: FocusManager): 
     var email by remember { mutableStateOf("") }
     val keyboardController = LocalSoftwareKeyboardController.current
 
-    TextField(value = email,
+    OutlinedTextField(value = email,
         onValueChange = { email = it },
         label = { Text(text = "Email address", textAlign = TextAlign.Center) },
         singleLine = true,
@@ -191,8 +191,16 @@ fun emailInput(modifier: Modifier = Modifier, localFocusManager: FocusManager): 
         keyboardActions = KeyboardActions(onNext = { localFocusManager.moveFocus(FocusDirection.Down) }),
         modifier = modifier,
         leadingIcon = {
-            Icon(imageVector = Icons.Filled.AlternateEmail, contentDescription = "phone leading icon")
-        }
+            Icon(
+                imageVector = Icons.Filled.AlternateEmail,
+                contentDescription = "phone leading icon",
+                tint = Color(0xff656565)
+            )
+        },
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            focusedBorderColor = Color(0xff656565),
+            unfocusedBorderColor = Color(0xff989898)
+        )
 
     )
 
@@ -204,14 +212,19 @@ fun passwordInput(modifier: Modifier, loaclFoucsManager: FocusManager): String{
     var password by remember { mutableStateOf("") }
     var passwordHidden by remember { mutableStateOf(true) }
 
-    TextField(value = password,
+    OutlinedTextField(value = password,
         onValueChange = { password = it },
         label = { Text(text = "Password")},
         visualTransformation = if (passwordHidden) PasswordVisualTransformation() else VisualTransformation.None,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Done),
         keyboardActions = KeyboardActions(onDone = {loaclFoucsManager.clearFocus()}),
         modifier = modifier,
-        leadingIcon = { Icon(imageVector = Icons.Filled.Lock, contentDescription = "password leading icon")},
+        leadingIcon = {
+            Icon(
+                imageVector = Icons.Filled.Lock,
+                contentDescription = "password leading icon",
+                tint = Color(0xff656565)
+            ) },
         trailingIcon = {
             IconButton(onClick = { passwordHidden = !passwordHidden }) {
                 val visibilityIcon =
@@ -220,7 +233,11 @@ fun passwordInput(modifier: Modifier, loaclFoucsManager: FocusManager): String{
                 val description = if (passwordHidden) "Show password" else "Hide password"
                 Icon(imageVector = visibilityIcon, contentDescription = description)
             }
-        }
+        },
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            focusedBorderColor = Color(0xff656565),
+            unfocusedBorderColor = Color(0xff989898)
+        )
 
     )
 
