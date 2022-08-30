@@ -11,96 +11,84 @@ struct ParentLoginPage: View {
     
     @State var userName: String = ""
     @State var password: String = ""
+    @State var goToScan = false
+    @State var valid: Float = 0
+    
+    
     
     func goToHomeSecond(){
-            if let window = UIApplication.shared.windows.first
-            {
-                window.rootViewController = UIHostingController(rootView: ChildLoginPage())
-                window.makeKeyAndVisible()
-            }
+        if let window = UIApplication.shared.windows.first
+        {
+            window.rootViewController = UIHostingController(rootView: ChildLoginPage())
+            window.makeKeyAndVisible()
         }
+    }
     
     
     var body: some View {
-    
-
-       
-        ZStack {
-            Image("Background").resizable().scaledToFill().ignoresSafeArea().opacity(0.2)
-            
-            
-                Button(action: goToHomeSecond, label: {
-                                      Image("QrCodeScan")
-                                   })
-               
-
-//                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height, alignment: .topTrailing)
-                .border(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/, width: /*@START_MENU_TOKEN@*/4/*@END_MENU_TOKEN@*/)
-                .position(x: UIScreen.main.bounds.width*0.9,y:UIScreen.main.bounds.height*0.05)
-                .zIndex(100)
-               
-                .ignoresSafeArea()
-                
-                
-
-            
-            
-            VStack {
-                
-                ZStack{
-                    Image("QrCodeScan")
-                        
-                    
-                    Image("photoframe")
-                        .frame(alignment: .center)
-                        
-                    
-                    Image("userPhoto")
-                        .frame(alignment: .center)
-                }
-                Text("\t\t   Welcome back!\n"+"If you dont have account, Sign up")
-                    .fontWeight(.thin)
-                    .multilineTextAlignment(.leading)
-                    .padding(.bottom, UIScreen.main.bounds.height*0.05)
-                
-              
-                    
         
-
-                CustomizedTextField(inputStream: $userName, label: "Name: ",placeholder: "Email Address")
-                    .padding(.bottom, UIScreen.main.bounds.height*0.04)
+        NavigationView {
+            ZStack {
+                Image("Background").resizable().scaledToFill().ignoresSafeArea().opacity(0.2)
                 
-                CustomizedSecureField(inputStream: $password, label: "Password: ", placeholder: "Password")
-                    .padding(.bottom,UIScreen.main.bounds.height*0.02)
+//                another way to navigate with button and NavigationLink
+                Button(action: {
+                    goToScan = true
+                }, label: {
+                    Image("QrCodeScan")
+                })
+                .frame(width: UIScreen.main.bounds.width*0.9, height: UIScreen.main.bounds.height*0.9, alignment: .topTrailing)
+                .zIndex(100)
                 
-                
-                Text("Forgot your password?")
-                    .font(.caption)
-                    .fontWeight(.light)
-                    .foregroundColor(Color.blue)
-                    .padding(.bottom, UIScreen.main.bounds.height*0.05)
-                
-                
-                Image("LoginBtn")
-                    .padding(.bottom, UIScreen.main.bounds.height*0.03)
-                
-                Image("separateLine")
-                    .padding(.bottom, UIScreen.main.bounds.height*0.03)
-                
-                HStack{
-                    Spacer()
-                    Image("AppleLoginBtn")
-                    Spacer()
-                    Image("GoogleLoginBtn")
-                    Spacer()
-                    Image("FacebookLoginBtn")
-                    Spacer()
+                NavigationLink(destination: ChildLoginPage(), isActive: $goToScan){
+                    EmptyView()
                 }
+                .navigationBarHidden(true)
                 
+                VStack {
+                    
+                    ProfilePhoto()
+                    
+                    WelcomeAndSignUpText()
+                    
+               
+//                    CustomizedTextField(inputStream: $userName, label: "Name: ",placeholder: "Email Address")
+//                        .padding(.bottom, UIScreen.main.bounds.height*0.04)
+//
+//                    CustomizedSecureField(inputStream: $password, label: "Password: ", placeholder: "Password")
+//                        .padding(.bottom,UIScreen.main.bounds.height*0.02)
+                    EntryField(textValue: $userName, icon: Image("emailIcon"), placeholder: "Email Address", prompt: "", validation: $valid, isPassword: false)
+                        .padding(.bottom, 3)
+                    EntryField(textValue: $password, icon: Image("locksign"), placeholder: "Password: ", prompt: "", validation: $valid, isPassword: true)
+                        
+                    
+                    
+                    Text("Forgot your password?")
+                        .font(.caption)
+                        .fontWeight(.light)
+                        .foregroundColor(Color.blue)
+                        .padding(.bottom, UIScreen.main.bounds.height*0.05)
+                    
+                    
+                    Button(action: {}, label: {
+                        Image("LoginBtn")
+                    })
+                    .padding(.bottom, UIScreen.main.bounds.height*0.03)
+                    
+                    Image("separateLine")
+                        .padding(.bottom, UIScreen.main.bounds.height*0.03)
+                    
+                    ThirdPartyLogo()
+                }
             }
+            
         }
-    
+        .navigationBarHidden(true)
+        
     }
+    
+    
+    
 }
 
 struct ParentLoginPage_Previews: PreviewProvider {
@@ -120,18 +108,17 @@ struct CustomizedTextField: View{
     var body: some View{
         
         VStack{
-
-                
-
+     
             TextField(placeholder, text: $inputStream)
-//                .padding(.horizontal)
+            //                .padding(.horizontal)
                 .background(Image("emailTextField-1"))
                 .frame(width: UIScreen.main.bounds.width*0.69, height: 40)
-
-                
-
-        }
+               
             
+            
+            
+        }
+        
     }
 }
 
@@ -143,13 +130,67 @@ struct CustomizedSecureField: View{
     var body: some View{
         
         VStack{
-
-
+            
+            
             SecureField(placeholder, text: $inputStream)
-//                .padding(.horizontal)
+            //                .padding(.horizontal)
                 .background(Image("passwordTextField-1"))
                 .frame(width: UIScreen.main.bounds.width*0.69, height: 40)
         }
     }
 }
 
+
+struct ProfilePhoto: View {
+    var body: some View {
+        ZStack{
+            
+            
+            Image("photoframe")
+                .frame(alignment: .center)
+            
+            
+            Image("userPhoto")
+                .frame(alignment: .center)
+        }
+    }
+}
+
+struct WelcomeAndSignUpText: View {
+    var body: some View {
+        HStack {
+            VStack {
+                Text("   Welcome back!")
+                    .fontWeight(.thin)
+                    .multilineTextAlignment(.leading)
+                
+                
+                HStack {
+                    Text("If you dont have account,")
+                        .fontWeight(.thin)
+                    
+                    
+                    NavigationLink(destination: SignUpPage(), label: {
+                        Text("Sign up")
+                    })
+                }
+            }
+            
+        }
+        .padding(.bottom, 10)
+    }
+}
+
+struct ThirdPartyLogo: View {
+    var body: some View {
+        HStack{
+            Spacer()
+            Image("AppleLoginBtn")
+            Spacer()
+            Image("GoogleLoginBtn")
+            Spacer()
+            Image("FacebookLoginBtn")
+            Spacer()
+        }
+    }
+}

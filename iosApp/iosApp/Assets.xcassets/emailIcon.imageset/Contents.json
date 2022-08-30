@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "padlock 2@1x.svg",
+      "filename" : "email 2@1x.svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "padlock 2@2x.svg",
+      "filename" : "email 2@2x.svg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "padlock 2@3x.svg",
+      "filename" : "email 2@3x.svg",
       "idiom" : "universal",
       "scale" : "3x"
     }
