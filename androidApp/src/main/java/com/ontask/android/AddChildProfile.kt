@@ -114,7 +114,7 @@ fun addChildProfile() {
                 .apply {
                     childNameInput(this, localFocusManager)
                     childDateOfBirth(this, localFocusManager)
-                    themesDropDown(this)
+//                    themesDropDown(this) // TODO: uncomment this for the themes dropdown menu
                 }
 
             Button(
