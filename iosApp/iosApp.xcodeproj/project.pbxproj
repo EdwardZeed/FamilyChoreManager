@@ -16,6 +16,7 @@
 		2B3B10AD28BDE43A003E24DE /* ParentProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3B10AC28BDE43A003E24DE /* ParentProfilePage.swift */; };
 		2B3B10B028BF980D003E24DE /* Testing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3B10AF28BF980D003E24DE /* Testing.swift */; };
 		2B3B10B228C0B16D003E24DE /* AddChildPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3B10B128C0B16C003E24DE /* AddChildPage.swift */; };
+		2BDE71F228C38D4B005821C6 /* KeyboardExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDE71F128C38D4B005821C6 /* KeyboardExtension.swift */; };
 		3759E52B28B39C50000E0419 /* ChildLoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759E52A28B39C50000E0419 /* ChildLoginPage.swift */; };
 		3759E52D28B39C8F000E0419 /* StartPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759E52C28B39C8F000E0419 /* StartPage.swift */; };
 		3759E52F28B39CC6000E0419 /* ParentLoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759E52E28B39CC6000E0419 /* ParentLoginPage.swift */; };
@@ -44,6 +45,7 @@
 		2B3B10AC28BDE43A003E24DE /* ParentProfilePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentProfilePage.swift; sourceTree = "<group>"; };
 		2B3B10AF28BF980D003E24DE /* Testing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Testing.swift; sourceTree = SOURCE_ROOT; };
 		2B3B10B128C0B16C003E24DE /* AddChildPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChildPage.swift; sourceTree = "<group>"; };
+		2BDE71F128C38D4B005821C6 /* KeyboardExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardExtension.swift; sourceTree = "<group>"; };
 		3759E52A28B39C50000E0419 /* ChildLoginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildLoginPage.swift; sourceTree = "<group>"; };
 		3759E52C28B39C8F000E0419 /* StartPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartPage.swift; sourceTree = "<group>"; };
 		3759E52E28B39CC6000E0419 /* ParentLoginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentLoginPage.swift; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 			children = (
 				2B3B10AF28BF980D003E24DE /* Testing.swift */,
 				2B3B10B128C0B16C003E24DE /* AddChildPage.swift */,
+				2BDE71F128C38D4B005821C6 /* KeyboardExtension.swift */,
 				2B3B10AA28B7956A003E24DE /* DatePickerTextField.swift */,
 				2B3B10AC28BDE43A003E24DE /* ParentProfilePage.swift */,
 				058557BA273AAA24004C7B11 /* Assets.xcassets */,
@@ -213,6 +216,7 @@
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				2B3B10B228C0B16D003E24DE /* AddChildPage.swift in Sources */,
 				3759E52D28B39C8F000E0419 /* StartPage.swift in Sources */,
+				2BDE71F228C38D4B005821C6 /* KeyboardExtension.swift in Sources */,
 				3759E52B28B39C50000E0419 /* ChildLoginPage.swift in Sources */,
 				2B3B10B028BF980D003E24DE /* Testing.swift in Sources */,
 				2B3B10AB28B7956A003E24DE /* DatePickerTextField.swift in Sources */,
