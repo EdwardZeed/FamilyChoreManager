@@ -13,6 +13,7 @@
 		05D24AE928C489170097A7C2 /* SignContractPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05D24AE828C489170097A7C2 /* SignContractPage.swift */; };
 		05D24AEB28C489380097A7C2 /* ContractInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05D24AEA28C489380097A7C2 /* ContractInit.swift */; };
 		05D24AED28C489640097A7C2 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05D24AEC28C489640097A7C2 /* Dashboard.swift */; };
+		05F5D4B128C4CF0200194DBF /* AddChorePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F5D4B028C4CF0200194DBF /* AddChorePage.swift */; };
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		2B3B10A728B3BD1F003E24DE /* SignUpPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3B10A628B3BD1F003E24DE /* SignUpPage.swift */; };
 		2B3B10AB28B7956A003E24DE /* DatePickerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3B10AA28B7956A003E24DE /* DatePickerTextField.swift */; };
@@ -61,6 +62,7 @@
 		05D24AE828C489170097A7C2 /* SignContractPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignContractPage.swift; sourceTree = "<group>"; };
 		05D24AEA28C489380097A7C2 /* ContractInit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractInit.swift; sourceTree = "<group>"; };
 		05D24AEC28C489640097A7C2 /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
+		05F5D4B028C4CF0200194DBF /* AddChorePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChorePage.swift; sourceTree = "<group>"; };
 		2152FB032600AC8F00CF470E /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
 		2B3B10A628B3BD1F003E24DE /* SignUpPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpPage.swift; sourceTree = "<group>"; };
 		2B3B10AA28B7956A003E24DE /* DatePickerTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerTextField.swift; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 				05D24AE828C489170097A7C2 /* SignContractPage.swift */,
 				05D24AEA28C489380097A7C2 /* ContractInit.swift */,
 				05D24AEC28C489640097A7C2 /* Dashboard.swift */,
+				05F5D4B028C4CF0200194DBF /* AddChorePage.swift */,
 			);
 			path = iosApp;
 			sourceTree = "<group>";
@@ -315,6 +318,7 @@
 				37FD898228C3C4A100B5ABFE /* RandomItem.swift in Sources */,
 				3759E52B28B39C50000E0419 /* ChildLoginPage.swift in Sources */,
 				2B3B10B028BF980D003E24DE /* Testing.swift in Sources */,
+				05F5D4B128C4CF0200194DBF /* AddChorePage.swift in Sources */,
 				2B3B10AB28B7956A003E24DE /* DatePickerTextField.swift in Sources */,
 				37FD897E28C3C22E00B5ABFE /* PopUpWindowModifier.swift in Sources */,
 				37FD898028C3C27F00B5ABFE /* AssignChorePopUpWindow.swift in Sources */,

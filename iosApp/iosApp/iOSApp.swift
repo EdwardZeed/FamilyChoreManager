@@ -7,9 +7,7 @@ struct iOSApp: App {
 		WindowGroup {
 //			ParentLoginPage()
             
-            AssignChorePopUpWindow(fadeIn: false, isPresented: Binding.constant(true)) { item in
-                print(item)
-            }
+            AddChorePage(choreName: "")
             
 //            let achievement = Achievement(points: 1, message: "free three")
 //            let chore = ChoreTask(taskID: 0, name: "Make bed", description: "Make bed", achievement: achievement, iconImage: "BedIcon")
