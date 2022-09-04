@@ -144,7 +144,7 @@ struct SingleFinishChore_ChildProfilePage : View {
                             Text("Your second free throw:")
                                 .font(.footnote)
                                 .fontWeight(.thin)
-                            Text(String(singlefinishchore.achievements))
+                            Text(String(singlefinishchore.achievement.points))
                                 .font(.footnote)
                                 .fontWeight(.thin)
                             Image("SmallCoinIcon-ChildProfilePage")
@@ -196,16 +196,16 @@ struct ChildProfilePage_Previews: PreviewProvider {
     static var previews: some View {
         
         //These are the dummy data of chore cards which assigned to the children
+        let achievement = Achievement(points: 3, message: "well done")
+        
+        var singleChore1 = ChoreTask(taskID: 1, name: "Make the bed", description: "None", achievement: achievement, iconImage: "BedIcon-ChildProfilePage")
+        var singleChore2 = ChoreTask(taskID: 2, name: "Sweep the floor", description: "None", achievement: achievement, iconImage: "broom")
+        var singleChore3 = ChoreTask(taskID: 3, name: "Wash the dishes", description: "None", achievement: achievement, iconImage: "WashDishes")
+        var singleChore4 = ChoreTask(taskID: 4, name: "Sweep the floor", description: "None", achievement: achievement, iconImage: "broom")
+        var singleChore5 = ChoreTask(taskID: 5, name: "Wash the dishes", description: "None", achievement: achievement, iconImage: "WashDishes")
         
         
-        var singleChore1 = ChoreTask(taskID: 1, name: "Make the bed", description: "None", achievements: 3, iconImage: "BedIcon-ChildProfilePage")
-        var singleChore2 = ChoreTask(taskID: 2, name: "Sweep the floor", description: "None", achievements: 2, iconImage: "broom")
-        var singleChore3 = ChoreTask(taskID: 3, name: "Wash the dishes", description: "None", achievements: 1, iconImage: "WashDishes")
-        var singleChore4 = ChoreTask(taskID: 4, name: "Sweep the floor", description: "None", achievements: 2, iconImage: "broom")
-        var singleChore5 = ChoreTask(taskID: 5, name: "Wash the dishes", description: "None", achievements: 1, iconImage: "WashDishes")
-        
-        
-        ChildProfilePage(finishChoreList: [singleChore1, singleChore2, singleChore3, singleChore4, singleChore5])
+        ChildProfilePage(finishChoreList: [])
     }
 }
 

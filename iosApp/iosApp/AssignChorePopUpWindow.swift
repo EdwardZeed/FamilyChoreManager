@@ -11,10 +11,13 @@ import UIKit
 import shared
 
 
+let achievement1 = Achievement(points: 0, message: "weel done")
+let achievement2 = Achievement(points: 0, message: "good")
+let achievement3 = Achievement(points: 0, message: "done")
 
-var singleChore4 = ChoreTask(taskID: 4, name: "Make the bed", description: "None", achievements: 0, iconImage: "BedIcon-ChildProfilePage")
-var singleChore5 = ChoreTask(taskID: 5, name: "Sweep the floor", description: "None", achievements: 0, iconImage: "broom")
-var singleChore6 = ChoreTask(taskID: 6, name: "Wash the dishes", description: "None", achievements: 0, iconImage: "WashDishes")
+var singleChore4 = ChoreTask(taskID: 4, name: "Make the bed", description: "None", achievement: achievement1, iconImage: "BedIcon-ChildProfilePage")
+var singleChore5 = ChoreTask(taskID: 5, name: "Sweep the floor", description: "None", achievement: achievement2, iconImage: "broom")
+var singleChore6 = ChoreTask(taskID: 6, name: "Wash the dishes", description: "None", achievement: achievement3, iconImage: "WashDishes")
 
 
 struct AssignChorePopUpWindow: View {
@@ -60,7 +63,7 @@ struct AssignChorePopUpWindow: View {
                         
                         Button(action: {
                             for i in list{
-                                print(i.name + " " + String(i.achievements))
+                                print(i.name + " " + String(i.achievement.points))
                             }
                             
                         }, label: {
@@ -124,7 +127,7 @@ struct SingleAssignChore_ChildProfilePage : View {
                     Button(action: {
                         isSelect=1
                         alreadyChoose1.toggle()
-                        singleChore.achievements = 1
+                        singleChore.achievement.points = 1
                         
                        
                     }, label: {
@@ -137,7 +140,7 @@ struct SingleAssignChore_ChildProfilePage : View {
                     Button(action: {
                         isSelect=2
                         alreadyChoose2.toggle()
-                        singleChore.achievements = 2
+                        singleChore.achievement.points = 2
                        
                     }, label: {
                         
@@ -149,7 +152,7 @@ struct SingleAssignChore_ChildProfilePage : View {
                     Button(action: {
                         isSelect=3
                         alreadyChoose3.toggle()
-                        singleChore.achievements = 3
+                        singleChore.achievement.points = 3
                     }, label: {
                         
                         ((isSelect==3) && (alreadyChoose3) ? Image("AssignPoint-AssignChorePage") : Image("selectPoint-AssignChorePage"))
