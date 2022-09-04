@@ -14,6 +14,10 @@ var child2 = Child(userID: 2, name: "Anna", dateOfBirth: "2012/03/14", chooseThe
 
 var child3 = Child(userID: 3, name: "Bulankin", dateOfBirth: "2012/05/14", chooseTheme: Theme(name: "T-34"), avatarPic: "PP_50")
 
+var child4: Child = Child(userID: 4, name: "Frank", dateOfBirth: "2001", chooseTheme: nil, avatarPic: "Default")
+
+var child5: Child = Child(userID: 5, name: "Frank", dateOfBirth: "2001", chooseTheme: nil, avatarPic: "Default")
+
 struct ParentLoginPage: View {
     
     @State var userName: String = ""
@@ -85,10 +89,10 @@ struct ParentLoginPage: View {
                     .padding(.bottom, UIScreen.main.bounds.height*0.03)
                     
                   
-                    var li = [child1, child2, child3]
+                    var li = [child1, child2, child3, child4, child5]
                     NavigationLink(destination: NavigationBarView(userName: userName,childrenlist: li).ignoresSafeArea(), isActive: $goToDashboard){
                         EmptyView()
-                    }
+                    }.navigationBarHidden(true)
                     
                     Image("separateLine")
                         .padding(.bottom, UIScreen.main.bounds.height*0.03)
@@ -102,6 +106,7 @@ struct ParentLoginPage: View {
             
         }
         .navigationBarHidden(true)
+      
         
     }
 }

@@ -18,10 +18,12 @@ struct Preview_DashBoardPage: PreviewProvider {
         var child1: Child = Child(userID: 1, name: "Frank", dateOfBirth: "2001", chooseTheme: nil, avatarPic: "Default")
         var child2: Child = Child(userID: 2, name: "Frank", dateOfBirth: "2001", chooseTheme: nil, avatarPic: "Default")
         var child3: Child = Child(userID: 3, name: "Frank", dateOfBirth: "2001", chooseTheme: nil, avatarPic: "Default")
+//        var child4: Child = Child(userID: 4, name: "Frank", dateOfBirth: "2001", chooseTheme: nil, avatarPic: "Default")
+//        var child5: Child = Child(userID: 5, name: "Frank", dateOfBirth: "2001", chooseTheme: nil, avatarPic: "Default")
         
         var childList = [child3,child2,child1]
         var parentList = [parent_user]
-        //DashBoardPage(username: parent_user.name,childList: childList, parentList:  parentList)
+        DashBoardPage(username: parent_user.name,childList: childList, parentList:  parentList)
     }
 }
 
@@ -89,37 +91,12 @@ struct DashBoardPage: View {
                 }
             }.background(Image("Background").resizable().scaledToFill().ignoresSafeArea().opacity(0.2))
                 .navigationBarHidden(true)
-        }
+        }.navigationBarBackButtonHidden(true)
+            .navigationBarHidden(true)
+            .ignoresSafeArea()
     }
 }
 
-//struct NavigationBarView: View {
-//
-//    var userName : String
-//    var childrenlist : [Child]
-//    var body: some View {
-//        TabView{
-//                   DashBoardPage(username: userName, childList: childrenlist, parentList: [])
-//                        .tabItem({
-//                            Image(systemName: "house")
-//                            Text("Family")
-//                        })
-//
-//                    Text("PAGE TWO")
-//                        .tabItem({
-//                            Image(systemName: "person")
-//                            Text("Account")
-//                        })
-//
-//                    Text("PAGE THREE")
-//                        .tabItem({
-//                            Image(systemName: "gear")
-//                            Text("Setting")
-//                        })
-//                }
-//
-//    }
-//}
 
 
 struct UserPhoto: View {

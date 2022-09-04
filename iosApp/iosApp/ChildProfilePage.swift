@@ -22,8 +22,6 @@ struct ChildProfilePage: View {
 
     var body: some View {
         
-        
-        
         ScrollView{
             VStack{
 

@@ -14,24 +14,24 @@ struct NavigationBarView: View {
     var childrenlist : [Child]
     var body: some View {
         TabView{
-                   DashBoardPage(username: userName, childList: childrenlist, parentList: [])
+            DashBoardPage(username: userName, childList: childrenlist, parentList: []).navigationBarBackButtonHidden(true).navigationBarHidden(true)
                         .tabItem({
                             Image(systemName: "house")
                             Text("Family")
                         })
                     
-                    ParentProfilePage(chores: [])
+            ParentProfilePage(chores: []).navigationBarBackButtonHidden(true).navigationBarHidden(true)
                         .tabItem({
                             Image(systemName: "person")
                             Text("Account")
                         })
                     
-                    Text("PAGE THREE")
+            ChildProfilePage(finishChoreList: []).navigationBarBackButtonHidden(true).navigationBarHidden(true)
                         .tabItem({
                             Image(systemName: "gear")
                             Text("Setting")
                         })
-                }
+        }.navigationBarHidden(true)
 
     }
 }
