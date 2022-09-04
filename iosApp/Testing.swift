@@ -37,6 +37,10 @@ struct Testing: View {
                 .border(Color.black, width: 3)
             
             Text(text)
+            
+            
+                
+            
         }
     }
 }
