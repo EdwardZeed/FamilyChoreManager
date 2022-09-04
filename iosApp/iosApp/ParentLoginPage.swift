@@ -82,6 +82,9 @@ struct ParentLoginPage: View {
                     ThirdPartyLogo()
                 }
             }
+            .onTapGesture {
+                hideKeyboard()
+            }
             
         }
         .navigationBarHidden(true)
@@ -195,3 +198,4 @@ struct ThirdPartyLogo: View {
         }
     }
 }
+

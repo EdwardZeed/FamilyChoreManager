@@ -116,6 +116,9 @@ struct SignUpPage: View {
             }
             
         }
+        .onTapGesture {
+            hideKeyboard()
+        }
         
     }
     

@@ -14,8 +14,7 @@ data class ChoreTask(
     var taskID:Int,
     var name: String,
     var description: String,
-    var achievements: Int,
+    var achievement: Achievement,
     var iconImage: String) {
-
     var children: ArrayList<Child> = ArrayList()
 }
