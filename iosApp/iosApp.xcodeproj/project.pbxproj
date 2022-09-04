@@ -10,6 +10,9 @@
 		05044BCA28B507EB009C8C0F /* OTALauchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 05044BC928B507EB009C8C0F /* OTALauchScreen.storyboard */; };
 		058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
 		058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
+		05D24AE928C489170097A7C2 /* SignContractPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05D24AE828C489170097A7C2 /* SignContractPage.swift */; };
+		05D24AEB28C489380097A7C2 /* ContractInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05D24AEA28C489380097A7C2 /* ContractInit.swift */; };
+		05D24AED28C489640097A7C2 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05D24AEC28C489640097A7C2 /* Dashboard.swift */; };
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		2B3B10A728B3BD1F003E24DE /* SignUpPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3B10A628B3BD1F003E24DE /* SignUpPage.swift */; };
 		2B3B10AB28B7956A003E24DE /* DatePickerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3B10AA28B7956A003E24DE /* DatePickerTextField.swift */; };
@@ -55,6 +58,9 @@
 		05044BC928B507EB009C8C0F /* OTALauchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = OTALauchScreen.storyboard; sourceTree = "<group>"; };
 		058557BA273AAA24004C7B11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		05D24AE828C489170097A7C2 /* SignContractPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignContractPage.swift; sourceTree = "<group>"; };
+		05D24AEA28C489380097A7C2 /* ContractInit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractInit.swift; sourceTree = "<group>"; };
+		05D24AEC28C489640097A7C2 /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
 		2152FB032600AC8F00CF470E /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
 		2B3B10A628B3BD1F003E24DE /* SignUpPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpPage.swift; sourceTree = "<group>"; };
 		2B3B10AA28B7956A003E24DE /* DatePickerTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerTextField.swift; sourceTree = "<group>"; };
@@ -151,6 +157,9 @@
 				37FD897D28C3C22E00B5ABFE /* PopUpWindowModifier.swift */,
 				37FD897F28C3C27F00B5ABFE /* AssignChorePopUpWindow.swift */,
 				37FD898128C3C4A100B5ABFE /* RandomItem.swift */,
+				05D24AE828C489170097A7C2 /* SignContractPage.swift */,
+				05D24AEA28C489380097A7C2 /* ContractInit.swift */,
+				05D24AEC28C489640097A7C2 /* Dashboard.swift */,
 			);
 			path = iosApp;
 			sourceTree = "<group>";
@@ -295,6 +304,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3759E52F28B39CC6000E0419 /* ParentLoginPage.swift in Sources */,
+				05D24AED28C489640097A7C2 /* Dashboard.swift in Sources */,
 				2B3B10A728B3BD1F003E24DE /* SignUpPage.swift in Sources */,
 				2B3B10AD28BDE43A003E24DE /* ParentProfilePage.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
@@ -308,6 +318,8 @@
 				2B3B10AB28B7956A003E24DE /* DatePickerTextField.swift in Sources */,
 				37FD897E28C3C22E00B5ABFE /* PopUpWindowModifier.swift in Sources */,
 				37FD898028C3C27F00B5ABFE /* AssignChorePopUpWindow.swift in Sources */,
+				05D24AE928C489170097A7C2 /* SignContractPage.swift in Sources */,
+				05D24AEB28C489380097A7C2 /* ContractInit.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
