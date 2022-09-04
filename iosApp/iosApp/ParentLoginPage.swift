@@ -49,6 +49,7 @@ struct ParentLoginPage: View {
                     
                     ProfilePhoto()
                     
+                    
                     WelcomeAndSignUpText()
                     
                
