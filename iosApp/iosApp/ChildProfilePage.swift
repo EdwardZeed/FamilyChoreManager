@@ -201,8 +201,7 @@ struct ChildProfilePage_Previews: PreviewProvider {
         var singleChore1 = ChoreTask(taskID: 1, name: "Make the bed", description: "None", achievement: achievement, iconImage: "BedIcon-ChildProfilePage")
         var singleChore2 = ChoreTask(taskID: 2, name: "Sweep the floor", description: "None", achievement: achievement, iconImage: "broom")
         var singleChore3 = ChoreTask(taskID: 3, name: "Wash the dishes", description: "None", achievement: achievement, iconImage: "WashDishes")
-        var singleChore4 = ChoreTask(taskID: 4, name: "Sweep the floor", description: "None", achievement: achievement, iconImage: "broom")
-        var singleChore5 = ChoreTask(taskID: 5, name: "Wash the dishes", description: "None", achievement: achievement, iconImage: "WashDishes")
+       
         
         
         ChildProfilePage(finishChoreList: [])

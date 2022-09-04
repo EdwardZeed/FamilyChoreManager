@@ -21,7 +21,7 @@ struct Preview_DashBoardPage: PreviewProvider {
         
         var childList = [child3,child2,child1]
         var parentList = [parent_user]
-        DashBoardPage(username: parent_user.name,childList: childList, parentList:  parentList)
+        //DashBoardPage(username: parent_user.name,childList: childList, parentList:  parentList)
     }
 }
 
@@ -31,10 +31,13 @@ struct DashBoardPage: View {
     var children: [Child]
     var parents: [Parent]
     
+    @State var goToChildProfilePage = false
+    
     init(username: String, childList: [Child], parentList: [Parent]){
         self.username = username
         self.children = childList
         self.parents = parentList
+        
     }
     
     
@@ -42,9 +45,10 @@ struct DashBoardPage: View {
         
         NavigationView {
             ZStack{
+                
                 ScrollView{
                     VStack{
-                        
+                      
                         HStack{
                             
                             HStack{
@@ -66,13 +70,17 @@ struct DashBoardPage: View {
                                 ForEach(children,id:\.self){child in
                                     HStack{
                                         Button(action: {
-                                            
+                                            goToChildProfilePage = true
                                         }, label: {
-                                            Button_Label()
+                                            Button_Label(currentChild: child)
                                         }).frame(width: UIScreen.main.bounds.width*0.95, height: UIScreen.main.bounds.width*0.3)
                                             .background(Color.white)
                                             .cornerRadius(25)
                                             .shadow(color: Color.gray, radius: 10)
+                                        
+                                        NavigationLink(destination: ChildProfilePage(finishChoreList: [])     .navigationBarHidden(true), isActive: $goToChildProfilePage){
+                                            EmptyView()
+                                        }
                                     }
                                 }
                             }
@@ -84,6 +92,35 @@ struct DashBoardPage: View {
         }
     }
 }
+
+//struct NavigationBarView: View {
+//
+//    var userName : String
+//    var childrenlist : [Child]
+//    var body: some View {
+//        TabView{
+//                   DashBoardPage(username: userName, childList: childrenlist, parentList: [])
+//                        .tabItem({
+//                            Image(systemName: "house")
+//                            Text("Family")
+//                        })
+//
+//                    Text("PAGE TWO")
+//                        .tabItem({
+//                            Image(systemName: "person")
+//                            Text("Account")
+//                        })
+//
+//                    Text("PAGE THREE")
+//                        .tabItem({
+//                            Image(systemName: "gear")
+//                            Text("Setting")
+//                        })
+//                }
+//
+//    }
+//}
+
 
 struct UserPhoto: View {
     
@@ -149,6 +186,7 @@ struct Title_and_home_Page: View{
 
 
 struct Button_Label: View{
+    var currentChild : Child
     var body: some View{
         HStack{
             ZStack{
@@ -165,7 +203,7 @@ struct Button_Label: View{
                 
             }.frame( alignment: .leading)
             VStack{
-                Text("This is my name").frame(width: UIScreen.main.bounds.width*0.6,height: UIScreen.main.bounds.width*0.16, alignment: .topLeading)
+                Text(currentChild.name).frame(width: UIScreen.main.bounds.width*0.6,height: UIScreen.main.bounds.width*0.16, alignment: .topLeading)
                 
                 HStack{
                     Spacer()

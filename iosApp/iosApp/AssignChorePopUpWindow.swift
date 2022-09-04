@@ -11,9 +11,9 @@ import UIKit
 import shared
 
 
-let achievement1 = Achievement(points: 0, message: "weel done")
-let achievement2 = Achievement(points: 0, message: "good")
-let achievement3 = Achievement(points: 0, message: "done")
+let achievement1 = Achievement(points: 1, message: "weel done")
+let achievement2 = Achievement(points: 2, message: "good")
+let achievement3 = Achievement(points: 3, message: "done")
 
 var singleChore4 = ChoreTask(taskID: 4, name: "Make the bed", description: "None", achievement: achievement1, iconImage: "BedIcon-ChildProfilePage")
 var singleChore5 = ChoreTask(taskID: 5, name: "Sweep the floor", description: "None", achievement: achievement2, iconImage: "broom")

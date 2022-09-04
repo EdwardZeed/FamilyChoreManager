@@ -6,6 +6,13 @@
 //
 
 import SwiftUI
+import shared
+
+var child1 = Child(userID: 1, name: "Linda", dateOfBirth: "2012/02/14", chooseTheme: Theme(name: "Disney"), avatarPic: "Poly")
+
+var child2 = Child(userID: 2, name: "Anna", dateOfBirth: "2012/03/14", chooseTheme: Theme(name: "Marvel"), avatarPic: "IronMan")
+
+var child3 = Child(userID: 3, name: "Bulankin", dateOfBirth: "2012/05/14", chooseTheme: Theme(name: "T-34"), avatarPic: "PP_50")
 
 struct ParentLoginPage: View {
     
@@ -13,6 +20,7 @@ struct ParentLoginPage: View {
     @State var password: String = ""
     @State var goToScan = false
     @State var valid: Float = 0
+    @State var goToDashboard = false
     
     
     
@@ -71,10 +79,16 @@ struct ParentLoginPage: View {
                         .padding(.bottom, UIScreen.main.bounds.height*0.05)
                     
                     
-                    Button(action: {}, label: {
-                        Image("LoginBtn")
+                    Button(action: {goToDashboard=true}, label: {
+                        Image("loginBtn")
                     })
                     .padding(.bottom, UIScreen.main.bounds.height*0.03)
+                    
+                  
+                    var li = [child1, child2, child3]
+                    NavigationLink(destination: NavigationBarView(userName: userName,childrenlist: li).ignoresSafeArea(), isActive: $goToDashboard){
+                        EmptyView()
+                    }
                     
                     Image("separateLine")
                         .padding(.bottom, UIScreen.main.bounds.height*0.03)
@@ -90,10 +104,8 @@ struct ParentLoginPage: View {
         .navigationBarHidden(true)
         
     }
-    
-    
-    
 }
+
 
 struct ParentLoginPage_Previews: PreviewProvider {
     static var previews: some View {
