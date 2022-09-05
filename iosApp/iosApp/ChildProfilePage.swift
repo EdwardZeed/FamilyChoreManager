@@ -14,13 +14,16 @@ import shared
 
 struct ChildProfilePage: View {
     
-    var finishChoreList: [ChoreTask]
+    var currentChild : Child
     @State var isAddDialogShow = false
     @State var isDeleteDialogShow = false
     @State var eventList:[RandomItem] = [RandomItem(title: "test")]
     @State var curDelItem: RandomItem = RandomItem(title: "")
     
+    
+    
     var body: some View {
+        
         
         
         ScrollView{
@@ -40,10 +43,10 @@ struct ChildProfilePage: View {
                 }
                 
                 VStack(alignment: .leading){
-                    Text("Date of birth: 2015/08/15")
+                    Text("Date of birth: " + currentChild.dateOfBirth)
                         .font(.footnote)
                         .fontWeight(.thin)
-                    Text("Choose Theme: Marvel")
+                    Text("Choose Theme: " + (currentChild.chooseTheme.name))
                         .font(.footnote)
                         .fontWeight(.thin)
                 }.padding(.bottom, UIScreen.main.bounds.height*0.02)
@@ -89,7 +92,8 @@ struct ChildProfilePage: View {
                         
                     }.padding(.bottom, -1)
                     
-                    ForEach(finishChoreList,id:\.self){choretask in
+ 
+                    ForEach(currentChild.finishedChoreList,id:\.self){choretask in
                         SingleFinishChore_ChildProfilePage(singlefinishchore : choretask)
                     }
                     
@@ -104,7 +108,7 @@ struct ChildProfilePage: View {
                 eventList.append(RandomItem(title: item))
             }
             
-        }.navigationBarTitle("[ Child Name]")
+        }.navigationBarTitle(currentChild.name)
             .toolbar{Menu {
                 Button(action: {isAddDialogShow.toggle()}, label: {
                     Text("Assign Chores")
@@ -193,7 +197,7 @@ struct ChildProfilePage_Previews: PreviewProvider {
         
         
         
-        ChildProfilePage(finishChoreList: [])
+//        ChildProfilePage(finishChoreList: [])
     }
 }
 

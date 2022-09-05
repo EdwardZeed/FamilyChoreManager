@@ -32,7 +32,7 @@ struct NavigationBarView: View {
     var body: some View {
             NavigationView { //整体设置，下级页面不会在出现底部tabbar
                 TabView(selection: $selection) {
-                    DashBoardPage(username: userName, childList: childrenlist, parentList: [], navigationBar: self)
+                    DashBoardPage(username: userName, children: childrenlist, parents: [])
                          .tabItem{//使用label 创建tabitem图文
                              Label("Family", systemImage: "house")
                          }

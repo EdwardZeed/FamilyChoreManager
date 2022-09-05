@@ -24,10 +24,6 @@ struct ParentProfilePage: View {
                 ScrollView {
                     VStack{
                         VStack {
-                            TopBar()
-                               
-                            
-                              
                             
                             AvatorBar(numberOfChildren: $numberOfChildren, numberOfRelatives: $numberOfRelatives)
                             Text("Date of Birth: 2002/07/05")
@@ -82,24 +78,6 @@ struct ParentProfilePage_Previews: PreviewProvider {
     }
 }
 
-struct TopBar: View {
-    var body: some View {
-        HStack{
-            Text("edwardhimself")
-                .padding(.horizontal, 10)
-                .frame(width: UIScreen.main.bounds.width*0.45, alignment: .leading)
-                
-                
-            
-            
-            
-            .padding(.horizontal, 10)
-            .frame(width: UIScreen.main.bounds.width*0.45, alignment: .trailing)
-            
-        }
-        .padding(.vertical)
-    }
-}
 
 struct AvatorBar: View {
     @Binding var numberOfChildren: String

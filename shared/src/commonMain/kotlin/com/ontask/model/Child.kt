@@ -13,9 +13,10 @@ data class Child(
     val userID: Int = 0,
     var name: String,
     var dateOfBirth: String,
-    var chooseTheme: Theme?,
+    var chooseTheme: Theme,
     var avatarPic: String?){
     var qrCode: QRcode ?= null
     var totalCreditPoint: Int = 0
+    var finishedChoreList:  List<ChoreTask> = emptyList<ChoreTask>()
 
 }
