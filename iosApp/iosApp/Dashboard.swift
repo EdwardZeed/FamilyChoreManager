@@ -11,17 +11,24 @@ import SwiftUI
 import shared
 
 struct Preview_DashBoardPage: PreviewProvider {
-    
+
     static var previews: some View {
-        var parent_user: Parent = Parent(userID: 1, name: "TestParent", dateOfBirth: "IDK", chooseTheme: nil, avatarPic: nil)
         
-        var child1: Child = Child(userID: 1, name: "Frank", dateOfBirth: "2001", chooseTheme: nil, avatarPic: "Default")
-        var child2: Child = Child(userID: 2, name: "Frank", dateOfBirth: "2001", chooseTheme: nil, avatarPic: "Default")
-        var child3: Child = Child(userID: 3, name: "Frank", dateOfBirth: "2001", chooseTheme: nil, avatarPic: "Default")
-        
+        var currentParent = Parent(userID: 0, name: "Chris", dateOfBirth: "2002/02/14", chooseTheme: Theme(name: "The Boys"), avatarPic: "Dragon")
+        var child1 = Child(userID: 1, name: "Linda", dateOfBirth: "2012/02/14", chooseTheme: Theme(name: "Disney"), avatarPic: "Poly")
+
+        var child2 = Child(userID: 2, name: "Anna", dateOfBirth: "2012/03/14", chooseTheme: Theme(name: "Marvel"), avatarPic: "IronMan")
+
+        var child3 = Child(userID: 3, name: "Bulankin", dateOfBirth: "2012/05/14", chooseTheme: Theme(name: "T-34"), avatarPic: "PP_50")
+
+        var child4: Child = Child(userID: 4, name: "Frank", dateOfBirth: "2001", chooseTheme: Theme(name: "T-34"), avatarPic: "Default")
+
+        var child5: Child = Child(userID: 5, name: "Frank", dateOfBirth: "2001", chooseTheme: Theme(name: "Minecraft"), avatarPic: "Default")
+
+
         var childList = [child3,child2,child1]
-        var parentList = [parent_user]
-        DashBoardPage(username: parent_user.name,childList: childList, parentList:  parentList)
+        var parentList = [currentParent]
+        DashBoardPage(username: "Chris",children: childList, parents:  parentList)
     }
 }
 
@@ -31,20 +38,22 @@ struct DashBoardPage: View {
     var children: [Child]
     var parents: [Parent]
     
-    init(username: String, childList: [Child], parentList: [Parent]){
-        self.username = username
-        self.children = childList
-        self.parents = parentList
-    }
+
+    @State var goToChildProfilePage = false
+    
+    @State var currentSelectChild: Child = Child(userID: -1, name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: "")
     
     
     var body: some View {
         
         NavigationView {
             ZStack{
+                Image("Background").resizable().edgesIgnoringSafeArea(.all)
+                    .opacity(0.2)
+                
                 ScrollView{
                     VStack{
-                        
+                      
                         HStack{
                             
                             HStack{
@@ -59,31 +68,52 @@ struct DashBoardPage: View {
                         
                         VStack{
                             
-                            Spacer(minLength: 50)
+                            //Spacer(minLength: 50)
                             Title_and_home_Page().frame(width: UIScreen.main.bounds.width*0.95,alignment: .leading)
                             
                             LazyVStack{
                                 ForEach(children,id:\.self){child in
                                     HStack{
                                         Button(action: {
-                                            
+                                            goToChildProfilePage = true
+                                        
+                                            currentSelectChild = child
+                                         
                                         }, label: {
-                                            Button_Label()
+                                            Button_Label(currentChild: child)
                                         }).frame(width: UIScreen.main.bounds.width*0.95, height: UIScreen.main.bounds.width*0.3)
                                             .background(Color.white)
                                             .cornerRadius(25)
                                             .shadow(color: Color.gray, radius: 10)
+                                        
+                                        
+                                        
                                     }
                                 }
+                               
+                                
                             }
+                            NavigationLink(destination: ChildProfilePage(currentChild: currentSelectChild), isActive: $goToChildProfilePage){
+                                EmptyView()
+                            }
+                            
                         }
+                       
                     }
                 }
-            }.background(Image("Background").resizable().scaledToFill().ignoresSafeArea().opacity(0.2))
-                .navigationBarHidden(true)
-        }
+               
+            }.navigationBarHidden(true)
+
+        }.navigationBarBackButtonHidden(true)
+            .navigationBarHidden(true)
+         
+       
+        
     }
+    
 }
+
+
 
 struct UserPhoto: View {
     
@@ -120,14 +150,37 @@ struct Message_And_Name: View{
 }
 
 struct Plus_button_in_DashBoard: View{
+    @State var goToAddChild = false
+    @State var goToAddChore = false
+    @State var goToAddContract = false
+    
     var body: some View{
         HStack{
-            Button(action: {
-                
-            }, label: {
-                Image("DashBoardPlusIcon")
-                
-            })
+            Menu {
+                Button("Add child"){goToAddChild = true}
+                Button("Add chore"){goToAddChore = true}
+                Button("Add contract"){goToAddContract = true}
+            } label: {
+                Image("PlusIcon")
+            }
+            
+            NavigationLink(isActive: $goToAddChild) {
+                AddChildPage()
+            } label: {
+                EmptyView()
+            }
+
+            NavigationLink(isActive: $goToAddChore) {
+                AddChorePage()
+            } label: {
+                EmptyView()
+            }
+            
+            NavigationLink(isActive: $goToAddContract) {
+                SignContractPage(username: "ikaros")
+            } label: {
+                EmptyView()
+            }
         }
     }
 }
@@ -149,6 +202,7 @@ struct Title_and_home_Page: View{
 
 
 struct Button_Label: View{
+    var currentChild : Child
     var body: some View{
         HStack{
             ZStack{
@@ -165,7 +219,7 @@ struct Button_Label: View{
                 
             }.frame( alignment: .leading)
             VStack{
-                Text("This is my name").frame(width: UIScreen.main.bounds.width*0.6,height: UIScreen.main.bounds.width*0.16, alignment: .topLeading)
+                Text(currentChild.name).frame(width: UIScreen.main.bounds.width*0.6,height: UIScreen.main.bounds.width*0.16, alignment: .topLeading)
                 
                 HStack{
                     Spacer()

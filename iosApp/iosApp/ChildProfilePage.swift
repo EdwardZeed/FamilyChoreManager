@@ -14,36 +14,21 @@ import shared
 
 struct ChildProfilePage: View {
     
-    var finishChoreList: [ChoreTask]
+    var currentChild : Child
     @State var isAddDialogShow = false
     @State var isDeleteDialogShow = false
     @State var eventList:[RandomItem] = [RandomItem(title: "test")]
     @State var curDelItem: RandomItem = RandomItem(title: "")
-
+    
+    
+    
     var body: some View {
         
         
         
         ScrollView{
             VStack{
-
                 
-                Menu {
-                    Button(action: {isAddDialogShow.toggle()}, label: {
-                       Text("Assign Chores")
-                    })
-                                
-                            } label: {
-                                Image("PlusIcon-ChildProfilePage")
-                                    
-                            }
-                            .padding(.horizontal, 10)
-                            .frame(width: UIScreen.main.bounds.width-20,alignment: .trailing)
-                    
-                
-                
-                Text("[ Child Name ]").frame(width: UIScreen.main.bounds.width,alignment: .leading)
-
                 
                 HStack(alignment: .center, spacing: 30){
                     Image("ChildIcon-ChildProfilePage")
@@ -58,10 +43,10 @@ struct ChildProfilePage: View {
                 }
                 
                 VStack(alignment: .leading){
-                    Text("Date of birth: 2015/08/15")
+                    Text("Date of birth: " + currentChild.dateOfBirth)
                         .font(.footnote)
                         .fontWeight(.thin)
-                    Text("Choose Theme: Marvel")
+                    Text("Choose Theme: " + (currentChild.chooseTheme.name))
                         .font(.footnote)
                         .fontWeight(.thin)
                 }.padding(.bottom, UIScreen.main.bounds.height*0.02)
@@ -107,7 +92,8 @@ struct ChildProfilePage: View {
                         
                     }.padding(.bottom, -1)
                     
-                    ForEach(finishChoreList,id:\.self){choretask in
+ 
+                    ForEach(currentChild.finishedChoreList,id:\.self){choretask in
                         SingleFinishChore_ChildProfilePage(singlefinishchore : choretask)
                     }
                     
@@ -115,15 +101,22 @@ struct ChildProfilePage: View {
                 
                 
             }.frame(width: UIScreen.main.bounds.width, alignment: .center)
-                
-
+            
+            
         }.PopUpWindow(isPresented: $isAddDialogShow) { item in
             if(!item.isEmpty) {
                 eventList.append(RandomItem(title: item))
             }
-        }
+            
+        }.navigationBarTitle(currentChild.name)
+            .toolbar{Menu {
+                Button(action: {isAddDialogShow.toggle()}, label: {
+                    Text("Assign Chores")
+                })} label: {
+                    Image("PlusIcon-ChildProfilePage")
+                }}
     }
-    
+                                   
 }
 
 struct SingleFinishChore_ChildProfilePage : View {
@@ -172,16 +165,16 @@ struct SingleFinishChore_ChildProfilePage : View {
 }
 
 struct SingleReward_ChildProfilePage : View {
-//    var text: String = String(SingleAssignChore_ChildProfilePage().getFinalSelectPoint())
+    //    var text: String = String(SingleAssignChore_ChildProfilePage().getFinalSelectPoint())
     
     var body: some View{
         ZStack{
             Image("SingleRewardBoard-ChildProfilePage")
             VStack(){
                 Image("xboxIcon")
-//                Text(text)
-//                    .font(.footnote)
-//                    .fontWeight(.thin)
+                //                Text(text)
+                //                    .font(.footnote)
+                //                    .fontWeight(.thin)
                 Text("Xbox One")
                     .font(.footnote)
                     .fontWeight(.thin)
@@ -201,11 +194,10 @@ struct ChildProfilePage_Previews: PreviewProvider {
         var singleChore1 = ChoreTask(taskID: 1, name: "Make the bed", description: "None", achievement: achievement, iconImage: "BedIcon-ChildProfilePage")
         var singleChore2 = ChoreTask(taskID: 2, name: "Sweep the floor", description: "None", achievement: achievement, iconImage: "broom")
         var singleChore3 = ChoreTask(taskID: 3, name: "Wash the dishes", description: "None", achievement: achievement, iconImage: "WashDishes")
-        var singleChore4 = ChoreTask(taskID: 4, name: "Sweep the floor", description: "None", achievement: achievement, iconImage: "broom")
-        var singleChore5 = ChoreTask(taskID: 5, name: "Wash the dishes", description: "None", achievement: achievement, iconImage: "WashDishes")
         
         
-        ChildProfilePage(finishChoreList: [])
+        
+//        ChildProfilePage(finishChoreList: [])
     }
 }
 

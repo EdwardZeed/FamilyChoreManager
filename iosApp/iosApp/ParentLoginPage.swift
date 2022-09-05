@@ -6,6 +6,17 @@
 //
 
 import SwiftUI
+import shared
+
+var child1 = Child(userID: 1, name: "Linda", dateOfBirth: "2012/02/14", chooseTheme: Theme(name: "Disney"), avatarPic: "Poly")
+
+var child2 = Child(userID: 2, name: "Anna", dateOfBirth: "2012/03/14", chooseTheme: Theme(name: "Marvel"), avatarPic: "IronMan")
+
+var child3 = Child(userID: 3, name: "Bulankin", dateOfBirth: "2012/05/14", chooseTheme: Theme(name: "T-34"), avatarPic: "PP_50")
+
+var child4: Child = Child(userID: 4, name: "Frank", dateOfBirth: "2001", chooseTheme: Theme(name: "T-34"), avatarPic: "Default")
+
+var child5: Child = Child(userID: 5, name: "Frank", dateOfBirth: "2001", chooseTheme: Theme(name: "Minecraft"), avatarPic: "Default")
 
 struct ParentLoginPage: View {
     
@@ -13,6 +24,7 @@ struct ParentLoginPage: View {
     @State var password: String = ""
     @State var goToScan = false
     @State var valid: Float = 0
+    @State var goToDashboard = false
     
     
     
@@ -52,12 +64,6 @@ struct ParentLoginPage: View {
                     
                     WelcomeAndSignUpText()
                     
-               
-//                    CustomizedTextField(inputStream: $userName, label: "Name: ",placeholder: "Email Address")
-//                        .padding(.bottom, UIScreen.main.bounds.height*0.04)
-//
-//                    CustomizedSecureField(inputStream: $password, label: "Password: ", placeholder: "Password")
-//                        .padding(.bottom,UIScreen.main.bounds.height*0.02)
                     EntryField(textValue: $userName, icon: Image("emailIcon"), placeholder: "Email Address", prompt: "", validation: $valid, isPassword: false)
                         .padding(.bottom, 3)
                     EntryField(textValue: $password, icon: Image("locksign"), placeholder: "Password: ", prompt: "", validation: $valid, isPassword: true)
@@ -71,10 +77,16 @@ struct ParentLoginPage: View {
                         .padding(.bottom, UIScreen.main.bounds.height*0.05)
                     
                     
-                    Button(action: {}, label: {
-                        Image("LoginBtn")
+                    Button(action: {goToDashboard=true}, label: {
+                        Image("loginBtn")
                     })
                     .padding(.bottom, UIScreen.main.bounds.height*0.03)
+                    
+                  
+                    var li = [child1, child2, child3, child4, child5]
+                    NavigationLink(destination: NavigationBarView(username: userName,childList: li).ignoresSafeArea(), isActive: $goToDashboard){
+                        EmptyView()
+                    }.navigationBarHidden(true)
                     
                     Image("separateLine")
                         .padding(.bottom, UIScreen.main.bounds.height*0.03)
@@ -88,12 +100,11 @@ struct ParentLoginPage: View {
             
         }
         .navigationBarHidden(true)
+      
         
     }
-    
-    
-    
 }
+
 
 struct ParentLoginPage_Previews: PreviewProvider {
     static var previews: some View {

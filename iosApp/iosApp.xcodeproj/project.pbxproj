@@ -24,6 +24,7 @@
 		3759E52B28B39C50000E0419 /* ChildLoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759E52A28B39C50000E0419 /* ChildLoginPage.swift */; };
 		3759E52D28B39C8F000E0419 /* StartPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759E52C28B39C8F000E0419 /* StartPage.swift */; };
 		3759E52F28B39CC6000E0419 /* ParentLoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759E52E28B39CC6000E0419 /* ParentLoginPage.swift */; };
+		3781DDCC28C4B453009F9904 /* NavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3781DDCB28C4B453009F9904 /* NavigationBarView.swift */; };
 		37FD897C28C3C1A700B5ABFE /* ChildProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FD897B28C3C1A700B5ABFE /* ChildProfilePage.swift */; };
 		37FD897E28C3C22E00B5ABFE /* PopUpWindowModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FD897D28C3C22E00B5ABFE /* PopUpWindowModifier.swift */; };
 		37FD898028C3C27F00B5ABFE /* AssignChorePopUpWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FD897F28C3C27F00B5ABFE /* AssignChorePopUpWindow.swift */; };
@@ -73,6 +74,7 @@
 		3759E52A28B39C50000E0419 /* ChildLoginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildLoginPage.swift; sourceTree = "<group>"; };
 		3759E52C28B39C8F000E0419 /* StartPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartPage.swift; sourceTree = "<group>"; };
 		3759E52E28B39CC6000E0419 /* ParentLoginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentLoginPage.swift; sourceTree = "<group>"; };
+		3781DDCB28C4B453009F9904 /* NavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarView.swift; sourceTree = "<group>"; };
 		37FD897B28C3C1A700B5ABFE /* ChildProfilePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildProfilePage.swift; sourceTree = "<group>"; };
 		37FD897D28C3C22E00B5ABFE /* PopUpWindowModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpWindowModifier.swift; sourceTree = "<group>"; };
 		37FD897F28C3C27F00B5ABFE /* AssignChorePopUpWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignChorePopUpWindow.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 				05D24AE828C489170097A7C2 /* SignContractPage.swift */,
 				05D24AEA28C489380097A7C2 /* ContractInit.swift */,
 				05D24AEC28C489640097A7C2 /* Dashboard.swift */,
+				3781DDCB28C4B453009F9904 /* NavigationBarView.swift */,
 				05F5D4B028C4CF0200194DBF /* AddChorePage.swift */,
 			);
 			path = iosApp;
@@ -314,6 +317,7 @@
 				2B3B10B228C0B16D003E24DE /* AddChildPage.swift in Sources */,
 				3759E52D28B39C8F000E0419 /* StartPage.swift in Sources */,
 				2BDE71F228C38D4B005821C6 /* KeyboardExtension.swift in Sources */,
+				3781DDCC28C4B453009F9904 /* NavigationBarView.swift in Sources */,
 				37FD897C28C3C1A700B5ABFE /* ChildProfilePage.swift in Sources */,
 				37FD898228C3C4A100B5ABFE /* RandomItem.swift in Sources */,
 				3759E52B28B39C50000E0419 /* ChildLoginPage.swift in Sources */,

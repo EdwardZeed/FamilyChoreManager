@@ -7,5 +7,5 @@ package com.ontask.model
  * @constructor Create empty Theme
  */
 data class Theme(var name: String) {
-    var message: String? = null
+    var message: String = "Default"
 }

@@ -20,39 +20,45 @@ struct ParentProfilePage: View {
             Image("Background").resizable().edgesIgnoringSafeArea(.all)
                 .opacity(0.2)
             
-            ScrollView {
-                VStack{
-                    VStack {
-                        TopBar()
-                            .padding(.top, 3)
-                        
-                        AvatorBar(numberOfChildren: $numberOfChildren, numberOfRelatives: $numberOfRelatives)
-                        Text("Date of Birth: 2002/07/05")
-                            .frame(width: UIScreen.main.bounds.width*0.9, alignment: .leading)
-                        Text("Choosen theme: Marvel")
-                            .frame(width: UIScreen.main.bounds.width*0.9, alignment: .leading)
-                        
-                    }
-                    .padding(.top, 4)
-                    
-                    Button(action: {}, label: {
-                        Text("Edit profile").foregroundColor(Color("AdaptiveColorForText"))
+            NavigationView {
+                ScrollView {
+                    VStack{
+                        VStack {
                             
-                    })
-                    .frame(width: UIScreen.main.bounds.width*0.9, height: 27)
-                    .background(Rectangle().fill(Color("AdaptiveColorForBackground")).shadow(color: Color.gray, radius: 1))
-                    .padding(.bottom)
-                    
-                    //                display all chores
-                    LazyVStack {
-                        ForEach(chores, id: \.self){chore in
-                            
-                            ChoreCard(chore: chore)
-                                
+                            AvatorBar(numberOfChildren: $numberOfChildren, numberOfRelatives: $numberOfRelatives)
+                            Text("Date of Birth: 2002/07/05")
+                                .frame(width: UIScreen.main.bounds.width*0.9, alignment: .leading)
+                            Text("Choosen theme: Marvel")
+                                .frame(width: UIScreen.main.bounds.width*0.9, alignment: .leading)
                             
                         }
+                        .padding(.top, 4)
+                        
+                        Button(action: {}, label: {
+                            Text("Edit profile").foregroundColor(Color("AdaptiveColorForText"))
+                                
+                        })
+                        .frame(width: UIScreen.main.bounds.width*0.9, height: 27)
+                        .background(Rectangle().fill(Color("AdaptiveColorForBackground")).shadow(color: Color.gray, radius: 1))
+                        .padding(.bottom)
+                        
+                        //                display all chores
+                        LazyVStack {
+                            ForEach(chores, id: \.self){chore in
+                                
+                                ChoreCard(chore: chore)
+                                    
+                                
+                            }
+                        }
                     }
-                }
+                }.navigationTitle("EdwardHimself")
+                    .toolbar{Menu {
+                        Button(action: {}, label: {
+                            Text("Add Chores")
+                        })} label: {
+                            Image("PlusIcon-ChildProfilePage")
+                        }}
             }
         }
         
@@ -72,28 +78,6 @@ struct ParentProfilePage_Previews: PreviewProvider {
     }
 }
 
-struct TopBar: View {
-    var body: some View {
-        HStack{
-            Text("edwardhimself")
-                .padding(.horizontal, 10)
-                .frame(width: UIScreen.main.bounds.width*0.45, alignment: .leading)
-            
-            Menu {
-                Button("add child"){
-                    
-                }
-            } label: {
-                Image("PlusIcon")
-                    
-            }
-            .padding(.horizontal, 10)
-            .frame(width: UIScreen.main.bounds.width*0.45, alignment: .trailing)
-            
-        }
-        .padding(.vertical)
-    }
-}
 
 struct AvatorBar: View {
     @Binding var numberOfChildren: String
