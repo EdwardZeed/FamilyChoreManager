@@ -9,6 +9,7 @@ struct iOSApp: App {
             ParentLoginPage()
 //			ParentLoginPage()
             
+
 //            AssignChorePopUpWindow(fadeIn: false, isPresented: Binding.constant(true)) { item in
 //                print(item)
 //            }
