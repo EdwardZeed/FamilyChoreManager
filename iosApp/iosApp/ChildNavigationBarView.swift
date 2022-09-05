@@ -1,16 +1,15 @@
 //
-//  NavigationBarView.swift
+//  ChildNavigationBarView.swift
 //  iosApp
 //
-//  Created by chris on 4/9/2022.
+//  Created by chris on 5/9/2022.
 //  Copyright © 2022 orgName. All rights reserved.
 //
+
 import SwiftUI
 import shared
 
-var currentParent = Parent(userID: 0, name: "Chris", dateOfBirth: "2002/02/14", chooseTheme: Theme(name: "The Boys"), avatarPic: "Dragon")
-
-struct NavigationBarView: View {
+struct ChildNavigationBarView: View {
 
     var userName : String
     var childrenlist : [Child]
@@ -29,23 +28,22 @@ struct NavigationBarView: View {
         self.userName = username
         self.childrenlist = childList
 
-
     }
     
     var body: some View {
             NavigationView { //整体设置，下级页面不会在出现底部tabbar
                 TabView(selection: $selection) {
-                        DashBoardPage(username: userName, children: childrenlist, parents: [currentParent])
-                             .tabItem{//使用label 创建tabitem图文
-                                 Label("Family", systemImage: "house")
-                             }
-                             .tag(Tab.dashboard)
-                        
-                        ParentProfilePage(chores: [])
-                            .tabItem{
+                        ChildDashBoardPage(username: userName, children: childrenlist, parents: [])
+                            .tabItem{//使用label 创建tabitem图文
+                                Label("Family", systemImage: "house")
+                            }
+                            .tag(Tab.dashboard)
+                        ChildAccountPage(currentChild: Child(userID: 10, name: userName, dateOfBirth: "2015/01/03", chooseTheme: Theme(name: "Viva"), avatarPic: "Rifle"))
+                            .tabItem{//使用label 创建tabitem图文
                                 Label("Account", systemImage: "person")
                             }
                             .tag(Tab.currentUser)
+                       
                     
                 }
                 .accentColor(.blue) //设置文字默认选中颜色
