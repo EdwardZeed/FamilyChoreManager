@@ -20,7 +20,7 @@ struct ChildProfilePage: View {
     @State var eventList:[RandomItem] = [RandomItem(title: "test")]
     @State var curDelItem: RandomItem = RandomItem(title: "")
     
-    
+    @State var goToChildQRCodePage = false
     
     var body: some View {
         
@@ -112,9 +112,21 @@ struct ChildProfilePage: View {
             .toolbar{Menu {
                 Button(action: {isAddDialogShow.toggle()}, label: {
                     Text("Assign Chores")
-                })} label: {
+                })
+                Button("QR Code Scan"){goToChildQRCodePage = true}
+                
+                
+            } label: {
                     Image("PlusIcon-ChildProfilePage")
-                }}
+                }
+                
+            }
+            NavigationLink(isActive: $goToChildQRCodePage) {
+                ChildQRCodePage(child: currentChild)
+            } label: {
+                EmptyView()
+            }
+                
     }
                                    
 }

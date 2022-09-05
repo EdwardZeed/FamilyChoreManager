@@ -40,9 +40,10 @@ struct DashBoardPage: View {
     
 
     @State var goToChildProfilePage = false
+    @State var goToParentProfilePage = false
+    
     
     @State var currentSelectChild: Child = Child(userID: -1, name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: "")
-    
     
     var body: some View {
         
@@ -72,6 +73,28 @@ struct DashBoardPage: View {
                             Title_and_home_Page().frame(width: UIScreen.main.bounds.width*0.95,alignment: .leading)
                             
                             LazyVStack{
+                                ForEach(parents,id:\.self){parent in
+                                    HStack{
+                                        Button(action: {
+                                            goToParentProfilePage = true
+                                        
+                                            //currentSelectParent = parent
+                                         
+                                        }, label: {
+                                            Parent_Button_Label(currentParent: parent)
+                                        }).frame(width: UIScreen.main.bounds.width*0.95, height: UIScreen.main.bounds.width*0.3)
+                                            .background(Color.white)
+                                            .cornerRadius(25)
+                                            .shadow(color: Color.gray, radius: 10)
+                                        
+                                        
+                                        
+                                    }
+//                                    NavigationLink(destination: ParentProfilePage(chores: []), isActive: $goToParentProfilePage){
+//                                        EmptyView()
+//                                    }
+                                    
+                                }
                                 ForEach(children,id:\.self){child in
                                     HStack{
                                         Button(action: {
@@ -244,3 +267,27 @@ struct Button_Label: View{
     }
 }
 
+
+struct Parent_Button_Label: View{
+    var currentParent: Parent
+    var body: some View{
+        HStack{
+            ZStack{
+                Image("photoframe")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 80, height: 80, alignment: .center)
+                
+                
+                Image("userPhoto")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 50, height: 50, alignment: .center)
+                
+            }.frame( alignment: .leading)
+            VStack{
+                Text(currentParent.name).frame(width: UIScreen.main.bounds.width*0.6,height: UIScreen.main.bounds.width*0.16, alignment: .topLeading)
+            }
+        }.frame( width: 300)
+    }
+}

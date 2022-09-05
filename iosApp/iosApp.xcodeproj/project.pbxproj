@@ -24,6 +24,10 @@
 		3759E52B28B39C50000E0419 /* ChildLoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759E52A28B39C50000E0419 /* ChildLoginPage.swift */; };
 		3759E52D28B39C8F000E0419 /* StartPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759E52C28B39C8F000E0419 /* StartPage.swift */; };
 		3759E52F28B39CC6000E0419 /* ParentLoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759E52E28B39CC6000E0419 /* ParentLoginPage.swift */; };
+		37613CFB28C6086000422234 /* ChildQRCodePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37613CFA28C6086000422234 /* ChildQRCodePage.swift */; };
+		37613CFD28C60D1D00422234 /* ChildDashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37613CFC28C60D1D00422234 /* ChildDashboard.swift */; };
+		37613CFF28C61B1300422234 /* ChildNavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37613CFE28C61B1300422234 /* ChildNavigationBarView.swift */; };
+		37613D0128C61D2B00422234 /* ChildAccountPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37613D0028C61D2B00422234 /* ChildAccountPage.swift */; };
 		3781DDCC28C4B453009F9904 /* NavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3781DDCB28C4B453009F9904 /* NavigationBarView.swift */; };
 		37FD897C28C3C1A700B5ABFE /* ChildProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FD897B28C3C1A700B5ABFE /* ChildProfilePage.swift */; };
 		37FD897E28C3C22E00B5ABFE /* PopUpWindowModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FD897D28C3C22E00B5ABFE /* PopUpWindowModifier.swift */; };
@@ -74,6 +78,10 @@
 		3759E52A28B39C50000E0419 /* ChildLoginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildLoginPage.swift; sourceTree = "<group>"; };
 		3759E52C28B39C8F000E0419 /* StartPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartPage.swift; sourceTree = "<group>"; };
 		3759E52E28B39CC6000E0419 /* ParentLoginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentLoginPage.swift; sourceTree = "<group>"; };
+		37613CFA28C6086000422234 /* ChildQRCodePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildQRCodePage.swift; sourceTree = "<group>"; };
+		37613CFC28C60D1D00422234 /* ChildDashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildDashboard.swift; sourceTree = "<group>"; };
+		37613CFE28C61B1300422234 /* ChildNavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildNavigationBarView.swift; sourceTree = "<group>"; };
+		37613D0028C61D2B00422234 /* ChildAccountPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildAccountPage.swift; sourceTree = "<group>"; };
 		3781DDCB28C4B453009F9904 /* NavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarView.swift; sourceTree = "<group>"; };
 		37FD897B28C3C1A700B5ABFE /* ChildProfilePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildProfilePage.swift; sourceTree = "<group>"; };
 		37FD897D28C3C22E00B5ABFE /* PopUpWindowModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpWindowModifier.swift; sourceTree = "<group>"; };
@@ -166,6 +174,10 @@
 				05D24AEC28C489640097A7C2 /* Dashboard.swift */,
 				3781DDCB28C4B453009F9904 /* NavigationBarView.swift */,
 				05F5D4B028C4CF0200194DBF /* AddChorePage.swift */,
+				37613CFA28C6086000422234 /* ChildQRCodePage.swift */,
+				37613CFC28C60D1D00422234 /* ChildDashboard.swift */,
+				37613CFE28C61B1300422234 /* ChildNavigationBarView.swift */,
+				37613D0028C61D2B00422234 /* ChildAccountPage.swift */,
 			);
 			path = iosApp;
 			sourceTree = "<group>";
@@ -310,11 +322,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				3759E52F28B39CC6000E0419 /* ParentLoginPage.swift in Sources */,
+				37613D0128C61D2B00422234 /* ChildAccountPage.swift in Sources */,
+				37613CFF28C61B1300422234 /* ChildNavigationBarView.swift in Sources */,
 				05D24AED28C489640097A7C2 /* Dashboard.swift in Sources */,
 				2B3B10A728B3BD1F003E24DE /* SignUpPage.swift in Sources */,
+				37613CFB28C6086000422234 /* ChildQRCodePage.swift in Sources */,
 				2B3B10AD28BDE43A003E24DE /* ParentProfilePage.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				2B3B10B228C0B16D003E24DE /* AddChildPage.swift in Sources */,
+				37613CFD28C60D1D00422234 /* ChildDashboard.swift in Sources */,
 				3759E52D28B39C8F000E0419 /* StartPage.swift in Sources */,
 				2BDE71F228C38D4B005821C6 /* KeyboardExtension.swift in Sources */,
 				3781DDCC28C4B453009F9904 /* NavigationBarView.swift in Sources */,

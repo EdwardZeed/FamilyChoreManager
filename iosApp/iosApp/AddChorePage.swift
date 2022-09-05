@@ -86,10 +86,10 @@ struct AddChorePage: View {
                             .background(Color.blue.opacity(0.7))
                             .foregroundColor(Color.white)
                             .cornerRadius(8)
-                    }.frame(width: UIScreen.main.bounds.width*0.9, alignment: .topLeading)
-                }
+                    }.frame(width: UIScreen.main.bounds.width)
+                }.frame(width: UIScreen.main.bounds.width, alignment: .center)
                 
-            }.frame(alignment: .topLeading)
+            }
         
     }
 }
