@@ -12,26 +12,45 @@ struct NavigationBarView: View {
 
     var userName : String
     var childrenlist : [Child]
-    var body: some View {
-        TabView{
-            DashBoardPage(username: userName, childList: childrenlist, parentList: []).navigationBarBackButtonHidden(true).navigationBarHidden(true)
-                        .tabItem({
-                            Image(systemName: "house")
-                            Text("Family")
-                        })
-                    
-            ParentProfilePage(chores: []).navigationBarBackButtonHidden(true).navigationBarHidden(true)
-                        .tabItem({
-                            Image(systemName: "person")
-                            Text("Account")
-                        })
-                    
-            ChildProfilePage(finishChoreList: []).navigationBarBackButtonHidden(true).navigationBarHidden(true)
-                        .tabItem({
-                            Image(systemName: "gear")
-                            Text("Setting")
-                        })
-        }.navigationBarHidden(true)
+    
+    @State private var selection: Tab = .exclusion
 
+        enum Tab {
+            case dashboard
+            case currentUser
+            case childProfile
+            case exclusion
+
+        }
+    
+    init(username: String, childList: [Child]){
+        self.userName = username
+        self.childrenlist = childList
+
+    }
+    
+    var body: some View {
+            NavigationView { //整体设置，下级页面不会在出现底部tabbar
+                TabView(selection: $selection) {
+                    DashBoardPage(username: userName, childList: childrenlist, parentList: [], navigationBar: self)
+                         .tabItem{//使用label 创建tabitem图文
+                             Label("Family", systemImage: "house")
+                         }
+                         .tag(Tab.dashboard)
+
+                    ParentProfilePage(chores: [])
+                        .tabItem{
+                            Label("Account", systemImage: "person")
+                        }
+                        .tag(Tab.currentUser)
+    
+
+                  
+                     
+                }
+                .accentColor(.blue) //设置文字默认选中颜色
+            }.navigationBarHidden(true)
+
+            
     }
 }

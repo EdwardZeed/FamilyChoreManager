@@ -23,7 +23,7 @@ struct Preview_DashBoardPage: PreviewProvider {
         
         var childList = [child3,child2,child1]
         var parentList = [parent_user]
-        DashBoardPage(username: parent_user.name,childList: childList, parentList:  parentList)
+//        DashBoardPage(username: parent_user.name,childList: childList, parentList:  parentList, navigationBar: )
     }
 }
 
@@ -33,12 +33,15 @@ struct DashBoardPage: View {
     var children: [Child]
     var parents: [Parent]
     
+    var navigationBar : NavigationBarView
+
     @State var goToChildProfilePage = false
     
-    init(username: String, childList: [Child], parentList: [Parent]){
+    init(username: String, childList: [Child], parentList: [Parent], navigationBar: NavigationBarView){
         self.username = username
         self.children = childList
         self.parents = parentList
+        self.navigationBar = navigationBar
         
     }
     
@@ -47,6 +50,8 @@ struct DashBoardPage: View {
         
         NavigationView {
             ZStack{
+                Image("Background").resizable().edgesIgnoringSafeArea(.all)
+                    .opacity(0.2)
                 
                 ScrollView{
                     VStack{
@@ -65,7 +70,7 @@ struct DashBoardPage: View {
                         
                         VStack{
                             
-                            Spacer(minLength: 50)
+                            //Spacer(minLength: 50)
                             Title_and_home_Page().frame(width: UIScreen.main.bounds.width*0.95,alignment: .leading)
                             
                             LazyVStack{
@@ -73,6 +78,7 @@ struct DashBoardPage: View {
                                     HStack{
                                         Button(action: {
                                             goToChildProfilePage = true
+                                         
                                         }, label: {
                                             Button_Label(currentChild: child)
                                         }).frame(width: UIScreen.main.bounds.width*0.95, height: UIScreen.main.bounds.width*0.3)
@@ -80,21 +86,29 @@ struct DashBoardPage: View {
                                             .cornerRadius(25)
                                             .shadow(color: Color.gray, radius: 10)
                                         
-                                        NavigationLink(destination: ChildProfilePage(finishChoreList: [])     .navigationBarHidden(true), isActive: $goToChildProfilePage){
+                                        NavigationLink(destination: ChildProfilePage(finishChoreList: []), isActive: $goToChildProfilePage){
                                             EmptyView()
                                         }
+                                        
                                     }
                                 }
+                                
                             }
+                            
                         }
+                       
                     }
                 }
-            }.background(Image("Background").resizable().scaledToFill().ignoresSafeArea().opacity(0.2))
-                .navigationBarHidden(true)
+               
+            }.navigationBarHidden(true)
+
         }.navigationBarBackButtonHidden(true)
             .navigationBarHidden(true)
-            .ignoresSafeArea()
+         
+       
+        
     }
+    
 }
 
 

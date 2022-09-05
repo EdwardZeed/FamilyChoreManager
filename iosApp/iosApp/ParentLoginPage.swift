@@ -90,7 +90,7 @@ struct ParentLoginPage: View {
                     
                   
                     var li = [child1, child2, child3, child4, child5]
-                    NavigationLink(destination: NavigationBarView(userName: userName,childrenlist: li).ignoresSafeArea(), isActive: $goToDashboard){
+                    NavigationLink(destination: NavigationBarView(username: userName,childList: li).ignoresSafeArea(), isActive: $goToDashboard){
                         EmptyView()
                     }.navigationBarHidden(true)
                     
