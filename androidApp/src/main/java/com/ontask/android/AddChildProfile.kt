@@ -153,7 +153,7 @@ fun themesDropDown(modifier: Modifier) {
 
 //    var mTextFieldSize by remember { mutableStateOf(Size.Zero)}
 
-    // Create a list of cities TODO change this to the themes available.
+    // Create a list of cities TODO change this to the themes available. --> have this call the list of themes from backend?
     val mCities = listOf("Delhi", "Mumbai", "Chennai", "Kolkata", "Hyderabad", "Bengaluru", "Pune")
 
     // Up Icon when expanded and down icon when collapsed
