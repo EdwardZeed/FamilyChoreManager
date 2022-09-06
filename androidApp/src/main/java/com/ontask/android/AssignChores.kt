@@ -22,5 +22,5 @@ class AssignChores : ComponentActivity() {
 @Preview
 fun assignChoresPage() {
 
-    
+
 }
