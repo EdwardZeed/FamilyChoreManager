@@ -36,11 +36,10 @@ struct ParentProfilePage: View {
                         
                         Button(action: {}, label: {
                             Text("Edit profile").foregroundColor(Color("AdaptiveColorForText"))
+                                .frame(width: UIScreen.main.bounds.width*0.9, height: 27)
+                                .background(Rectangle().fill(Color("AdaptiveColorForBackground")).shadow(color: Color.gray, radius: 1))
                                 
                         })
-                        .frame(width: UIScreen.main.bounds.width*0.9, height: 27)
-                        .background(Rectangle().fill(Color("AdaptiveColorForBackground")).shadow(color: Color.gray, radius: 1))
-
                         .padding(.bottom)
                         
                         
