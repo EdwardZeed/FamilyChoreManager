@@ -1,24 +1,39 @@
 package com.ontask.android
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.focusable
+import androidx.compose.foundation.*
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.ontask.model.Child
+import com.ontask.model.Theme
 
 class DashboardPage : ComponentActivity() {
 
@@ -47,12 +62,14 @@ fun dashboardPage() {
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxSize()
         ) {
+            Spacer(modifier = Modifier.height(10.dp))
 
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(20.dp)
             ) {
+                Spacer(modifier = Modifier.width(10.dp))
+
                 Image(
                     painter = painterResource(id = R.drawable.woman),
                     contentDescription = "parent icon",
@@ -63,16 +80,15 @@ fun dashboardPage() {
                 )
 
                 Box(modifier = Modifier.padding(10.dp)) {
-                    Text(text = "Welcome!\n{username}")
+                    Text(text = "Welcome,\n{username}!") //TODO: put the parent's name here
                 }
             }
 
             Row(
                 modifier = Modifier
-//                    .size(width = 200.dp, height = 200.dp)
-                    .padding(10.dp)
                     .fillMaxWidth()
             ) {
+                Spacer(modifier = Modifier.padding(8.dp))
                 Image(
                     painter = painterResource(id = R.drawable.family_icon),
                     contentDescription = "family icon",
@@ -82,39 +98,54 @@ fun dashboardPage() {
                         .padding(10.dp)
                 )
 
-                Column(
-                    modifier = Modifier.padding(20.dp)
-                )
+                Box(modifier = Modifier.padding(20.dp))
                 {
                     Text(text = "Family list")
                 }
 
+                Spacer(modifier = Modifier.size(width = 130.dp, height = 0.dp)) // TODO: the space here needs to be device-dependent OR make the floating action button bottom right overlayed the actual screen
+
+                ActionButton()
 
             }
 
-            childProfileCard()
-            childProfileCard()
-            childProfileCard()
+            // tODO: dummy data
+            val childList = listOf(
+                Child(1, "Anna", "", Theme(""), "daughter"),
+                Child(2, "Bob", "", Theme(""), "son"),
+                Child(3, "Carol", "", Theme(""), "daughter"),
+                Child(4, "Denise", "", Theme(""), "daughter"),
+                Child(5, "Emily", "", Theme(""), "daughter"),
+                Child(6, "Felix", "", Theme(""), "son")
+            )
 
+            Column(
+                modifier = Modifier.verticalScroll(state = rememberScrollState())
+            ) {
+                Spacer(modifier = Modifier.size(5.dp))
+
+                for (child in childList)
+                    childProfileCard(child = child)
+            }
         }
     }
 
 }
 
 @Composable
-fun childProfileCard() {
+fun childProfileCard(child: Child) {
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
     val cardWidth = screenWidth - 30.dp
 
     Card(
         modifier = Modifier
-            .size(width = cardWidth, height = 120.dp),
+            .size(width = cardWidth, height = 120.dp)
+            .clickable { /* TODO each card needs to be clickable to the relevant child profile. */ },
         border = BorderStroke(1.5.dp, Color.White),
         elevation = 10.dp, // shadow around box
-        shape = RoundedCornerShape(10.dp),
-
-        ) {
+        shape = RoundedCornerShape(10.dp)
+    ) {
         Column() {
             Row() {
                 Image(
@@ -131,11 +162,10 @@ fun childProfileCard() {
                         .padding(23.dp)
                 )
                 {
-                    Text(text = "{child name}")
+                    Text(text = child.name)
                 }
             }
 
-            //TODO: centre this entire thing to the middle of the card, or right justify.
             Row() {
 
                 Image(
@@ -181,4 +211,30 @@ fun childProfileCard() {
         }
     }
     Spacer(modifier = Modifier.padding(5.dp))
+}
+
+// reference: https://www.geeksforgeeks.org/floating-action-button-in-android-using-jetpack-compose/
+@Composable
+fun ActionButton() {
+//    Column(
+//        modifier = Modifier
+//            .fillMaxSize()
+//            .fillMaxHeight()
+//            .fillMaxWidth()
+//            .padding(20.dp),
+//
+//        verticalArrangement = Arrangement.Bottom,
+//        horizontalAlignment = Alignment.End
+//    ) {
+        FloatingActionButton(
+            onClick = {
+                //TODO: click the plus button should do something here
+            },
+            backgroundColor = Color(0xff689FEC),
+            contentColor = Color.White,
+            elevation = FloatingActionButtonDefaults.elevation(15.dp)
+        ) {
+            Icon(Icons.Filled.Add, "plus icon")
+        }
+//    }
 }
