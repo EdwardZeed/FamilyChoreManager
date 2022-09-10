@@ -107,7 +107,7 @@ fun dashboardPage() {
                 {
                     Text(
                         text = "Family list",
-                        fontSize = 16.sp
+                        fontSize = 17.sp
                     )
                 }
 
@@ -167,10 +167,13 @@ fun childProfileCard(child: Child) {
 
                 Column(
                     modifier = Modifier
+//                        .height(23.dp)
                         .padding(23.dp)
-                )
-                {
-                    Text(text = child.name)
+                ) {
+                    Text(
+                        text = child.name,
+                        fontSize = 15.sp
+                    )
                 }
             }
 
