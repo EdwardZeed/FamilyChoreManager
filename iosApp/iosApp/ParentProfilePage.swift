@@ -36,17 +36,27 @@ struct ParentProfilePage: View {
                         
                         Button(action: {}, label: {
                             Text("Edit profile").foregroundColor(Color("AdaptiveColorForText"))
+                                .frame(width: UIScreen.main.bounds.width*0.9, height: 27)
+                                .background(Rectangle().fill(Color("AdaptiveColorForBackground")).shadow(color: Color.gray, radius: 1))
                                 
                         })
-                        .frame(width: UIScreen.main.bounds.width*0.9, height: 27)
-                        .background(Rectangle().fill(Color("AdaptiveColorForBackground")).shadow(color: Color.gray, radius: 1))
                         .padding(.bottom)
+                        
                         
                         //                display all chores
                         LazyVStack {
                             ForEach(chores, id: \.self){chore in
-                                
-                                ChoreCard(chore: chore)
+                                Button {
+                                    
+                                } label: {
+                                    ChoreCard(chore: chore)
+                                }
+                                .frame(width: UIScreen.main.bounds.width*0.95, height: UIScreen.main.bounds.width*0.3)
+                                .background(Color("AdaptiveColorForBackground"))
+                                .cornerRadius(25)
+                                .shadow(color: Color.gray, radius: 10)
+
+//                                ChoreCard(chore: chore)
                                     
                                 
                             }
@@ -136,7 +146,8 @@ struct ChoreCard: View {
             }
             
         }
-        .frame(width: UIScreen.main.bounds.width*0.9, alignment: .leading)
-        .background(Rectangle().fill(Color("AdaptiveColorForBackground")).shadow(color: Color.gray, radius: 2))
+//        .frame(width: UIScreen.main.bounds.width*0.9, alignment: .leading)
+//        .background(Rectangle().fill(Color("AdaptiveColorForBackground")).shadow(color: Color.gray, radius: 10))
+        
     }
 }
