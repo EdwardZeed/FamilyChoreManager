@@ -118,7 +118,9 @@ fun addChildProfile() {
                 }
 
             Button(
-                onClick = {},
+                onClick = {
+                          //TODO: make this button do something
+                },
                 modifier = Modifier
                     .fillMaxWidth(0.71f)
                     .height(50.dp),
