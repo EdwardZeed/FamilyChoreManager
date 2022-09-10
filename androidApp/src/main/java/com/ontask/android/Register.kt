@@ -12,6 +12,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -28,6 +29,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -115,12 +117,19 @@ fun Greeting(name: String) {
                 Text(
                     text = "Have an account? ",
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(top = padding, bottom = padding, start = padding, end = 0.dp)
+                    modifier = Modifier.padding(top = padding, bottom = padding, start = padding, end = 0.dp),
+                    fontSize = 16.sp
                 )
-                Text(
-                    text = "Log in",
+                ClickableText(
+                    text = AnnotatedString("Log in"),
                     modifier = Modifier.padding(top = padding, bottom = padding, end = padding, start = 0.dp),
-                    color = Color.Blue // this indicates that this text is clickable although just double check the colour.
+                    style = TextStyle(
+                        fontSize = 16.sp,
+                        color = Color(0xFF0000EE)
+                    ),
+                    onClick = {
+                        // do something when sign up button clicked
+                    }
                 )
             }
 
@@ -146,7 +155,8 @@ fun Greeting(name: String) {
                 Text(
                     text = "or continue with:",
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(top = padding, bottom = padding, start = padding, end = 0.dp)
+                    modifier = Modifier.padding(top = padding, bottom = padding, start = padding, end = 0.dp),
+                    fontSize = 16.sp
                 )
             }
 
