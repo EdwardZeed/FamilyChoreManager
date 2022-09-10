@@ -53,12 +53,12 @@ fun AdultProfilePage() {
                 .padding(20.dp)
         ) {
             Text(
-                text = "{name}",
+                text = "{name}", //TODO: parent name
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold
             )
 
-            Spacer(modifier = Modifier.padding(10.dp))
+            Spacer(modifier = Modifier.padding(6.dp))
 
             Row() {
                 Image(
@@ -151,7 +151,7 @@ fun AdultProfilePage() {
                     modifier = Modifier.padding(10.dp)
                 ) {
                     Text(
-                        text = "Chores",
+                        text = "Completed chores",
                         fontSize = 18.sp
                     )
                 }
@@ -164,8 +164,7 @@ fun AdultProfilePage() {
             //TODO: list of completed chores?!
             Card(
                 modifier = Modifier
-                    .size(width = cardWidth, height = 120.dp)
-                    .clickable { /* TODO each card needs to be clickable to the relevant child profile. */ },
+                    .size(width = cardWidth, height = 120.dp),
                 border = BorderStroke(1.dp, Color(0xff878787)),
 //                elevation = 10.dp, // shadow around box
                 shape = RoundedCornerShape(10.dp)
