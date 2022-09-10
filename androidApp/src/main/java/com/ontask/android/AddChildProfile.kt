@@ -120,7 +120,7 @@ fun addChildProfile() {
             Button(
                 onClick = {},
                 modifier = Modifier
-                    .fillMaxWidth(0.3f)
+                    .fillMaxWidth(0.71f)
                     .height(50.dp),
 //                    .padding(10.dp),
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF689FEC)),
@@ -130,7 +130,7 @@ fun addChildProfile() {
                     textAlign = TextAlign.Center,
                     style = TextStyle(
                         fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold,
+                        fontWeight = FontWeight.Normal,
                     ),
                     color = Color.White
                 )
