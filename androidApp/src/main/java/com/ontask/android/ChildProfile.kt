@@ -50,7 +50,7 @@ fun childProfilePage() {
                 fontSize = 20.sp
             )
 
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(5.dp))
 
             Row() {
 
@@ -157,10 +157,10 @@ fun childProfilePage() {
             val screenWidth = configuration.screenWidthDp.dp
             val cardWidth = screenWidth - 30.dp
 
+            // TODO: add some dummy data rewards that the child has received.
             Card(
                 modifier = Modifier
-                    .size(width = cardWidth, height = 120.dp)
-                    .clickable { /* TODO each card needs to be clickable to the relevant child profile. */ },
+                    .size(width = cardWidth, height = 120.dp),
                 border = BorderStroke(1.dp, Color(0xff878787)),
 //                elevation = 10.dp, // shadow around box
                 shape = RoundedCornerShape(10.dp)
@@ -168,6 +168,8 @@ fun childProfilePage() {
 
 
             }
+
+            Spacer(modifier = Modifier.height(5.dp))
 
             Row() {
                 Image(
@@ -181,7 +183,7 @@ fun childProfilePage() {
 
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(10.dp)
+                    modifier = Modifier.padding(13.dp)
                 ) {
                     Text(text = "Finished chores")
                 }
@@ -190,8 +192,7 @@ fun childProfilePage() {
             //TODO: list of completed chores
             Card(
                 modifier = Modifier
-                    .size(width = cardWidth, height = 120.dp)
-                    .clickable { /* TODO each card needs to be clickable to the relevant child profile. */ },
+                    .size(width = cardWidth, height = 120.dp),
                 border = BorderStroke(1.dp, Color(0xff878787)),
 //                elevation = 10.dp, // shadow around box
                 shape = RoundedCornerShape(10.dp)
