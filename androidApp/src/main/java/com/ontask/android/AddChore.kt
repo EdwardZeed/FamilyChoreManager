@@ -65,9 +65,7 @@ fun AddChoresPage() {
                 .padding(20.dp)
         ) {
 
-            Row(
-
-            ) {
+            Row {
                 Image(
                     painter = painterResource(id = R.drawable.cleaning),
                     contentDescription = "cleaning icon",
@@ -88,12 +86,7 @@ fun AddChoresPage() {
                 }
             }
 
-
-            Spacer(modifier = Modifier.height(10.dp))
-
-            Row(
-
-            ) {
+            Row {
                 Image(
                     painter = painterResource(id = R.drawable.housekeeping),
                     contentDescription = "vacuum icon",
