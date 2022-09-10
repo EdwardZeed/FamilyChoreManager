@@ -82,12 +82,11 @@ struct DashBoardPage: View {
                                          
                                         }, label: {
                                             Parent_Button_Label(currentParent: parent)
+                                                .foregroundColor(Color("AdaptiveColorForText"))
                                         }).frame(width: UIScreen.main.bounds.width*0.95, height: UIScreen.main.bounds.width*0.3)
-                                            .background(Color.white)
+                                            .background(Color("AdaptiveColorForBackground"))
                                             .cornerRadius(25)
                                             .shadow(color: Color.gray, radius: 10)
-                                        
-                                        
                                         
                                     }
 //                                    NavigationLink(destination: ParentProfilePage(chores: []), isActive: $goToParentProfilePage){
@@ -103,14 +102,12 @@ struct DashBoardPage: View {
                                             currentSelectChild = child
                                          
                                         }, label: {
-                                            Button_Label(currentChild: child)
+                                            Button_Label(currentChild: child).foregroundColor(Color("AdaptiveColorForText"))
                                         }).frame(width: UIScreen.main.bounds.width*0.95, height: UIScreen.main.bounds.width*0.3)
-                                            .background(Color.white)
+                                            .background(Color("AdaptiveColorForBackground"))
                                             .cornerRadius(25)
                                             .shadow(color: Color.gray, radius: 10)
-                                        
-                                        
-                                        
+                                
                                     }
                                 }
                                
