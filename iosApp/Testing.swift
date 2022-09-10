@@ -6,41 +6,26 @@
 //  Copyright © 2022 orgName. All rights reserved.
 //
 
+import Combine
 import SwiftUI
+import shared
 
 struct Testing: View {
     
-    
-    @ObservedObject var r = R()
-//    var array: [R] = [r]
-    
     @State var text = ""
+    @ObservedObject var user = User()
+    @ObservedObject var userArray = UserArray()
     
     var body: some View {
-        VStack{
-//            TextField("Type here", text: $rs.array[0].name)
-//                .padding()
-//                .border(Color.black, width: 3)
-////                .onChange(of: rs.array[0].$name){ text in
-////                    self.rs.changeName(index: 0, name: $text)
-////
-////                }
-            
-//            ForEach(rs.array){ r in
-//                VStack {
-//                    Text(r.name)
-//                }
-//            }
-            
-            TextField("Type here", text: $text)
-                .padding()
-                .border(Color.black, width: 3)
-            
-            Text(text)
-            
-            
-                
-            
+        ScrollView{
+            ForEach(userArray.array.indices, id: \.self) { index in
+                TextField("type here", text: $userArray.array[index].username)
+                    .padding()
+                    .frame(width: UIScreen.main.bounds.width*0.5,
+                           height:UIScreen.main.bounds.height*0.05)
+                    .border(.green)
+                Text(userArray.array[index].username)
+            }
         }
     }
 }
@@ -51,27 +36,17 @@ struct Testing_Previews: PreviewProvider {
     }
 }
 
-class R: ObservableObject{
+class User: ObservableObject, Identifiable {
+   
+    @Published var username = ""
+}
+
+class UserArray: ObservableObject{
+    @Published var array: [User] = []
     
-//    let id: String = UUID().uuidString
-    @Published var name: String
     init(){
-        self.name = " "
+        @ObservedObject var user = User()
+        array.append(user)
     }
     
 }
-
-//class RS: ObservableObject{
-//    @Published var array: [R] = []
-//
-//    init() {
-//        array.append(R(name: "PS5"))
-//        array.append(R(name: "PC"))
-//    }
-//
-//    func changeName(index: Int, name: String){
-//        array[index].name = name
-//    }
-//
-//}
-
