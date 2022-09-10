@@ -32,6 +32,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.ontask.model.Child
 import com.ontask.model.Theme
 
@@ -80,7 +81,11 @@ fun dashboardPage() {
                 )
 
                 Box(modifier = Modifier.padding(10.dp)) {
-                    Text(text = "Welcome,\n{username}!") //TODO: put the parent's name here
+                    Text(
+                        text = "Welcome,\n{username}!", //TODO: put the parent's name here
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold
+                    )
                 }
             }
 
@@ -90,7 +95,7 @@ fun dashboardPage() {
             ) {
                 Spacer(modifier = Modifier.padding(8.dp))
                 Image(
-                    painter = painterResource(id = R.drawable.family_icon),
+                    painter = painterResource(id = R.drawable.home),
                     contentDescription = "family icon",
                     modifier = Modifier
                         .height(60.dp)
@@ -100,7 +105,10 @@ fun dashboardPage() {
 
                 Box(modifier = Modifier.padding(20.dp))
                 {
-                    Text(text = "Family list")
+                    Text(
+                        text = "Family list",
+                        fontSize = 16.sp
+                    )
                 }
 
                 Spacer(modifier = Modifier.size(width = 130.dp, height = 0.dp)) // TODO: the space here needs to be device-dependent OR make the floating action button bottom right overlayed the actual screen
@@ -228,7 +236,7 @@ fun ActionButton() {
 //    ) {
         FloatingActionButton(
             onClick = {
-                //TODO: click the plus button should do something here
+                //TODO: click the plus button should do something here -- open up a menu with some options
             },
             backgroundColor = Color(0xff689FEC),
             contentColor = Color.White,
