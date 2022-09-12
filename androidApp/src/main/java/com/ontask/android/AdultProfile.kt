@@ -18,29 +18,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 
-class AdultProfile : ComponentActivity() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            MaterialTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    AdultProfilePage()
-                }
-            }
-        }
-    }
-
-}
 
 @Composable
-@Preview
-fun AdultProfilePage() {
+//@Preview
+fun AdultProfilePage(navController: NavHostController) {
     Box(modifier = Modifier
         .fillMaxSize()
         .focusable()
@@ -68,6 +51,7 @@ fun AdultProfilePage() {
                         .height(80.dp)
                         .width(80.dp)
                         .padding(10.dp)
+                        .clickable { navController.navigate("dashboard_screen") }
                 )
 
                 Spacer(modifier = Modifier.padding(10.dp))

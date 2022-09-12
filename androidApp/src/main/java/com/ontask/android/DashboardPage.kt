@@ -17,8 +17,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,6 +25,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -33,24 +33,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.ontask.model.Child
 import com.ontask.model.Theme
 
-class DashboardPage : ComponentActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            dashboardPage()
-
-        }
-    }
-
-}
 
 @Composable
-@Preview
-fun dashboardPage() {
+fun dashboardPage(navController: NavHostController) {
 
     // male/female icon
     Box(modifier = Modifier
@@ -78,6 +68,9 @@ fun dashboardPage() {
                         .height(80.dp)
                         .width(80.dp)
                         .padding(10.dp)
+                        .clickable {
+                            navController.navigate("parentProfile_screen")
+                        }
                 )
 
                 Box(modifier = Modifier.padding(10.dp)) {
@@ -113,7 +106,7 @@ fun dashboardPage() {
 
                 Spacer(modifier = Modifier.size(width = 130.dp, height = 0.dp)) // TODO: the space here needs to be device-dependent OR make the floating action button bottom right overlayed the actual screen
 
-                ActionButton()
+                ActionButton(navController)
 
             }
 
@@ -133,7 +126,7 @@ fun dashboardPage() {
                 Spacer(modifier = Modifier.size(5.dp))
 
                 for (child in childList)
-                    childProfileCard(child = child)
+                    childProfileCard(child = child,navController)
             }
         }
     }
@@ -141,7 +134,7 @@ fun dashboardPage() {
 }
 
 @Composable
-fun childProfileCard(child: Child) {
+fun childProfileCard(child: Child,navController: NavHostController) {
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
     val cardWidth = screenWidth - 30.dp
@@ -149,7 +142,9 @@ fun childProfileCard(child: Child) {
     Card(
         modifier = Modifier
             .size(width = cardWidth, height = 120.dp)
-            .clickable { /* TODO each card needs to be clickable to the relevant child profile. */ },
+            .clickable { /* TODO each card needs to be clickable to the relevant child profile. */
+                navController.navigate("childProfile_screen")
+            },
         border = BorderStroke(1.5.dp, Color.White),
         elevation = 10.dp, // shadow around box
         shape = RoundedCornerShape(10.dp)
@@ -226,7 +221,13 @@ fun childProfileCard(child: Child) {
 
 // reference: https://www.geeksforgeeks.org/floating-action-button-in-android-using-jetpack-compose/
 @Composable
-fun ActionButton() {
+fun ActionButton(navController: NavHostController) {
+    var showMenu by remember {
+        mutableStateOf(false)
+    }
+    val list = listOf("Add Child","Add Chore")
+    var context = LocalContext.current
+    var selectedItem = remember{mutableStateOf("")}
 //    Column(
 //        modifier = Modifier
 //            .fillMaxSize()
@@ -237,9 +238,13 @@ fun ActionButton() {
 //        verticalArrangement = Arrangement.Bottom,
 //        horizontalAlignment = Alignment.End
 //    ) {
+    Box(){
         FloatingActionButton(
             onClick = {
+
                 //TODO: click the plus button should do something here -- open up a menu with some options
+                //navController.navigate("addChildProfile_screen")
+                showMenu = !showMenu
             },
             backgroundColor = Color(0xff689FEC),
             contentColor = Color.White,
@@ -247,5 +252,18 @@ fun ActionButton() {
         ) {
             Icon(Icons.Filled.Add, "plus icon")
         }
+        DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false/*TODO*/ }) {
+            DropdownMenuItem(onClick = {navController.navigate("addChildProfile_screen")}) {
+                Text(text = "Add Children")
+            }
+
+            DropdownMenuItem(onClick = { navController.navigate("addChore_screen") }) {
+                Text(text = "Add Chores")
+            }
+
+        }
+    }
+
+
 //    }
 }
