@@ -184,7 +184,7 @@ fun CreateContractPage() {
 
                 Button(
                     onClick = {
-                        //TODO
+                        //TODO this + button needs to add a row for the award/points thing
                     }, modifier = Modifier
                         .fillMaxWidth(1f)
                         .height(50.dp),
