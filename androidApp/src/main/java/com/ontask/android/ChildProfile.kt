@@ -7,6 +7,8 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,11 +46,18 @@ fun childProfilePage() {
             modifier = Modifier.fillMaxSize()
                 .padding(20.dp)
         ) {
-            Text(
-                text = "{Child name}",
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp
-            )
+            Row() {
+
+                Text(
+                    text = "{Child name}",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp
+                )
+
+                Spacer(modifier = Modifier.size(width = 180.dp, height = 0.dp)) // TODO: this needs to be changed so that its on the right side of the screen dependent on screen size
+
+                ActionButton()
+            }
 
             Spacer(modifier = Modifier.height(5.dp))
 
@@ -205,4 +214,30 @@ fun childProfilePage() {
         }
     }
 
+}
+
+// reference: https://www.geeksforgeeks.org/floating-action-button-in-android-using-jetpack-compose/
+@Composable
+fun ActionButton() {
+//    Column(
+//        modifier = Modifier
+//            .fillMaxSize()
+//            .fillMaxHeight()
+//            .fillMaxWidth()
+//            .padding(20.dp),
+//
+//        verticalArrangement = Arrangement.Bottom,
+//        horizontalAlignment = Alignment.End
+//    ) {
+    FloatingActionButton(
+        onClick = {
+            //TODO: click the plus button should do something here -- open up a menu with some options
+        },
+        backgroundColor = Color(0xff689FEC),
+        contentColor = Color.White,
+        elevation = FloatingActionButtonDefaults.elevation(15.dp)
+    ) {
+        Icon(Icons.Filled.Add, "plus icon")
+    }
+//    }
 }
