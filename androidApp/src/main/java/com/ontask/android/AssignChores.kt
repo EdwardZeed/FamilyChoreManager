@@ -63,7 +63,7 @@ fun assignChoresPage() {
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center
             ) {
-                Text(text = "hihihi this is assign chores page!!")
+                Spacer(modifier = Modifier.padding(10.dp))
             }
 
             // TODO: get a list of chores
@@ -106,13 +106,6 @@ fun choreCard(choreTask: ChoreTask) {
     val screenWidth = configuration.screenWidthDp.dp
     val cardWidth = screenWidth - 30.dp
 
-//    val iconId = "R.drawable." + choreTask.iconImage
-//    iv.setImageResource(getResources().getIdentifier(variableValue, "drawable", getPackageName()));
-
-    val currentContext = LocalContext.current
-//    val idk = ContextCompat.getDrawable(currentContext.getDrawable())
-//    val iconId = (currentContext.resources.getIdentifier(choreTask.iconImage, "drawable", currentContext.packageName))
-
     Card(
         modifier = Modifier
             .size(width = cardWidth, height = 140.dp),
@@ -145,6 +138,7 @@ fun choreCard(choreTask: ChoreTask) {
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center
             ) {
+                //TODO: make it so that if the user clicks one button and then clicks another, the first button that is clicked automatically unclicks
                 onePointButton()
                 Spacer(modifier = Modifier.padding(23.dp))
                 twoPointButton()
