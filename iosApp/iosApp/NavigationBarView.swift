@@ -9,6 +9,8 @@ import SwiftUI
 import shared
 
 var currentParent = Parent(userID: 0, name: "Chris", dateOfBirth: "2002/02/14", chooseTheme: Theme(name: "The Boys"), avatarPic: "Dragon")
+let achievement = Achievement(points: 1, message: "free three")
+let chore = ChoreTask(taskID: 0, name: "Make bed", description: "Make bed", achievement: achievement, iconImage: "BedIcon")
 
 struct NavigationBarView: View {
 
@@ -41,7 +43,7 @@ struct NavigationBarView: View {
                              }
                              .tag(Tab.dashboard)
                         
-                        ParentProfilePage(chores: [])
+                        ParentProfilePage(chores: [chore])
                             .tabItem{
                                 Label("Account", systemImage: "person")
                             }

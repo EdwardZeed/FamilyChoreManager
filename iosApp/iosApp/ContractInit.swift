@@ -11,11 +11,11 @@ import shared
 
 import SwiftUI
 
-struct RewardCreater: Identifiable{
+class RewardCreater: ObservableObject, Identifiable{
     //init with UUID
-    var id = UUID()
-    @State var name: String
-    @State var point: String
+//    var id = UUID()
+    @Published var name: String = ""
+    @Published var point: String = ""
     
     
 //    func Add_To_List(reward: RewardCreategdggr) -> [RewardCreater]{
@@ -33,9 +33,9 @@ class ContractCreater: ObservableObject{
     public init(){
         self.maxpoint = "0"
         self.description = "Null"
-        var reward1 = RewardCreater(name: "", point: "")
-        var reward2 = RewardCreater(name: "", point: "")
-        var reward3 = RewardCreater(name: "", point: "")
+        var reward1 = RewardCreater()
+        var reward2 = RewardCreater()
+        var reward3 = RewardCreater()
         self.rewardArray.append(reward1)
         self.rewardArray.append(reward2)
         self.rewardArray.append(reward3)
