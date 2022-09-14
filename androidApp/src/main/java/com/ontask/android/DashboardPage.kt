@@ -143,7 +143,7 @@ fun childProfileCard(child: Child, navController: NavHostController) {
         modifier = Modifier
             .size(width = cardWidth, height = 120.dp)
             .clickable { /* TODO each card needs to be clickable to the relevant child profile. */
-//                navController.navigate("childProfile_screen")
+                navController.navigate("childProfile_screen")
             },
         border = BorderStroke(1.5.dp, Color.White),
         elevation = 10.dp, // shadow around box

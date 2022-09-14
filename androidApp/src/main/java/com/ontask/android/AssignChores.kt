@@ -26,24 +26,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.ontask.model.Achievement
 import com.ontask.model.ChoreTask
 
-class AssignChores : ComponentActivity() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            assignChoresPage()
-
-        }
-    }
-
-}
-
 @Composable
-@Preview
-fun assignChoresPage() {
+fun assignChoresPage(navController: NavHostController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -75,7 +63,9 @@ fun assignChoresPage() {
                 choreCard(choreTask = chore)
 
             Button(
-                onClick = {}, modifier = Modifier
+                onClick = {
+                    navController.navigate("childProfile_screen")
+                }, modifier = Modifier
                     .fillMaxWidth(0.3f)
                     .height(50.dp),
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF689FEC)),

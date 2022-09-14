@@ -28,9 +28,9 @@ fun NavMap(navController: NavHostController, starDest:String) {
         composable(route = "addChore_screen"){
             AddChoresPage(navController = navController)
         }
-//        composable(route = "assignChore_screen"){
-//            assignChoresPage(navController = navController)
-//        }
+        composable(route = "assignChore_screen"){
+            assignChoresPage(navController = navController)
+        }
         composable(route = "createContract_screen"){
             CreateContractPage(navController = navController)
         }
