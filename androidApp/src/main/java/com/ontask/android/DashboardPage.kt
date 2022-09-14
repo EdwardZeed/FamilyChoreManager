@@ -37,8 +37,6 @@ import androidx.navigation.NavHostController
 import com.ontask.model.Child
 import com.ontask.model.Theme
 
-
-
 @Composable
 fun dashboardPage(navController: NavHostController) {
 
@@ -80,6 +78,11 @@ fun dashboardPage(navController: NavHostController) {
                         fontWeight = FontWeight.Bold
                     )
                 }
+
+                Spacer(modifier = Modifier.size(width = 100.dp, height = 0.dp)) // TODO: the space here needs to be device-dependent OR make the floating action button bottom right overlayed the actual screen
+
+                DashboardActionButton(navController)
+
             }
 
             Row(
@@ -104,9 +107,6 @@ fun dashboardPage(navController: NavHostController) {
                     )
                 }
 
-                Spacer(modifier = Modifier.size(width = 130.dp, height = 0.dp)) // TODO: the space here needs to be device-dependent OR make the floating action button bottom right overlayed the actual screen
-
-                ActionButton(navController)
 
             }
 
@@ -134,7 +134,7 @@ fun dashboardPage(navController: NavHostController) {
 }
 
 @Composable
-fun childProfileCard(child: Child,navController: NavHostController) {
+fun childProfileCard(child: Child, navController: NavHostController) {
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
     val cardWidth = screenWidth - 30.dp
@@ -143,7 +143,7 @@ fun childProfileCard(child: Child,navController: NavHostController) {
         modifier = Modifier
             .size(width = cardWidth, height = 120.dp)
             .clickable { /* TODO each card needs to be clickable to the relevant child profile. */
-                navController.navigate("childProfile_screen")
+//                navController.navigate("childProfile_screen")
             },
         border = BorderStroke(1.5.dp, Color.White),
         elevation = 10.dp, // shadow around box
@@ -221,7 +221,9 @@ fun childProfileCard(child: Child,navController: NavHostController) {
 
 // reference: https://www.geeksforgeeks.org/floating-action-button-in-android-using-jetpack-compose/
 @Composable
-fun ActionButton(navController: NavHostController) {
+fun DashboardActionButton(
+    navController: NavHostController
+) {
     var showMenu by remember {
         mutableStateOf(false)
     }
@@ -248,7 +250,8 @@ fun ActionButton(navController: NavHostController) {
             },
             backgroundColor = Color(0xff689FEC),
             contentColor = Color.White,
-            elevation = FloatingActionButtonDefaults.elevation(15.dp)
+            elevation = FloatingActionButtonDefaults.elevation(15.dp),
+            modifier = Modifier.padding(5.dp)
         ) {
             Icon(Icons.Filled.Add, "plus icon")
         }
@@ -265,5 +268,4 @@ fun ActionButton(navController: NavHostController) {
     }
 
 
-//    }
 }
