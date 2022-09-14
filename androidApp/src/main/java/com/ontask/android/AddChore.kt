@@ -32,11 +32,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 
+@Composable
+fun AddChoresPage(navController: NavHostController) {
+    Scaffold(
+        bottomBar = { BottomNavigationBar(navController) },
+        content = {
+            AddChoresPageContents(navController = navController)
+        }
+    )
+}
 
 @Composable
 //@Preview
-fun AddChoresPage(navController: NavHostController) {
-
+fun AddChoresPageContents(navController: NavHostController) {
     Box(
         modifier = Modifier
             .fillMaxSize()

@@ -34,12 +34,22 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.ontask.model.Child
 import com.ontask.model.Theme
 
 @Composable
 fun dashboardPage(navController: NavHostController) {
+    Scaffold(
+        bottomBar = { BottomNavigationBar(navController) },
+        content = {
+            dashboardPageContents(navController = navController)
+        }
+    )
+}
 
+@Composable
+fun dashboardPageContents(navController: NavHostController) {
     // male/female icon
     Box(modifier = Modifier
         .fillMaxSize()

@@ -47,10 +47,18 @@ import androidx.compose.ui.unit.toSize
 import androidx.navigation.NavHostController
 import java.util.*
 
-
-
 @Composable
 fun addChildProfile(navController: NavHostController) {
+    Scaffold(
+        bottomBar = { BottomNavigationBar(navController) },
+        content = {
+            addChildProfileContents(navController = navController)
+        }
+    )
+}
+
+@Composable
+fun addChildProfileContents(navController: NavHostController) {
     var paddingState by remember { mutableStateOf(16.dp) }
     val padding by animateDpAsState(
         targetValue = paddingState,
