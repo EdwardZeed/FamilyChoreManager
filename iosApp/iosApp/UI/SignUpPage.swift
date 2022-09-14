@@ -7,23 +7,20 @@
 //
 
 import SwiftUI
-import shared
+import Firebase
 
 struct SignUpPage: View {
     @State var name = ""
     @State var email = ""
     @State var password = ""
     @State var dateOfBirth: Date?
-    @State var emailValid: Float = 0
-    @State var emailPrompt: String = ""
-    @State var datePromt: String = ""
-    @State var valid: Float = 0
-    @State var dateValid: Float = 0
+    
     
     @State var textFieldHeight: CGFloat = 0
     @State var goToLogin = false
+    @State var goToDashboard = false
     
-
+    @EnvironmentObject var  authViewModel: AuthViewModel
     
     var body: some View {
         ZStack{
@@ -42,11 +39,11 @@ struct SignUpPage: View {
                 }
                 .padding(.bottom, 10)
                 
-                EntryField(textValue: $email, icon: Image("emailIcon"), placeholder: "email", prompt: emailPrompt, validation: $emailValid, isPassword: false)
+                EntryField(textValue: $email, icon: Image("emailIcon"), placeholder: "email", prompt: authViewModel.emailPrompt, validation: $authViewModel.emailValid, isPassword: false)
 
-                EntryField(textValue: $password, icon: Image("locksign"), placeholder: "password", prompt: "", validation: $valid, isPassword: false)
+                EntryField(textValue: $password, icon: Image("locksign"), placeholder: "password", prompt: authViewModel.passwordPrompt, validation: $authViewModel.passwordValid, isPassword: true)
                 
-                EntryField(textValue: $name, icon: Image("userIcon"), placeholder: "name", prompt: "", validation: $valid, isPassword: false)
+                EntryField(textValue: $name, icon: Image("userIcon"), placeholder: "name", prompt: authViewModel.namePrompt, validation: $authViewModel.nameValid, isPassword: false)
                     .overlay(GeometryReader{
                         proxy -> AnyView in
                         DispatchQueue.main.async {
@@ -55,18 +52,25 @@ struct SignUpPage: View {
                         return AnyView(EmptyView())
                         
                     })
-                    
+                
                 
 //                struct for the datepicker textfield
 //                the height is got from the GeometryReader above
-                HStack {
-                    Image("dateIcon")
-                    DatePickerTextField(placeholder: "date", date: $dateOfBirth)
+                VStack {
+                    HStack {
+                        Image("dateIcon")
+                        DatePickerTextField(placeholder: "date", date: $dateOfBirth)
+                    }
+                    .padding(8)
+                    .background(Color(UIColor.secondarySystemBackground))
+                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
+                    .frame(width: UIScreen.main.bounds.width*0.8, height: textFieldHeight)
+                    .border(.red, width: CGFloat(authViewModel.dateOfBirthValid))
+                    
+                    Text(authViewModel.dateOfBirthPrompt)
+                        .font(.caption)
+                        .frame(width: UIScreen.main.bounds.width*0.8, alignment: .leading)
                 }
-                .padding(8)
-                .background(Color(UIColor.secondarySystemBackground))
-                .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
-                .frame(width: UIScreen.main.bounds.width*0.8, height: textFieldHeight)
              
                 
                 
@@ -94,12 +98,16 @@ struct SignUpPage: View {
                 .frame(width: UIScreen.main.bounds.width*0.8, alignment: .leading)
                 
                 
-                Button(action: registerValid, label: {
+                Button(action: {authViewModel.register(email: email, password: password, name: name, dateOfBirth: dateOfBirth)},
+                       label: {
                     Image("signUpBtn")
                 })
                 .frame(width: UIScreen.main.bounds.width*0.8)
                 .cornerRadius(8)
                 
+                NavigationLink(destination: DashBoardPage(username: name, children: [], parents: []), isActive: $authViewModel.goToDashboardFromSignUp){
+                    EmptyView()
+                }
                 
                 Image("separateLine")
                 
@@ -122,19 +130,6 @@ struct SignUpPage: View {
         }
         
     }
-    
-    func registerValid(){
-        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-        
-        
-        if !emailTest.evaluate(with: email){
-            emailValid = 2
-            emailPrompt = "please enter a correct email format"
-            return
-        }
-    }
-    
     
     
 }

@@ -39,7 +39,7 @@ struct ChildDashBoardPage: View {
     var parents: [Parent]
     
 
-    @State var goToChildInformationPage = false
+    @State var goToChildProfilePage = false
     
     @State var currentSelectChild: Child = Child(userID: -1, name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: "")
     
@@ -74,7 +74,7 @@ struct ChildDashBoardPage: View {
                                 ForEach(children,id:\.self){child in
                                     HStack{
                                         Button(action: {
-                                            goToChildInformationPage = true
+                                            goToChildProfilePage = true
                                             currentSelectChild = child
                                          
                                         }, label: {
@@ -91,7 +91,7 @@ struct ChildDashBoardPage: View {
                                
                                 
                             }
-                            NavigationLink(destination: ChildAccountPage(currentChild: currentSelectChild), isActive: $goToChildInformationPage){
+                            NavigationLink(destination: ChildProfilePage(currentChild: currentSelectChild), isActive: $goToChildProfilePage){
                                 EmptyView()
                             }
                             

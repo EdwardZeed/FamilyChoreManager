@@ -7,6 +7,7 @@
 
 import SwiftUI
 import shared
+import Firebase
 
 var child1 = Child(userID: 1, name: "Linda", dateOfBirth: "2012/02/14", chooseTheme: Theme(name: "Disney"), avatarPic: "Poly")
 
@@ -20,18 +21,20 @@ var child5: Child = Child(userID: 5, name: "Frank", dateOfBirth: "2001", chooseT
 
 struct ParentLoginPage: View {
     
-    @State var userName: String = ""
+    @State var email: String = ""
     @State var password: String = ""
     @State var goToScan = false
     @State var valid: Float = 0
     @State var goToDashboard = false
+    @State var logInFail = false
     
+    @EnvironmentObject var authViewModel: AuthViewModel
     
     
     func goToHomeSecond(){
         if let window = UIApplication.shared.windows.first
         {
-            window.rootViewController = UIHostingController(rootView: ChildLoginPage(child: child5))
+            window.rootViewController = UIHostingController(rootView: ChildLoginPage())
             window.makeKeyAndVisible()
         }
     }
@@ -52,7 +55,7 @@ struct ParentLoginPage: View {
                 .frame(width: UIScreen.main.bounds.width*0.9, height: UIScreen.main.bounds.height*0.9, alignment: .topTrailing)
                 .zIndex(100)
                 
-                NavigationLink(destination: ChildLoginPage(child: Child(userID: 1, name: "Linda", dateOfBirth: "2012/02/14", chooseTheme: Theme(name: "Disney"), avatarPic: "Poly")), isActive: $goToScan){
+                NavigationLink(destination: ChildLoginPage(), isActive: $goToScan){
                     EmptyView()
                 }
                 .navigationBarHidden(true)
@@ -64,7 +67,7 @@ struct ParentLoginPage: View {
                     
                     WelcomeAndSignUpText()
                     
-                    EntryField(textValue: $userName, icon: Image("emailIcon"), placeholder: "Email Address", prompt: "", validation: $valid, isPassword: false)
+                    EntryField(textValue: $email, icon: Image("emailIcon"), placeholder: "Email Address", prompt: "", validation: $valid, isPassword: false)
                         .padding(.bottom, 3)
                     EntryField(textValue: $password, icon: Image("locksign"), placeholder: "Password: ", prompt: "", validation: $valid, isPassword: true)
                         
@@ -76,15 +79,19 @@ struct ParentLoginPage: View {
                         .foregroundColor(Color.blue)
                         .padding(.bottom, UIScreen.main.bounds.height*0.05)
                     
+                    if authViewModel.loginFailed == nil{
+                        Text("email or password is incorrect")
+                    }
                     
-                    Button(action: {goToDashboard=true}, label: {
+                    Button(action: {authViewModel.loginWithEmail(email: email, password: password)},
+                           label: {
                         Image("loginBtn")
                     })
                     .padding(.bottom, UIScreen.main.bounds.height*0.03)
                     
                   
                     var li = [child1, child2, child3, child4, child5]
-                    NavigationLink(destination: NavigationBarView(username: userName,childList: li).ignoresSafeArea(), isActive: $goToDashboard){
+                    NavigationLink(destination: NavigationBarView(username: email,childList: li).ignoresSafeArea(), isActive: $authViewModel.goToDashboardFromLogin){
                         EmptyView()
                     }.navigationBarHidden(true)
                     
@@ -102,6 +109,20 @@ struct ParentLoginPage: View {
         .navigationBarHidden(true)
       
         
+    }
+    
+    func loginWithEmail(){
+        Auth.auth().signIn(withEmail: email, password: password){
+            auth,err in
+            if err == nil{
+                goToDashboard = true
+                UserDefaults.standard.set(Auth.auth().currentUser, forKey: "currentUser")
+                print(auth!.autoContentAccessingProxy)
+            }
+            else{
+                logInFail = true
+            }
+        }
     }
 }
 

@@ -47,6 +47,7 @@ struct DashBoardPage: View {
     
     var body: some View {
         
+        NavigationView {
             ZStack{
                 Image("Background").resizable().edgesIgnoringSafeArea(.all)
                     .opacity(0.2)
@@ -88,12 +89,16 @@ struct DashBoardPage: View {
                                             .shadow(color: Color.gray, radius: 10)
                                         
                                     }
+//                                    NavigationLink(destination: ParentProfilePage(chores: []), isActive: $goToParentProfilePage){
+//                                        EmptyView()
+//                                    }
                                     
                                 }
                                 ForEach(children,id:\.self){child in
                                     HStack{
                                         Button(action: {
                                             goToChildProfilePage = true
+                                        
                                             currentSelectChild = child
                                          
                                         }, label: {
@@ -119,6 +124,8 @@ struct DashBoardPage: View {
                
             }.navigationBarHidden(true)
 
+        }.navigationBarBackButtonHidden(true)
+            .navigationBarHidden(true)
          
        
         
@@ -218,26 +225,22 @@ struct Button_Label: View{
     var currentChild : Child
     var body: some View{
         HStack{
-            VStack {
-                ZStack{
-                    Image("photoframe")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 65, height: 65, alignment: .center)
-                    
-                    
-                    Image("userPhoto")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 35, height: 35, alignment: .center)
-                    
-                }.frame( alignment: .leading)
-                    .padding(.top, 10)
-                Text(currentChild.name)
-            }
-            VStack(alignment: .trailing){
-                //Text(currentChild.name).frame(width: UIScreen.main.bounds.width*0.6,height: UIScreen.main.bounds.width*0.16, alignment: .topLeading)
-                Text("").frame(height:60)
+            ZStack{
+                Image("photoframe")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 80, height: 80, alignment: .center)
+                
+                
+                Image("userPhoto")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 50, height: 50, alignment: .center)
+                
+            }.frame( alignment: .leading)
+            VStack{
+                Text(currentChild.name).frame(width: UIScreen.main.bounds.width*0.6,height: UIScreen.main.bounds.width*0.16, alignment: .topLeading)
+                
                 HStack{
                     Spacer()
                     Image("token 5_In_DashBoard")
@@ -257,7 +260,7 @@ struct Button_Label: View{
                     Text("2/5")
                 }
             }
-        }.frame( width: 310)
+        }.frame( width: 300)
     }
 }
 

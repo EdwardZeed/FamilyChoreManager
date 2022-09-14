@@ -12,6 +12,7 @@ import shared
 struct ParentProfilePage: View {
     @State var numberOfChildren = "2"
     @State var numberOfRelatives = "2"
+    @EnvironmentObject var authViewModel: AuthViewModel
     var chores: [ChoreTask]
     
     var body: some View {
@@ -62,7 +63,13 @@ struct ParentProfilePage: View {
                             }
                         }
                     }
-                }.navigationBarTitle("EdwardHimself")
+                }.navigationTitle("EdwardHimself")
+                    .toolbar{Menu {
+                        Button(action: { authViewModel.signOut()}, label: {
+                            Text("sign out")
+                        })} label: {
+                            Image("PlusIcon-ChildProfilePage")
+                        }}
             }
         }
         
