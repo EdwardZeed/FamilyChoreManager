@@ -10,10 +10,7 @@ import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Card
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,6 +29,16 @@ import com.ontask.model.ChoreTask
 
 @Composable
 fun assignChoresPage(navController: NavHostController) {
+    Scaffold(
+        bottomBar = { BottomNavigationBar(navController) },
+        content = {
+            assignChoresPageContents(navController = navController)
+        }
+    )
+}
+
+@Composable
+fun assignChoresPageContents(navController: NavHostController) {
     Box(
         modifier = Modifier
             .fillMaxSize()

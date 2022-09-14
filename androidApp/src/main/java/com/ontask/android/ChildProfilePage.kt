@@ -18,9 +18,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 
-
 @Composable
 fun childProfilePage(navController: NavHostController) {
+    Scaffold(
+        bottomBar = { BottomNavigationBar(navController) },
+        content = {
+            childProfilePageContents(navController = navController)
+        }
+    )
+}
+
+@Composable
+fun childProfilePageContents(navController: NavHostController) {
 
     Box(modifier = Modifier
         .fillMaxSize()
