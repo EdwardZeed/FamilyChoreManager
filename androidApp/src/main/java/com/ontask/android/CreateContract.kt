@@ -27,27 +27,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
-class CreateContract: ComponentActivity() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            MaterialTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    CreateContractPage()
-                }
-            }
-        }
-    }
-}
+import androidx.navigation.NavHostController
 
 @Composable
-@Preview
-fun CreateContractPage() {
+fun CreateContractPage(navController: NavHostController) {
 
     Box(
         modifier = Modifier
@@ -76,6 +59,7 @@ fun CreateContractPage() {
                         .height(70.dp)
                         .width(70.dp)
                         .padding(10.dp)
+                        .clickable { navController.navigate("childProfile_screen") }
                 )
 
                 Spacer(modifier = Modifier.width(190.dp))
@@ -430,3 +414,4 @@ fun DescriptionBox(modifier: Modifier = Modifier, localFocusManager: FocusManage
 
     return descriptionText
 }
+

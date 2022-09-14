@@ -30,27 +30,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 
-class AddChore: ComponentActivity() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            MaterialTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    AddChoresPage()
-                }
-            }
-        }
-    }
-}
 
 @Composable
-@Preview
-fun AddChoresPage() {
+//@Preview
+fun AddChoresPage(navController: NavHostController) {
 
     Box(
         modifier = Modifier
@@ -73,6 +58,7 @@ fun AddChoresPage() {
                         .height(70.dp)
                         .width(70.dp)
                         .padding(10.dp)
+                        .clickable { navController.navigate("dashboard_screen") }
                 )
 
                 Row(

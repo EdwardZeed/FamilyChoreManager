@@ -44,28 +44,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toSize
+import androidx.navigation.NavHostController
 import java.util.*
 
-class AddChildProfile : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            MaterialTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    addChildProfile()
-                }
-            }
-        }
-    }
-}
+
 
 @Composable
-@Preview
-fun addChildProfile() {
+fun addChildProfile(navController: NavHostController) {
     var paddingState by remember { mutableStateOf(16.dp) }
     val padding by animateDpAsState(
         targetValue = paddingState,
@@ -93,6 +78,7 @@ fun addChildProfile() {
                     modifier = Modifier
                         .height(150.dp)
                         .padding(10.dp)
+                        .clickable { navController.navigate("dashboard_screen") }
                 )
             }
 

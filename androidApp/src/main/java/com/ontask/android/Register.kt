@@ -41,29 +41,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import java.util.*
 
-class Register : ComponentActivity() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            MaterialTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    Greeting("android")
-                }
-            }
-        }
-    }
-
-}
 
 @Composable
-fun Greeting(name: String) {
+fun Register(navController: NavHostController) {
     var paddingState by remember { mutableStateOf(16.dp) }
     val padding by animateDpAsState(
         targetValue = paddingState,
@@ -129,13 +112,16 @@ fun Greeting(name: String) {
                     ),
                     onClick = {
                         // do something when sign up button clicked
+                        navController.navigate("Login_screen")
                     }
                 )
             }
 
 // TODO: https://developer.android.com/jetpack/compose/layouts/material -- add shadow on the button?
             Button(
-                onClick = {}, modifier = Modifier
+                onClick = {
+                    navController.navigate("dashboard_screen")
+                }, modifier = Modifier
                     .fillMaxWidth(0.3f)
                     .height(50.dp),
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF689FEC))
@@ -382,13 +368,5 @@ fun dateOfBirth(modifier: Modifier, localFocusManager: FocusManager): String {
     }
 
     return mDate.value
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    MaterialTheme {
-        Greeting("Android")
-    }
 }
 
