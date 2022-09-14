@@ -31,7 +31,7 @@ struct ParentLoginPage: View {
     func goToHomeSecond(){
         if let window = UIApplication.shared.windows.first
         {
-            window.rootViewController = UIHostingController(rootView: ChildLoginPage())
+            window.rootViewController = UIHostingController(rootView: ChildLoginPage(child: child5))
             window.makeKeyAndVisible()
         }
     }
@@ -52,7 +52,7 @@ struct ParentLoginPage: View {
                 .frame(width: UIScreen.main.bounds.width*0.9, height: UIScreen.main.bounds.height*0.9, alignment: .topTrailing)
                 .zIndex(100)
                 
-                NavigationLink(destination: ChildLoginPage(), isActive: $goToScan){
+                NavigationLink(destination: ChildLoginPage(child: Child(userID: 1, name: "Linda", dateOfBirth: "2012/02/14", chooseTheme: Theme(name: "Disney"), avatarPic: "Poly")), isActive: $goToScan){
                     EmptyView()
                 }
                 .navigationBarHidden(true)

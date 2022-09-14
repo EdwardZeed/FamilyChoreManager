@@ -21,13 +21,15 @@ struct ChildProfilePage: View {
     @State var curDelItem: RandomItem = RandomItem(title: "")
     
     @State var goToChildQRCodePage = false
+    @State var goToAddContract = false
     
     var body: some View {
         
         
         
         ScrollView{
-            VStack{
+            
+            VStack(alignment: .leading){
                 
                 
                 HStack(alignment: .center, spacing: 30){
@@ -54,28 +56,30 @@ struct ChildProfilePage: View {
                 
                 Button(action: {}, label: {
                     Image("EditProfileBtn-ChildProfilePage")
+                        .resizable()
                     
                 }).padding(.bottom, UIScreen.main.bounds.height*0.01).shadow(radius: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
                     .frame(width: UIScreen.main.bounds.width*0.98, alignment: .center)
                 
                 
-                VStack(alignment: .leading){
+                VStack(alignment: .center){
                     HStack{
                         Image("rewardIcon-ChildrenProfilePage")
                         Text("Reward List")
                     }.padding(.bottom, -1)
                     
                     
-                    ZStack(alignment: .leading){
+                    ZStack(alignment: .center){
                         Image("RewardBackgroundBoard-ChildProfilePage")
+                            .resizable()
                         
                         ScrollView(.horizontal){
-                            HStack{
+                            HStack(){
                                 SingleReward_ChildProfilePage()
-                                
-                                
-                                
-                            }.padding(.horizontal, 7)
+                                    .padding(.horizontal, UIScreen.self.main.bounds.width*0.02)
+                                    .zIndex(0)
+                                    
+                            }
                         }
                         
                         
@@ -85,7 +89,7 @@ struct ChildProfilePage: View {
                 }.padding(.bottom, UIScreen.main.bounds.height*0.01).shadow(radius: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
                 
                 
-                VStack(alignment: .leading) {
+                VStack() {
                     HStack{
                         Image("ChoresIcon-ChildProfilePage")
                         Text("Finished Chores")
@@ -96,6 +100,10 @@ struct ChildProfilePage: View {
                     ForEach(currentChild.finishedChoreList,id:\.self){choretask in
                         SingleFinishChore_ChildProfilePage(singlefinishchore : choretask)
                     }
+                    SingleFinishChore_ChildProfilePage(singlefinishchore : ChoreTask(taskID: 1, name: "Make the bed", description: "None", achievement: achievement, iconImage: "BedIcon-ChildProfilePage"))
+                    SingleFinishChore_ChildProfilePage(singlefinishchore : ChoreTask(taskID: 2, name: "Sweep the floor", description: "None", achievement: achievement, iconImage: "broom"))
+                    SingleFinishChore_ChildProfilePage(singlefinishchore : ChoreTask(taskID: 3, name: "Wash the dishes", description: "None", achievement: achievement, iconImage: "WashDishes"))
+                    
                     
                 }
                 
@@ -113,6 +121,7 @@ struct ChildProfilePage: View {
                 Button(action: {isAddDialogShow.toggle()}, label: {
                     Text("Assign Chores")
                 })
+                Button("Add contract"){goToAddContract = true}
                 Button("QR Code Scan"){goToChildQRCodePage = true}
                 
                 
@@ -126,18 +135,26 @@ struct ChildProfilePage: View {
             } label: {
                 EmptyView()
             }
+        
+            NavigationLink(isActive: $goToAddContract) {
+                SignContractPage(username: "ikaros")
+            } label: {
+                EmptyView()
+            }
                 
     }
                                    
 }
-
 struct SingleFinishChore_ChildProfilePage : View {
     var singlefinishchore: ChoreTask
     var body: some View{
         HStack{
             ZStack{
                 Image("SingleFinishChoreboard-ChildProfilePage")
+                    .resizable()
+                    .frame(maxWidth: UIScreen.self.main.bounds.width*0.99,maxHeight: 100)
                     .shadow(radius: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
+    
                 HStack{
                     Image(singlefinishchore.iconImage)
                     VStack(alignment: .leading){
@@ -157,11 +174,11 @@ struct SingleFinishChore_ChildProfilePage : View {
                             
                         }
                         
-                    }.frame(width: 200, height: 73, alignment: .leading)
+                    }.frame(width: UIScreen.self.main.bounds.width*0.55, height: 73, alignment: .leading)
                     
                     VStack(alignment: .trailing){
                         //this is shit code, delete anytime
-                        Text("").frame(height:40)
+                        
                         Text("2001/07/09")
                             .font(.footnote)
                             .fontWeight(.thin)
@@ -177,16 +194,12 @@ struct SingleFinishChore_ChildProfilePage : View {
 }
 
 struct SingleReward_ChildProfilePage : View {
-    //    var text: String = String(SingleAssignChore_ChildProfilePage().getFinalSelectPoint())
     
     var body: some View{
         ZStack{
             Image("SingleRewardBoard-ChildProfilePage")
             VStack(){
                 Image("xboxIcon")
-                //                Text(text)
-                //                    .font(.footnote)
-                //                    .fontWeight(.thin)
                 Text("Xbox One")
                     .font(.footnote)
                     .fontWeight(.thin)
@@ -209,7 +222,7 @@ struct ChildProfilePage_Previews: PreviewProvider {
         
         
         
-//        ChildProfilePage(finishChoreList: [])
+        ChildProfilePage(currentChild: Child(userID: 100, name: "Chris", dateOfBirth: "2002-02-14", chooseTheme: Theme(name: "Saber"), avatarPic: "Lion"))
     }
 }
 
