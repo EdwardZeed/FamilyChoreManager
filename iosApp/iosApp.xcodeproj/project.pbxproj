@@ -22,7 +22,6 @@
 		2B3B10B228C0B16D003E24DE /* AddChildPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3B10B128C0B16C003E24DE /* AddChildPage.swift */; };
 		2BDE71F228C38D4B005821C6 /* KeyboardExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDE71F128C38D4B005821C6 /* KeyboardExtension.swift */; };
 		3759E52B28B39C50000E0419 /* ChildLoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759E52A28B39C50000E0419 /* ChildLoginPage.swift */; };
-		3759E52D28B39C8F000E0419 /* StartPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759E52C28B39C8F000E0419 /* StartPage.swift */; };
 		3759E52F28B39CC6000E0419 /* ParentLoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759E52E28B39CC6000E0419 /* ParentLoginPage.swift */; };
 		37613CFB28C6086000422234 /* ChildQRCodePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37613CFA28C6086000422234 /* ChildQRCodePage.swift */; };
 		37613CFD28C60D1D00422234 /* ChildDashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37613CFC28C60D1D00422234 /* ChildDashboard.swift */; };
@@ -76,7 +75,6 @@
 		2B3B10B128C0B16C003E24DE /* AddChildPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChildPage.swift; sourceTree = "<group>"; };
 		2BDE71F128C38D4B005821C6 /* KeyboardExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardExtension.swift; sourceTree = "<group>"; };
 		3759E52A28B39C50000E0419 /* ChildLoginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildLoginPage.swift; sourceTree = "<group>"; };
-		3759E52C28B39C8F000E0419 /* StartPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartPage.swift; sourceTree = "<group>"; };
 		3759E52E28B39CC6000E0419 /* ParentLoginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentLoginPage.swift; sourceTree = "<group>"; };
 		37613CFA28C6086000422234 /* ChildQRCodePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildQRCodePage.swift; sourceTree = "<group>"; };
 		37613CFC28C60D1D00422234 /* ChildDashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildDashboard.swift; sourceTree = "<group>"; };
@@ -162,7 +160,6 @@
 				2152FB032600AC8F00CF470E /* iOSApp.swift */,
 				058557D7273AAEEB004C7B11 /* Preview Content */,
 				3759E52A28B39C50000E0419 /* ChildLoginPage.swift */,
-				3759E52C28B39C8F000E0419 /* StartPage.swift */,
 				3759E52E28B39CC6000E0419 /* ParentLoginPage.swift */,
 				2B3B10A628B3BD1F003E24DE /* SignUpPage.swift */,
 				37FD897B28C3C1A700B5ABFE /* ChildProfilePage.swift */,
@@ -331,7 +328,6 @@
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				2B3B10B228C0B16D003E24DE /* AddChildPage.swift in Sources */,
 				37613CFD28C60D1D00422234 /* ChildDashboard.swift in Sources */,
-				3759E52D28B39C8F000E0419 /* StartPage.swift in Sources */,
 				2BDE71F228C38D4B005821C6 /* KeyboardExtension.swift in Sources */,
 				3781DDCC28C4B453009F9904 /* NavigationBarView.swift in Sources */,
 				37FD897C28C3C1A700B5ABFE /* ChildProfilePage.swift in Sources */,

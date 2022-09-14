@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import shared
 
 struct SignUpPage: View {
     @State var name = ""
@@ -134,13 +135,6 @@ struct SignUpPage: View {
         }
     }
     
-    func goToHomeSecond(){
-        if let window = UIApplication.shared.windows.first
-        {
-            window.rootViewController = UIHostingController(rootView: ChildLoginPage())
-            window.makeKeyAndVisible()
-        }
-    }
     
     
 }

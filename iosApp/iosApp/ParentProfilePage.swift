@@ -62,13 +62,7 @@ struct ParentProfilePage: View {
                             }
                         }
                     }
-                }.navigationTitle("EdwardHimself")
-                    .toolbar{Menu {
-                        Button(action: {}, label: {
-                            Text("Add Chores")
-                        })} label: {
-                            Image("PlusIcon-ChildProfilePage")
-                        }}
+                }.navigationBarTitle("EdwardHimself")
             }
         }
         
