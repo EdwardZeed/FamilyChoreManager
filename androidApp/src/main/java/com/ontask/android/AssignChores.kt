@@ -29,14 +29,24 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
-import androidx.navigation.NavHostController
 import com.ontask.model.Achievement
 import com.ontask.model.ChoreTask
 
+class AssignChores : ComponentActivity() {
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            assignChoresPage()
+
+        }
+    }
+
+}
 
 @Composable
-fun assignChoresPage(navController: NavHostController) {
+@Preview
+fun assignChoresPage() {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -53,7 +63,7 @@ fun assignChoresPage(navController: NavHostController) {
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center
             ) {
-                Text(text = "This is assign chores page!!")
+                Spacer(modifier = Modifier.padding(10.dp))
             }
 
             // TODO: get a list of chores
@@ -68,9 +78,7 @@ fun assignChoresPage(navController: NavHostController) {
                 choreCard(choreTask = chore)
 
             Button(
-                onClick = {
-                    navController.navigate("childProfile_screen")
-                }, modifier = Modifier
+                onClick = {}, modifier = Modifier
                     .fillMaxWidth(0.3f)
                     .height(50.dp),
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF689FEC)),
@@ -97,13 +105,6 @@ fun choreCard(choreTask: ChoreTask) {
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
     val cardWidth = screenWidth - 30.dp
-
-//    val iconId = "R.drawable." + choreTask.iconImage
-//    iv.setImageResource(getResources().getIdentifier(variableValue, "drawable", getPackageName()));
-
-    val currentContext = LocalContext.current
-//    val idk = ContextCompat.getDrawable(currentContext.getDrawable())
-//    val iconId = (currentContext.resources.getIdentifier(choreTask.iconImage, "drawable", currentContext.packageName))
 
     Card(
         modifier = Modifier
@@ -137,6 +138,7 @@ fun choreCard(choreTask: ChoreTask) {
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center
             ) {
+                //TODO: make it so that if the user clicks one button and then clicks another, the first button that is clicked automatically unclicks
                 onePointButton()
                 Spacer(modifier = Modifier.padding(23.dp))
                 twoPointButton()
