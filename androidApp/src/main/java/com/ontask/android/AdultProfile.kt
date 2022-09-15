@@ -20,10 +20,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 
+@Composable
+fun AdultProfilePage(navController: NavHostController) {
+    Scaffold(
+        bottomBar = { BottomNavigationBar(navController) },
+        content = {
+            AdultProfilePageContents(navController = navController)
+        }
+    )
+}
 
 @Composable
 //@Preview
-fun AdultProfilePage(navController: NavHostController) {
+fun AdultProfilePageContents(navController: NavHostController) {
     Box(modifier = Modifier
         .fillMaxSize()
         .focusable()

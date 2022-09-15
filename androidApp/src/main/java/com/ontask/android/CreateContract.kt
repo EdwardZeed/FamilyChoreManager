@@ -31,7 +31,16 @@ import androidx.navigation.NavHostController
 
 @Composable
 fun CreateContractPage(navController: NavHostController) {
+    Scaffold(
+        bottomBar = { BottomNavigationBar(navController) },
+        content = {
+            CreateContractPageContents(navController = navController)
+        }
+    )
+}
 
+@Composable
+fun CreateContractPageContents(navController: NavHostController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
