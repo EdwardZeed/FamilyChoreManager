@@ -18,7 +18,6 @@ struct SignUpPage: View {
     
     @State var textFieldHeight: CGFloat = 0
     @State var goToLogin = false
-    @State var goToDashboard = false
     
     @EnvironmentObject var  authViewModel: AuthViewModel
     
@@ -105,9 +104,6 @@ struct SignUpPage: View {
                 .frame(width: UIScreen.main.bounds.width*0.8)
                 .cornerRadius(8)
                 
-                NavigationLink(destination: DashBoardPage(username: name, children: [], parents: []), isActive: $authViewModel.goToDashboardFromSignUp){
-                    EmptyView()
-                }
                 
                 Image("separateLine")
                 

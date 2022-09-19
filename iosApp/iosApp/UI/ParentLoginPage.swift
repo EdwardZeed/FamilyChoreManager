@@ -25,7 +25,6 @@ struct ParentLoginPage: View {
     @State var password: String = ""
     @State var goToScan = false
     @State var valid: Float = 0
-    @State var goToDashboard = false
     @State var logInFail = false
     
     @EnvironmentObject var authViewModel: AuthViewModel
@@ -64,7 +63,6 @@ struct ParentLoginPage: View {
                     
                     ProfilePhoto()
                     
-                    
                     WelcomeAndSignUpText()
                     
                     EntryField(textValue: $email, icon: Image("emailIcon"), placeholder: "Email Address", prompt: "", validation: $valid, isPassword: false)
@@ -79,7 +77,7 @@ struct ParentLoginPage: View {
                         .foregroundColor(Color.blue)
                         .padding(.bottom, UIScreen.main.bounds.height*0.05)
                     
-                    if authViewModel.loginFailed == nil{
+                    if authViewModel.loginFailed == true{
                         Text("email or password is incorrect")
                     }
                     
@@ -91,9 +89,6 @@ struct ParentLoginPage: View {
                     
                   
                     var li = [child1, child2, child3, child4, child5]
-                    NavigationLink(destination: NavigationBarView(username: email,childList: li).ignoresSafeArea(), isActive: $authViewModel.goToDashboardFromLogin){
-                        EmptyView()
-                    }.navigationBarHidden(true)
                     
                     Image("separateLine")
                         .padding(.bottom, UIScreen.main.bounds.height*0.03)
@@ -111,19 +106,6 @@ struct ParentLoginPage: View {
         
     }
     
-    func loginWithEmail(){
-        Auth.auth().signIn(withEmail: email, password: password){
-            auth,err in
-            if err == nil{
-                goToDashboard = true
-                UserDefaults.standard.set(Auth.auth().currentUser, forKey: "currentUser")
-                print(auth!.autoContentAccessingProxy)
-            }
-            else{
-                logInFail = true
-            }
-        }
-    }
 }
 
 
@@ -218,12 +200,14 @@ struct WelcomeAndSignUpText: View {
 }
 
 struct ThirdPartyLogo: View {
+    @EnvironmentObject var authViewModel: AuthViewModel
     var body: some View {
         HStack{
             Spacer()
             Image("AppleLoginBtn")
             Spacer()
-            Image("GoogleLoginBtn")
+//            Image("GoogleLoginBtn")
+            Button(action: authViewModel.loginWithGoogle, label: {Image("GoogleLoginBtn")})
             Spacer()
             Image("FacebookLoginBtn")
             Spacer()

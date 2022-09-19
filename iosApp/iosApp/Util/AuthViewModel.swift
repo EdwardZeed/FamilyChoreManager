@@ -8,6 +8,7 @@
 
 import Foundation
 import Firebase
+import GoogleSignIn
 
 class AuthViewModel: ObservableObject{
     
@@ -22,27 +23,69 @@ class AuthViewModel: ObservableObject{
     @Published var dateOfBirthValid: Float = 0
     @Published var dateOfBirthPrompt = ""
     
-    @Published var goToDashboardFromSignUp = false
-    @Published var goToDashboardFromLogin = false
     @Published var loginFailed = false
+    @Published var progressing = false
+    
+    @Published var username = ""
     
     init(){
         self.userSession = Auth.auth().currentUser
     }
     
     func loginWithEmail(email: String, password: String){
+        self.progressing = true
         Auth.auth().signIn(withEmail: email, password: password){
             auth,err in
-            if err == nil{
-                self.goToDashboardFromLogin = true
-                
-                guard let user = auth?.user else {return}
-                self.userSession = user
-                print(auth!.autoContentAccessingProxy)
+            if let error = err{
+                self.loginFailed = true
+                print("DEBUG:\(error.localizedDescription)")
             }
             else{
-                self.loginFailed = true
+                guard let user = auth?.user else {return}
+                self.progressing = false
+                self.userSession = user
+                self.username = user.displayName ?? ""
+                print(auth!.autoContentAccessingProxy)
             }
+        }
+    }
+    
+    func loginWithGoogle(){
+        guard let clientID = FirebaseApp.app()?.options.clientID else { return }
+
+        // Create Google Sign In configuration object.
+        let config = GIDConfiguration(clientID: clientID)
+        
+        GIDSignIn.sharedInstance.signIn(with: config, presenting: ApplicationUtil.rootViewController){user, error in
+            if let error = error{
+                print("DEBUG: LOGIN FAILED WITH GOOGLE, \(error.localizedDescription)")
+                return
+            }
+            
+            guard
+                let authentication = user?.authentication,
+                let idToken = authentication.idToken
+              else {
+                return
+              }
+            
+            let credential = GoogleAuthProvider.credential(withIDToken: idToken,
+                                                             accessToken: authentication.accessToken)
+            
+            Auth.auth().signIn(with: credential){
+                result, error in
+                if let error = error{
+                    print("DEBUG: \(error.localizedDescription)")
+                    return 
+                }
+                
+                guard let user = result?.user else{return}
+                print(user.displayName)
+                
+                self.username = user.displayName ?? ""
+                self.userSession = user
+            }
+            
         }
     }
     
@@ -72,7 +115,7 @@ class AuthViewModel: ObservableObject{
                     .document(user.uid)
                     .setData(data)
                 
-                self.goToDashboardFromSignUp = true
+                self.username = user.displayName ?? ""
             }
             
         }
@@ -81,8 +124,6 @@ class AuthViewModel: ObservableObject{
     func signOut(){
         self.userSession = nil
         try? Auth.auth().signOut()
-        self.goToDashboardFromLogin = false
-        self.goToDashboardFromSignUp = false
         print("DEBUG: \(userSession)")
     }
     
@@ -137,3 +178,4 @@ class AuthViewModel: ObservableObject{
                
     }
 }
+

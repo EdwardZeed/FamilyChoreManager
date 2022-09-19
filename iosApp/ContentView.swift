@@ -10,6 +10,7 @@ import Combine
 import SwiftUI
 import shared
 
+
 struct ContentView: View{
     @EnvironmentObject var authViewModel: AuthViewModel
     var body: some View{
@@ -18,6 +19,7 @@ struct ContentView: View{
         }
         else{
             NavigationBarView(username: "edwardhimself", childList: [])
+            
         }
     }
 }
