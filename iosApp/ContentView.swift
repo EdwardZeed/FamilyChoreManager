@@ -16,9 +16,12 @@ struct ContentView: View{
     var body: some View{
         if authViewModel.userSession == nil{
             ParentLoginPage()
+                .overlay(
+                    ProgressSpinner()
+                )
         }
         else{
-            NavigationBarView(username: "edwardhimself", childList: [])
+            NavigationBarView(childList: [])
             
         }
     }

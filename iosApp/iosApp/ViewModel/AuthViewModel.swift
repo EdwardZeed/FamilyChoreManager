@@ -7,12 +7,15 @@
 //
 
 import Foundation
+import SwiftUI
 import Firebase
 import GoogleSignIn
+import shared
 
 class AuthViewModel: ObservableObject{
     
     @Published var userSession:FirebaseAuth.User?
+    @Published var currentUser: Parent?
     
     @Published var emailValid: Float = 0
     @Published var emailPrompt = ""
@@ -25,11 +28,18 @@ class AuthViewModel: ObservableObject{
     
     @Published var loginFailed = false
     @Published var progressing = false
+    @AppStorage("loggedInWithThirdParty") var loggedInWithThirdParty: Bool = false
     
-    @Published var username = ""
+    var service = UserService()
     
     init(){
         self.userSession = Auth.auth().currentUser
+        if !loggedInWithThirdParty{
+            self.fetchUser()
+        }
+        else{
+            self.currentUser = Parent(userID: self.userSession?.uid ?? "", name: self.userSession?.displayName ?? "", dateOfBirth: "", chooseTheme: nil, avatarPic: "")
+        }
     }
     
     func loginWithEmail(email: String, password: String){
@@ -38,14 +48,17 @@ class AuthViewModel: ObservableObject{
             auth,err in
             if let error = err{
                 self.loginFailed = true
+                self.progressing = false
                 print("DEBUG:\(error.localizedDescription)")
             }
             else{
                 guard let user = auth?.user else {return}
                 self.progressing = false
                 self.userSession = user
-                self.username = user.displayName ?? ""
-                print(auth!.autoContentAccessingProxy)
+                self.loggedInWithThirdParty = false
+                self.fetchUser()
+                
+               
             }
         }
     }
@@ -80,10 +93,11 @@ class AuthViewModel: ObservableObject{
                 }
                 
                 guard let user = result?.user else{return}
-                print(user.displayName)
+                print("DEBUG: \(user.displayName)")
                 
-                self.username = user.displayName ?? ""
                 self.userSession = user
+                self.loggedInWithThirdParty = true
+                self.currentUser = Parent(userID: user.uid, name: user.displayName ?? "", dateOfBirth: "", chooseTheme: nil, avatarPic: "")
             }
             
         }
@@ -109,13 +123,13 @@ class AuthViewModel: ObservableObject{
             else{
                 guard let user = result?.user else {return}
                 self.userSession = user
-                
+                self.loggedInWithThirdParty = false
                 let data = ["email": email, "name": name, "dateOfBirth": birthday, "userId": user.uid]
                 Firestore.firestore().collection("users")
                     .document(user.uid)
                     .setData(data)
+                self.fetchUser()
                 
-                self.username = user.displayName ?? ""
             }
             
         }
@@ -176,6 +190,15 @@ class AuthViewModel: ObservableObject{
         
         return valid
                
+    }
+    
+    func fetchUser(){
+        guard let uid = self.userSession?.uid else {return}
+        
+        self.service.fetchUser(uid: uid) { user in
+            self.currentUser = user
+        }
+        
     }
 }
 

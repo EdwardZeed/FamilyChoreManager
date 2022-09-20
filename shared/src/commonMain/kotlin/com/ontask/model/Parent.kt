@@ -11,8 +11,8 @@ package com.ontask.model
  * @param chooseTheme
  * @param avatarPic
  */
-data class Parent(
-    val userID: Int = 0,
+class Parent(
+    var userID: String,
     var name: String,
     var dateOfBirth: String,
     var chooseTheme: Theme?,

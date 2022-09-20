@@ -16,7 +16,7 @@ struct Preview_AddContractPage: PreviewProvider {
     
     static var previews: some View {
         
-        var parent_user: Parent = Parent(userID: 1, name: "TestParent", dateOfBirth: "IDK", chooseTheme: nil, avatarPic: nil)
+        var parent_user: Parent = Parent(userID: "1", name: "TestParent", dateOfBirth: "IDK", chooseTheme: nil, avatarPic: nil)
         SignContractPage(username: parent_user.name)
     }
 }

@@ -14,7 +14,7 @@ struct Preview_DashBoardPage: PreviewProvider {
 
     static var previews: some View {
         
-        var currentParent = Parent(userID: 0, name: "Chris", dateOfBirth: "2002/02/14", chooseTheme: Theme(name: "The Boys"), avatarPic: "Dragon")
+        var currentParent = Parent(userID: "0", name: "Chris", dateOfBirth: "2002/02/14", chooseTheme: Theme(name: "The Boys"), avatarPic: "Dragon")
         var child1 = Child(userID: 1, name: "Linda", dateOfBirth: "2012/02/14", chooseTheme: Theme(name: "Disney"), avatarPic: "Poly")
 
         var child2 = Child(userID: 2, name: "Anna", dateOfBirth: "2012/03/14", chooseTheme: Theme(name: "Marvel"), avatarPic: "IronMan")
@@ -28,13 +28,12 @@ struct Preview_DashBoardPage: PreviewProvider {
 
         var childList = [child3,child2,child1]
         var parentList = [currentParent]
-        DashBoardPage(username: "Chris",children: childList, parents:  parentList)
+        DashBoardPage(children: childList, parents:  parentList)
     }
 }
 
 
 struct DashBoardPage: View {
-    let username: String
     var children: [Child]
     var parents: [Parent]
     
@@ -42,7 +41,7 @@ struct DashBoardPage: View {
     @State var goToChildProfilePage = false
     @State var goToParentProfilePage = false
     
-    
+    @EnvironmentObject var authViewModel: AuthViewModel
     @State var currentSelectChild: Child = Child(userID: -1, name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: "")
     
     var body: some View {
@@ -59,7 +58,7 @@ struct DashBoardPage: View {
                             
                             HStack{
                                 UserPhoto()
-                                Message_And_Name(username: username)
+                                Message_And_Name(username: authViewModel.currentUser?.name ?? "")
                                 
                             }.frame(width: UIScreen.main.bounds.width*0.85, alignment: .leading)
                                 .padding(.top, 3)
@@ -162,7 +161,7 @@ struct Message_And_Name: View{
         self.username = username
     }
     var body: some View {
-        VStack{
+        VStack(alignment: .leading){
             Text("Welcome Back").fontWeight(.thin)
             Text(username)
         }

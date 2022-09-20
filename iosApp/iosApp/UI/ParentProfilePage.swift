@@ -15,6 +15,7 @@ struct ParentProfilePage: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     var chores: [ChoreTask]
     
+    
     var body: some View {
         
         ZStack {
@@ -63,7 +64,7 @@ struct ParentProfilePage: View {
                             }
                         }
                     }
-                }.navigationTitle("EdwardHimself")
+                }.navigationTitle(authViewModel.currentUser?.name ?? "")
                     .toolbar{Menu {
                         Button(action: { authViewModel.signOut()}, label: {
                             Text("sign out")
