@@ -8,6 +8,7 @@
 import SwiftUI
 import shared
 import Firebase
+import AuthenticationServices
 
 var child1 = Child(userID: 1, name: "Linda", dateOfBirth: "2012/02/14", chooseTheme: Theme(name: "Disney"), avatarPic: "Poly")
 
@@ -29,22 +30,12 @@ struct ParentLoginPage: View {
     
     @EnvironmentObject var authViewModel: AuthViewModel
     
-    
-    func goToHomeSecond(){
-        if let window = UIApplication.shared.windows.first
-        {
-            window.rootViewController = UIHostingController(rootView: ChildLoginPage())
-            window.makeKeyAndVisible()
-        }
-    }
-    
-    
     var body: some View {
-        
+
         NavigationView {
             ZStack {
                 Image("Background").resizable().scaledToFill().ignoresSafeArea().opacity(0.2)
-                
+
 //                another way to navigate with button and NavigationLink
                 Button(action: {
                     goToScan = true
@@ -53,58 +44,59 @@ struct ParentLoginPage: View {
                 })
                 .frame(width: UIScreen.main.bounds.width*0.9, height: UIScreen.main.bounds.height*0.9, alignment: .topTrailing)
                 .zIndex(100)
-                
+
                 NavigationLink(destination: ChildLoginPage(), isActive: $goToScan){
                     EmptyView()
                 }
                 .navigationBarHidden(true)
-                
+
                 VStack {
-                    
+
                     ProfilePhoto()
-                    
+
                     WelcomeAndSignUpText()
-                    
+
                     EntryField(textValue: $email, icon: Image("emailIcon"), placeholder: "Email Address", prompt: "", validation: $valid, isPassword: false)
                         .padding(.bottom, 3)
                     EntryField(textValue: $password, icon: Image("locksign"), placeholder: "Password: ", prompt: "", validation: $valid, isPassword: true)
-                        
-                    
-                    
+
+
+
                     Text("Forgot your password?")
                         .font(.caption)
                         .fontWeight(.light)
                         .foregroundColor(Color.blue)
                         .padding(.bottom, UIScreen.main.bounds.height*0.05)
-                    
+
                     if authViewModel.loginFailed == true{
                         Text("email or password is incorrect")
                     }
-                    
+
                     Button(action: {authViewModel.loginWithEmail(email: email, password: password)},
                            label: {
                         Image("loginBtn")
                     })
                     .padding(.bottom, UIScreen.main.bounds.height*0.03)
-                    
-                  
+
+
                     var li = [child1, child2, child3, child4, child5]
-                    
+
                     Image("separateLine")
                         .padding(.bottom, UIScreen.main.bounds.height*0.03)
-                    
+
                     ThirdPartyLogo()
                 }
             }
-            .onTapGesture {
-                hideKeyboard()
-            }
-            
+//            .onTapGesture {
+//                hideKeyboard()
+//            }
+
         }
         .navigationBarHidden(true)
-      
-        
+
+
     }
+    
     
 }
 
@@ -201,17 +193,76 @@ struct WelcomeAndSignUpText: View {
 
 struct ThirdPartyLogo: View {
     @EnvironmentObject var authViewModel: AuthViewModel
+    @State private var signInWithAppleDelegates: SignInWithAppleDelegates! = nil
+    @Environment(\.window) private var window: UIWindow?
     var body: some View {
         HStack{
             Spacer()
-            Image("AppleLoginBtn")
+//            Image("AppleLoginBtn")
+//            SignInWithAppleButton(.continue) { request in
+//                request.requestedScopes = [.email, .fullName]
+//            } onCompletion: { result in
+//                switch result{
+//                case .success(let auth):
+//                    switch auth.credential{
+//                    case let credential as ASAuthorizationAppleIDCredential:
+//                        let userId = credential.user
+//
+//                        let email = credential.email
+//                        let firstName = credential.fullName?.familyName
+//                        let lastName = credential.fullName?.givenName
+//                        print("DEBUG: \(firstName)")
+//                    default:
+//                        break
+//                    }
+//                case .failure(let error):
+//                    print("DEBUG: \(error)")
+//                }
+//            }
+            Button(action: performExistingAccountSetUpFlow, label: {Image("AppleLoginBtn")})
+            
             Spacer()
-//            Image("GoogleLoginBtn")
+            
             Button(action: authViewModel.loginWithGoogle, label: {Image("GoogleLoginBtn")})
             Spacer()
             Image("FacebookLoginBtn")
             Spacer()
         }
+    }
+    
+    func showAppleLogin(){
+        let request = ASAuthorizationAppleIDProvider().createRequest()
+        request.requestedScopes = [.fullName, .email]
+        performSignIn(using: [request])
+    }
+    
+    func performExistingAccountSetUpFlow(){
+        let requsts = [
+            ASAuthorizationAppleIDProvider().createRequest(),
+            ASAuthorizationPasswordProvider().createRequest()
+        ]
+        performSignIn(using: requsts)
+    }
+    
+    func performSignIn(using requests: [ASAuthorizationRequest]){
+        print("DEBUG:  1")
+        signInWithAppleDelegates = SignInWithAppleDelegates(window: window, onSignedIn: { result in
+            switch result{
+            case .success(let userId):
+                print("DEBUG: 2")
+                print("DEBUG: sign in succeed \(userId)")
+            case .failure(let error):
+                print("DEBUG: sign in with apple error \(error.localizedDescription)")
+                print("DEBUG: \(error)")
+            }
+        })
+        print("DEBUG: 3")
+        let controller = ASAuthorizationController(authorizationRequests: requests)
+        controller.delegate = self.signInWithAppleDelegates
+        controller.presentationContextProvider = signInWithAppleDelegates
+        
+        controller.performRequests()
+        print("DEBUG: 4")
     }
 }
 

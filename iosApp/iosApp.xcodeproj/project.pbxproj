@@ -42,6 +42,8 @@
 		2B57827128D835E900EFBB1C /* ApplicationUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B57827028D835E900EFBB1C /* ApplicationUtil.swift */; };
 		2B57827328D84E8400EFBB1C /* ProgressSpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B57827228D84E8400EFBB1C /* ProgressSpinner.swift */; };
 		2B57827628D85C2C00EFBB1C /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B57827528D85C2C00EFBB1C /* UserService.swift */; };
+		2B57827C28E19BD500EFBB1C /* EnvironmentWindowKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B57827B28E19BD500EFBB1C /* EnvironmentWindowKey.swift */; };
+		2B57828028E1A62B00EFBB1C /* SignInWithAppleDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B57827F28E1A62B00EFBB1C /* SignInWithAppleDelegates.swift */; };
 		2BDE71F228C38D4B005821C6 /* KeyboardExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDE71F128C38D4B005821C6 /* KeyboardExtension.swift */; };
 		3759E52B28B39C50000E0419 /* ChildLoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759E52A28B39C50000E0419 /* ChildLoginPage.swift */; };
 		3759E52F28B39CC6000E0419 /* ParentLoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759E52E28B39CC6000E0419 /* ParentLoginPage.swift */; };
@@ -100,6 +102,9 @@
 		2B57827028D835E900EFBB1C /* ApplicationUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationUtil.swift; sourceTree = "<group>"; };
 		2B57827228D84E8400EFBB1C /* ProgressSpinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressSpinner.swift; sourceTree = "<group>"; };
 		2B57827528D85C2C00EFBB1C /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		2B57827828DC40E800EFBB1C /* iosApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = iosApp.entitlements; sourceTree = "<group>"; };
+		2B57827B28E19BD500EFBB1C /* EnvironmentWindowKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnvironmentWindowKey.swift; sourceTree = "<group>"; };
+		2B57827F28E1A62B00EFBB1C /* SignInWithAppleDelegates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInWithAppleDelegates.swift; sourceTree = "<group>"; };
 		2BDE71F128C38D4B005821C6 /* KeyboardExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardExtension.swift; sourceTree = "<group>"; };
 		3759E52A28B39C50000E0419 /* ChildLoginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildLoginPage.swift; sourceTree = "<group>"; };
 		3759E52E28B39CC6000E0419 /* ParentLoginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentLoginPage.swift; sourceTree = "<group>"; };
@@ -194,6 +199,8 @@
 				2BDE71F128C38D4B005821C6 /* KeyboardExtension.swift */,
 				37FD897D28C3C22E00B5ABFE /* PopUpWindowModifier.swift */,
 				2B57827028D835E900EFBB1C /* ApplicationUtil.swift */,
+				2B57827F28E1A62B00EFBB1C /* SignInWithAppleDelegates.swift */,
+				2B57827B28E19BD500EFBB1C /* EnvironmentWindowKey.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -246,6 +253,7 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
+				2B57827828DC40E800EFBB1C /* iosApp.entitlements */,
 				2B57827728D97C1200EFBB1C /* ViewModel */,
 				2B57827428D85C1A00EFBB1C /* Service */,
 				2B4536B828CF5C0400678D0D /* Util */,
@@ -434,6 +442,7 @@
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				2B3B10B228C0B16D003E24DE /* AddChildPage.swift in Sources */,
 				37613CFD28C60D1D00422234 /* ChildDashboard.swift in Sources */,
+				2B57827C28E19BD500EFBB1C /* EnvironmentWindowKey.swift in Sources */,
 				2B57827128D835E900EFBB1C /* ApplicationUtil.swift in Sources */,
 				2BDE71F228C38D4B005821C6 /* KeyboardExtension.swift in Sources */,
 				3781DDCC28C4B453009F9904 /* NavigationBarView.swift in Sources */,
@@ -443,6 +452,7 @@
 				2B3B10B028BF980D003E24DE /* ContentView.swift in Sources */,
 				05F5D4B128C4CF0200194DBF /* AddChorePage.swift in Sources */,
 				2B4536BE28CF902900678D0D /* AuthViewModel.swift in Sources */,
+				2B57828028E1A62B00EFBB1C /* SignInWithAppleDelegates.swift in Sources */,
 				2B3B10AB28B7956A003E24DE /* DatePickerTextField.swift in Sources */,
 				37FD897E28C3C22E00B5ABFE /* PopUpWindowModifier.swift in Sources */,
 				2B57827328D84E8400EFBB1C /* ProgressSpinner.swift in Sources */,
@@ -622,9 +632,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = iosApp/iosApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
-				DEVELOPMENT_TEAM = KDG35238XZ;
+				DEVELOPMENT_TEAM = WDJG82TS77;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";
 				INFOPLIST_FILE = iosApp/Info.plist;
@@ -637,7 +648,7 @@
 					"-framework",
 					shared,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.onTaskAchiever;
+				PRODUCT_BUNDLE_IDENTIFIER = com.onTaskAchieverEFC;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -648,9 +659,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = iosApp/iosApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
-				DEVELOPMENT_TEAM = KDG35238XZ;
+				DEVELOPMENT_TEAM = WDJG82TS77;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";
 				INFOPLIST_FILE = iosApp/Info.plist;
@@ -663,7 +675,7 @@
 					"-framework",
 					shared,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.onTaskAchiever;
+				PRODUCT_BUNDLE_IDENTIFIER = com.onTaskAchieverEFC;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

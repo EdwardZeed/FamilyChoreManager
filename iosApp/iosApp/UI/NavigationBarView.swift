@@ -7,6 +7,7 @@
 //
 import SwiftUI
 import shared
+import AuthenticationServices
 
 var currentParent = Parent(userID: "0", name: "Chris", dateOfBirth: "2002/02/14", chooseTheme: Theme(name: "The Boys"), avatarPic: "Dragon")
 let achievement = Achievement(points: 1, message: "free three")
@@ -38,17 +39,17 @@ struct NavigationBarView: View {
                                  Label("Family", systemImage: "house")
                              }
                              .tag(Tab.dashboard)
-                        
+
                         ParentProfilePage(chores: [chore])
                             .tabItem{
                                 Label("Account", systemImage: "person")
                             }
                             .tag(Tab.currentUser)
-                    
+
                 }
                 .accentColor(.blue) //设置文字默认选中颜色
             }.navigationBarHidden(true)
-
+        
             
     }
 }
