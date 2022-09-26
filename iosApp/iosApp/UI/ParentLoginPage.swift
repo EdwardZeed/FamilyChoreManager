@@ -9,6 +9,7 @@ import SwiftUI
 import shared
 import Firebase
 import AuthenticationServices
+import CryptoKit
 
 var child1 = Child(userID: 1, name: "Linda", dateOfBirth: "2012/02/14", chooseTheme: Theme(name: "Disney"), avatarPic: "Poly")
 
@@ -219,7 +220,7 @@ struct ThirdPartyLogo: View {
 //                    print("DEBUG: \(error)")
 //                }
 //            }
-            Button(action: performExistingAccountSetUpFlow, label: {Image("AppleLoginBtn")})
+            Button(action: showAppleLogin, label: {Image("AppleLoginBtn")})
             
             Spacer()
             
@@ -231,22 +232,26 @@ struct ThirdPartyLogo: View {
     }
     
     func showAppleLogin(){
+        
+        let currentNonce = randomNonceString()
         let request = ASAuthorizationAppleIDProvider().createRequest()
         request.requestedScopes = [.fullName, .email]
-        performSignIn(using: [request])
+        request.nonce = sha256(currentNonce)
+        
+        performSignIn(using: [request], currentNonce: currentNonce)
     }
     
-    func performExistingAccountSetUpFlow(){
-        let requsts = [
-            ASAuthorizationAppleIDProvider().createRequest(),
-            ASAuthorizationPasswordProvider().createRequest()
-        ]
-        performSignIn(using: requsts)
-    }
+//    func performExistingAccountSetUpFlow(){
+//        let requsts = [
+//            ASAuthorizationAppleIDProvider().createRequest(),
+//            ASAuthorizationPasswordProvider().createRequest()
+//        ]
+//        performSignIn(using: requsts, )
+//    }
     
-    func performSignIn(using requests: [ASAuthorizationRequest]){
+    func performSignIn(using requests: [ASAuthorizationRequest], currentNonce: String){
         print("DEBUG:  1")
-        signInWithAppleDelegates = SignInWithAppleDelegates(window: window, onSignedIn: { result in
+        signInWithAppleDelegates = SignInWithAppleDelegates(window: window, currentNonce, authViewModel: authViewModel, onSignedIn: { result in
             switch result{
             case .success(let userId):
                 print("DEBUG: 2")

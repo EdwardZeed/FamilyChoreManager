@@ -1,14 +1,22 @@
 
 import UIKit
 import AuthenticationServices
+import CryptoKit
+import Firebase
+
+import shared
 
 class SignInWithAppleDelegates: NSObject {
     private let signInSucceeded: (Result<String, Error>) -> ()
     private weak var window: UIWindow!
+    var currentNonce = ""
+    var authViewModel: AuthViewModel
     
-    init(window: UIWindow?, onSignedIn: @escaping (Result<String, Error>) -> ()) {
+    init(window: UIWindow?, _ currentNonce: String, authViewModel: AuthViewModel,onSignedIn: @escaping (Result<String, Error>) -> ()) {
         self.window = window
         self.signInSucceeded = onSignedIn
+        self.currentNonce = currentNonce
+        self.authViewModel = authViewModel
     }
 }
 
@@ -29,23 +37,10 @@ extension SignInWithAppleDelegates: ASAuthorizationControllerDelegate {
     }
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        switch authorization.credential {
-        case let appleIdCredential as ASAuthorizationAppleIDCredential:
-            if let _ = appleIdCredential.email, let _ = appleIdCredential.fullName {
-                registerNewAccount(credential: appleIdCredential)
-            } else {
-                signInWithExistingAccount(credential: appleIdCredential)
-            }
-            
-            break
-            
-        case let passwordCredential as ASPasswordCredential:
-            signInWithUserAndPassword(credential: passwordCredential)
-            
-            break
-            
-        default:
-            break
+        
+        if let credential = authorization.credential as? ASAuthorizationAppleIDCredential{
+                
+            authViewModel.authenticateWithApple(credential: credential, currentNonce: currentNonce)
         }
     }
     
@@ -57,5 +52,17 @@ extension SignInWithAppleDelegates: ASAuthorizationControllerDelegate {
 extension SignInWithAppleDelegates: ASAuthorizationControllerPresentationContextProviding {
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         return self.window
+    }
+}
+
+class StoreNonce{
+    @Published var currentNonce = ""
+    
+    func SetCurrentNonce(currentNonce: String){
+        self.currentNonce = currentNonce
+    }
+
+    func GetCurrentNonce() -> String{
+        return currentNonce
     }
 }

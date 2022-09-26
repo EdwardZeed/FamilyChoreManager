@@ -11,8 +11,11 @@ import SwiftUI
 import Firebase
 import GoogleSignIn
 import shared
+import CryptoKit
+import AuthenticationServices
 
 class AuthViewModel: ObservableObject{
+    @Published var nonce = ""
     
     @Published var userSession:FirebaseAuth.User?
     @Published var currentUser: Parent?
@@ -28,6 +31,7 @@ class AuthViewModel: ObservableObject{
     
     @Published var loginFailed = false
     @Published var progressing = false
+    @AppStorage("loggedInWithThirdParty") var loggedInWithThirdParty: Bool = false
     
     var service = UserService()
     
@@ -205,5 +209,48 @@ class AuthViewModel: ObservableObject{
         }
         
     }
+    
+    func authenticateWithApple (credential: ASAuthorizationAppleIDCredential, currentNonce: String){
+        guard let token = credential.identityToken else{
+            print("error with firebase")
+            return
+        }
+        print("I am tokemn: \n",token)
+        guard let tokenString = String(data:token, encoding: .utf8) else{
+            print("Error with token")
+            return
+        }
+        
+        let firebaseCredential = OAuthProvider.credential(withProviderID: "apple.com", idToken: tokenString, rawNonce: currentNonce)
+        
+        Auth.auth().signIn(with: firebaseCredential){
+            result, error in
+            if let error = error{
+                print("DEBUG: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let user = result?.user else{return}
+            print("DEBUG: \(user.displayName)")
+            
+            self.userSession = user
+            self.loggedInWithThirdParty = true
+            let fullname = (credential.fullName?.givenName ?? "") + " " + (credential.fullName?.familyName ?? "")
+            let email = credential.email
+           
+            self.currentUser = Parent(userID: user.uid, name: fullname , dateOfBirth: "", chooseTheme: nil, avatarPic: "")
+            print(user.uid)
+            
+            let data = ["email": email, "name": fullname, "dateOfBirth": "", "userId": user.uid]
+            Firestore.firestore().collection("users")
+                .document(user.uid)
+                .setData(data)
+            self.fetchUser()
+        }
+    }
+    
 }
+
+
+
 
