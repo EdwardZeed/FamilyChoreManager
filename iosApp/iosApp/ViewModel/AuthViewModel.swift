@@ -28,18 +28,12 @@ class AuthViewModel: ObservableObject{
     
     @Published var loginFailed = false
     @Published var progressing = false
-    @AppStorage("loggedInWithThirdParty") var loggedInWithThirdParty: Bool = false
     
     var service = UserService()
     
     init(){
         self.userSession = Auth.auth().currentUser
-        if !loggedInWithThirdParty{
-            self.fetchUser()
-        }
-        else{
-            self.currentUser = Parent(userID: self.userSession?.uid ?? "", name: self.userSession?.displayName ?? "", dateOfBirth: "", chooseTheme: nil, avatarPic: "")
-        }
+        self.fetchUser()
     }
     
     func loginWithEmail(email: String, password: String){
@@ -55,7 +49,6 @@ class AuthViewModel: ObservableObject{
                 guard let user = auth?.user else {return}
                 self.progressing = false
                 self.userSession = user
-                self.loggedInWithThirdParty = false
                 self.fetchUser()
                 
                
@@ -96,8 +89,14 @@ class AuthViewModel: ObservableObject{
                 print("DEBUG: \(user.displayName)")
                 
                 self.userSession = user
-                self.loggedInWithThirdParty = true
-                self.currentUser = Parent(userID: user.uid, name: user.displayName ?? "", dateOfBirth: "", chooseTheme: nil, avatarPic: "")
+//                self.currentUser = Parent(userID: user.uid, name: user.displayName ?? "", dateOfBirth: "", chooseTheme: nil, avatarPic: "")
+                self.fetchUser()
+                
+                if self.currentUser == nil{
+                    print("DEBUG: registring for third party google")
+                    self.registerForThirdparty(email: user.email ?? "", name: user.displayName ?? "", userId: user.uid)
+                    self.fetchUser()
+                }
             }
             
         }
@@ -123,7 +122,6 @@ class AuthViewModel: ObservableObject{
             else{
                 guard let user = result?.user else {return}
                 self.userSession = user
-                self.loggedInWithThirdParty = false
                 let data = ["email": email, "name": name, "dateOfBirth": birthday, "userId": user.uid]
                 Firestore.firestore().collection("users")
                     .document(user.uid)
@@ -133,6 +131,13 @@ class AuthViewModel: ObservableObject{
             }
             
         }
+    }
+    
+    func registerForThirdparty(email: String, name: String, userId: String){
+        let data = ["email": email, "name": name, "userId": userId]
+        Firestore.firestore().collection("users")
+            .document(userId)
+            .setData(data)
     }
     
     func signOut(){

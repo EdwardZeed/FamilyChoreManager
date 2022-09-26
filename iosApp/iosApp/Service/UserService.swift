@@ -28,7 +28,7 @@ class UserService: ObservableObject{
                 
                 let userId: String = data["userId"] as! String
                 let name: String = data["name"] as! String
-                let dateOfBirth: String = data["dateOfBirth"] as! String
+                let dateOfBirth: String = data["dateOfBirth"] as? String ?? "no date of birth recorded"
                 let currentUser = Parent(userID: userId, name: name, dateOfBirth: dateOfBirth, chooseTheme: nil, avatarPic: nil)
                 
                 completion(currentUser)
