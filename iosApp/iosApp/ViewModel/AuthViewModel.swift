@@ -31,7 +31,6 @@ class AuthViewModel: ObservableObject{
     
     @Published var loginFailed = false
     @Published var progressing = false
-    @AppStorage("loggedInWithThirdParty") var loggedInWithThirdParty: Bool = false
     
     var service = UserService()
     
@@ -234,18 +233,15 @@ class AuthViewModel: ObservableObject{
             print("DEBUG: \(user.displayName)")
             
             self.userSession = user
-            self.loggedInWithThirdParty = true
-            let fullname = (credential.fullName?.givenName ?? "") + " " + (credential.fullName?.familyName ?? "")
-            let email = credential.email
            
-            self.currentUser = Parent(userID: user.uid, name: fullname , dateOfBirth: "", chooseTheme: nil, avatarPic: "")
-            print(user.uid)
-            
-            let data = ["email": email, "name": fullname, "dateOfBirth": "", "userId": user.uid]
-            Firestore.firestore().collection("users")
-                .document(user.uid)
-                .setData(data)
             self.fetchUser()
+            if self.currentUser == nil{
+                print("DEBUG: registering for third party apple")
+                let fullname: String = (credential.fullName?.givenName ?? "") + " " + (credential.fullName?.familyName ?? "")
+                let email: String = credential.email ?? ""
+                self.registerForThirdparty(email: email, name: fullname, userId: user.uid)
+                self.fetchUser()
+            }
         }
     }
     
