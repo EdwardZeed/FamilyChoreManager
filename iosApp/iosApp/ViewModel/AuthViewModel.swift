@@ -14,6 +14,10 @@ import shared
 import CryptoKit
 import AuthenticationServices
 
+import FacebookCore
+import FacebookLogin
+import FacebookShare
+
 class AuthViewModel: ObservableObject{
     @Published var nonce = ""
     
@@ -31,6 +35,10 @@ class AuthViewModel: ObservableObject{
     
     @Published var loginFailed = false
     @Published var progressing = false
+    
+    @Published var logged = true
+    @Published var email = ""
+    @State var manager = LoginManager()
     
     var service = UserService()
     
@@ -104,6 +112,62 @@ class AuthViewModel: ObservableObject{
             
         }
     }
+    
+    func loginWithFacebook() {
+
+        
+        if logged{
+            manager.logOut()
+            self.email = ""
+            logged = false
+        }
+        else{
+            manager.logIn(permissions: ["email"], from: nil){
+                (result, error) in
+                if error != nil{
+                    print(error!.localizedDescription)
+                    return
+                }
+                if !result!.isCancelled{
+                    self.logged = true
+                    let request = GraphRequest(graphPath: "me", parameters: ["fields":"email"])
+                    request.start{(_, res, _) in
+                        //it will return as dictionary
+                        guard let profileData = res as? [String : Any] else {return}
+                        
+                        
+                        let credential = FacebookAuthProvider
+                            .credential(withAccessToken: AccessToken.current!.tokenString)
+                        
+                        Auth.auth().signIn(with: credential){
+                            result, error in
+                            if let error = error{
+                                print("DEBUG: \(error.localizedDescription)")
+                                return
+                            }
+                            
+                            guard let user = result?.user else{return}
+                            print("DEBUG: \(user.displayName)")
+                            
+                            self.userSession = user
+                            self.fetchUser()
+                            print(user.uid)
+                            
+                            if self.currentUser == nil{
+                                print("DEBUG: registring for third party google")
+                                self.registerForThirdparty(email: user.email ?? "", name: user.displayName ?? "", userId: user.uid)
+                                self.fetchUser()
+                            }
+                        }
+                        
+                    }
+                }
+        
+                
+            }
+            
+        }
+        }
     
     func register(email: String, password: String, name: String, dateOfBirth: Date?) {
         

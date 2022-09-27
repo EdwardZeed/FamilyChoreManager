@@ -226,7 +226,8 @@ struct ThirdPartyLogo: View {
             
             Button(action: authViewModel.loginWithGoogle, label: {Image("GoogleLoginBtn")})
             Spacer()
-            Image("FacebookLoginBtn")
+            Button(action: authViewModel.loginWithFacebook, label: { Image("FacebookLoginBtn")})
+           
             Spacer()
         }
     }
