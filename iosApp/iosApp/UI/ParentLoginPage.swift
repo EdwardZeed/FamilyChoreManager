@@ -7,6 +7,9 @@
 
 import SwiftUI
 import shared
+import Firebase
+import AuthenticationServices
+import CryptoKit
 
 var child1 = Child(userID: 1, name: "Linda", dateOfBirth: "2012/02/14", chooseTheme: Theme(name: "Disney"), avatarPic: "Poly")
 
@@ -20,29 +23,20 @@ var child5: Child = Child(userID: 5, name: "Frank", dateOfBirth: "2001", chooseT
 
 struct ParentLoginPage: View {
     
-    @State var userName: String = ""
+    @State var email: String = ""
     @State var password: String = ""
     @State var goToScan = false
     @State var valid: Float = 0
-    @State var goToDashboard = false
+    @State var logInFail = false
     
-    
-    
-    func goToHomeSecond(){
-        if let window = UIApplication.shared.windows.first
-        {
-            window.rootViewController = UIHostingController(rootView: ChildLoginPage(child: child5))
-            window.makeKeyAndVisible()
-        }
-    }
-    
+    @EnvironmentObject var authViewModel: AuthViewModel
     
     var body: some View {
-        
+
         NavigationView {
             ZStack {
                 Image("Background").resizable().scaledToFill().ignoresSafeArea().opacity(0.2)
-                
+
 //                another way to navigate with button and NavigationLink
                 Button(action: {
                     goToScan = true
@@ -51,58 +45,60 @@ struct ParentLoginPage: View {
                 })
                 .frame(width: UIScreen.main.bounds.width*0.9, height: UIScreen.main.bounds.height*0.9, alignment: .topTrailing)
                 .zIndex(100)
-                
-                NavigationLink(destination: ChildLoginPage(child: Child(userID: 1, name: "Linda", dateOfBirth: "2012/02/14", chooseTheme: Theme(name: "Disney"), avatarPic: "Poly")), isActive: $goToScan){
+
+                NavigationLink(destination: ChildLoginPage(), isActive: $goToScan){
                     EmptyView()
                 }
                 .navigationBarHidden(true)
-                
+
                 VStack {
-                    
+
                     ProfilePhoto()
-                    
-                    
+
                     WelcomeAndSignUpText()
-                    
-                    EntryField(textValue: $userName, icon: Image("emailIcon"), placeholder: "Email Address", prompt: "", validation: $valid, isPassword: false)
+
+                    EntryField(textValue: $email, icon: Image("emailIcon"), placeholder: "Email Address", prompt: "", validation: $valid, isPassword: false)
                         .padding(.bottom, 3)
                     EntryField(textValue: $password, icon: Image("locksign"), placeholder: "Password: ", prompt: "", validation: $valid, isPassword: true)
-                        
-                    
-                    
+
+
+
                     Text("Forgot your password?")
                         .font(.caption)
                         .fontWeight(.light)
                         .foregroundColor(Color.blue)
                         .padding(.bottom, UIScreen.main.bounds.height*0.05)
-                    
-                    
-                    Button(action: {goToDashboard=true}, label: {
+
+                    if authViewModel.loginFailed == true{
+                        Text("email or password is incorrect")
+                    }
+
+                    Button(action: {authViewModel.loginWithEmail(email: email, password: password)},
+                           label: {
                         Image("loginBtn")
                     })
                     .padding(.bottom, UIScreen.main.bounds.height*0.03)
-                    
-                  
+
+
                     var li = [child1, child2, child3, child4, child5]
-                    NavigationLink(destination: NavigationBarView(username: userName,childList: li).ignoresSafeArea(), isActive: $goToDashboard){
-                        EmptyView()
-                    }.navigationBarHidden(true)
-                    
+
                     Image("separateLine")
                         .padding(.bottom, UIScreen.main.bounds.height*0.03)
-                    
+
                     ThirdPartyLogo()
                 }
             }
-            .onTapGesture {
-                hideKeyboard()
-            }
-            
+//            .onTapGesture {
+//                hideKeyboard()
+//            }
+
         }
         .navigationBarHidden(true)
-      
-        
+
+
     }
+    
+    
 }
 
 
@@ -197,16 +193,82 @@ struct WelcomeAndSignUpText: View {
 }
 
 struct ThirdPartyLogo: View {
+    @EnvironmentObject var authViewModel: AuthViewModel
+    @State private var signInWithAppleDelegates: SignInWithAppleDelegates! = nil
+    @Environment(\.window) private var window: UIWindow?
     var body: some View {
         HStack{
             Spacer()
-            Image("AppleLoginBtn")
+//            Image("AppleLoginBtn")
+//            SignInWithAppleButton(.continue) { request in
+//                request.requestedScopes = [.email, .fullName]
+//            } onCompletion: { result in
+//                switch result{
+//                case .success(let auth):
+//                    switch auth.credential{
+//                    case let credential as ASAuthorizationAppleIDCredential:
+//                        let userId = credential.user
+//
+//                        let email = credential.email
+//                        let firstName = credential.fullName?.familyName
+//                        let lastName = credential.fullName?.givenName
+//                        print("DEBUG: \(firstName)")
+//                    default:
+//                        break
+//                    }
+//                case .failure(let error):
+//                    print("DEBUG: \(error)")
+//                }
+//            }
+            Button(action: showAppleLogin, label: {Image("AppleLoginBtn")})
+            
             Spacer()
-            Image("GoogleLoginBtn")
+            
+            Button(action: authViewModel.loginWithGoogle, label: {Image("GoogleLoginBtn")})
             Spacer()
-            Image("FacebookLoginBtn")
+            Button(action: authViewModel.loginWithFacebook, label: { Image("FacebookLoginBtn")})
+           
             Spacer()
         }
+    }
+    
+    func showAppleLogin(){
+        
+        let currentNonce = randomNonceString()
+        let request = ASAuthorizationAppleIDProvider().createRequest()
+        request.requestedScopes = [.fullName, .email]
+        request.nonce = sha256(currentNonce)
+        
+        performSignIn(using: [request], currentNonce: currentNonce)
+    }
+    
+//    func performExistingAccountSetUpFlow(){
+//        let requsts = [
+//            ASAuthorizationAppleIDProvider().createRequest(),
+//            ASAuthorizationPasswordProvider().createRequest()
+//        ]
+//        performSignIn(using: requsts, )
+//    }
+    
+    func performSignIn(using requests: [ASAuthorizationRequest], currentNonce: String){
+        print("DEBUG:  1")
+        signInWithAppleDelegates = SignInWithAppleDelegates(window: window, currentNonce, authViewModel: authViewModel, onSignedIn: { result in
+            switch result{
+            case .success(let userId):
+                print("DEBUG: 2")
+                print("DEBUG: sign in succeed \(userId)")
+            case .failure(let error):
+                print("DEBUG: sign in with apple error \(error.localizedDescription)")
+                print("DEBUG: \(error)")
+            }
+        })
+        print("DEBUG: 3")
+        let controller = ASAuthorizationController(authorizationRequests: requests)
+        controller.delegate = self.signInWithAppleDelegates
+        controller.presentationContextProvider = signInWithAppleDelegates
+        
+        controller.performRequests()
+        print("DEBUG: 4")
     }
 }
 

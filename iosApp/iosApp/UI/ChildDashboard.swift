@@ -14,7 +14,7 @@ struct Preview_ChildDashBoardPage: PreviewProvider {
 
     static var previews: some View {
 
-        var currentParent = Parent(userID: 0, name: "Chris", dateOfBirth: "2002/02/14", chooseTheme: Theme(name: "The Boys"), avatarPic: "Dragon")
+        var currentParent = Parent(userID: "0", name: "Chris", dateOfBirth: "2002/02/14", chooseTheme: Theme(name: "The Boys"), avatarPic: "Dragon")
         var child1 = Child(userID: 1, name: "Linda", dateOfBirth: "2012/02/14", chooseTheme: Theme(name: "Disney"), avatarPic: "Poly")
 
         var child2 = Child(userID: 2, name: "Anna", dateOfBirth: "2012/03/14", chooseTheme: Theme(name: "Marvel"), avatarPic: "IronMan")
@@ -39,7 +39,7 @@ struct ChildDashBoardPage: View {
     var parents: [Parent]
     
 
-    @State var goToChildInformationPage = false
+    @State var goToChildProfilePage = false
     
     @State var currentSelectChild: Child = Child(userID: -1, name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: "")
     
@@ -74,7 +74,7 @@ struct ChildDashBoardPage: View {
                                 ForEach(children,id:\.self){child in
                                     HStack{
                                         Button(action: {
-                                            goToChildInformationPage = true
+                                            goToChildProfilePage = true
                                             currentSelectChild = child
                                          
                                         }, label: {
@@ -91,7 +91,7 @@ struct ChildDashBoardPage: View {
                                
                                 
                             }
-                            NavigationLink(destination: ChildAccountPage(currentChild: currentSelectChild), isActive: $goToChildInformationPage){
+                            NavigationLink(destination: ChildProfilePage(currentChild: currentSelectChild), isActive: $goToChildProfilePage){
                                 EmptyView()
                             }
                             
