@@ -44,7 +44,9 @@
 		2B57827628D85C2C00EFBB1C /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B57827528D85C2C00EFBB1C /* UserService.swift */; };
 		2B57827C28E19BD500EFBB1C /* EnvironmentWindowKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B57827B28E19BD500EFBB1C /* EnvironmentWindowKey.swift */; };
 		2B57828028E1A62B00EFBB1C /* SignInWithAppleDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B57827F28E1A62B00EFBB1C /* SignInWithAppleDelegates.swift */; };
+		2B57828728E57F3A00EFBB1C /* AddChildViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B57828628E57F3A00EFBB1C /* AddChildViewModel.swift */; };
 		2BDE71F228C38D4B005821C6 /* KeyboardExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDE71F128C38D4B005821C6 /* KeyboardExtension.swift */; };
+		2BF4E55B28E9F79D006CC58E /* DashBoardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4E55A28E9F79D006CC58E /* DashBoardService.swift */; };
 		3759E52B28B39C50000E0419 /* ChildLoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759E52A28B39C50000E0419 /* ChildLoginPage.swift */; };
 		3759E52F28B39CC6000E0419 /* ParentLoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759E52E28B39CC6000E0419 /* ParentLoginPage.swift */; };
 		37613CFB28C6086000422234 /* ChildQRCodePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37613CFA28C6086000422234 /* ChildQRCodePage.swift */; };
@@ -109,7 +111,9 @@
 		2B57827828DC40E800EFBB1C /* iosApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = iosApp.entitlements; sourceTree = "<group>"; };
 		2B57827B28E19BD500EFBB1C /* EnvironmentWindowKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnvironmentWindowKey.swift; sourceTree = "<group>"; };
 		2B57827F28E1A62B00EFBB1C /* SignInWithAppleDelegates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInWithAppleDelegates.swift; sourceTree = "<group>"; };
+		2B57828628E57F3A00EFBB1C /* AddChildViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddChildViewModel.swift; sourceTree = "<group>"; };
 		2BDE71F128C38D4B005821C6 /* KeyboardExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardExtension.swift; sourceTree = "<group>"; };
+		2BF4E55A28E9F79D006CC58E /* DashBoardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashBoardService.swift; sourceTree = "<group>"; };
 		3759E52A28B39C50000E0419 /* ChildLoginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildLoginPage.swift; sourceTree = "<group>"; };
 		3759E52E28B39CC6000E0419 /* ParentLoginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentLoginPage.swift; sourceTree = "<group>"; };
 		37613CFA28C6086000422234 /* ChildQRCodePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildQRCodePage.swift; sourceTree = "<group>"; };
@@ -218,6 +222,7 @@
 			isa = PBXGroup;
 			children = (
 				2B57827528D85C2C00EFBB1C /* UserService.swift */,
+				2BF4E55A28E9F79D006CC58E /* DashBoardService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -225,6 +230,7 @@
 		2B57827728D97C1200EFBB1C /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				2B57828628E57F3A00EFBB1C /* AddChildViewModel.swift */,
 				2B4536BD28CF902900678D0D /* AuthViewModel.swift */,
 			);
 			path = ViewModel;
@@ -309,10 +315,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7555FFA5242A565B00829871 /* Build configuration list for PBXNativeTarget "iosApp" */;
 			buildPhases = (
+				7555FF79242A565900829871 /* Resources */,
 				7555FFB5242A651A00829871 /* ShellScript */,
 				7555FF77242A565900829871 /* Sources */,
 				7555FF78242A565900829871 /* Frameworks */,
-				7555FF79242A565900829871 /* Resources */,
 				7555FFB4242A642300829871 /* Embed Frameworks */,
 			);
 			buildRules = (
@@ -452,6 +458,7 @@
 				37613CFB28C6086000422234 /* ChildQRCodePage.swift in Sources */,
 				2B57827628D85C2C00EFBB1C /* UserService.swift in Sources */,
 				2B3B10AD28BDE43A003E24DE /* ParentProfilePage.swift in Sources */,
+				2BF4E55B28E9F79D006CC58E /* DashBoardService.swift in Sources */,
 				05EE617128E1FFAD007C1354 /* AppleLoginUtil.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				2B3B10B228C0B16D003E24DE /* AddChildPage.swift in Sources */,
@@ -469,6 +476,7 @@
 				2B57828028E1A62B00EFBB1C /* SignInWithAppleDelegates.swift in Sources */,
 				2B3B10AB28B7956A003E24DE /* DatePickerTextField.swift in Sources */,
 				37FD897E28C3C22E00B5ABFE /* PopUpWindowModifier.swift in Sources */,
+				2B57828728E57F3A00EFBB1C /* AddChildViewModel.swift in Sources */,
 				2B57827328D84E8400EFBB1C /* ProgressSpinner.swift in Sources */,
 				37FD898028C3C27F00B5ABFE /* AssignChorePopUpWindow.swift in Sources */,
 				05D24AE928C489170097A7C2 /* SignContractPage.swift in Sources */,
@@ -648,6 +656,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = iosApp/iosApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = WDJG82TS77;
 				ENABLE_PREVIEWS = YES;
@@ -657,6 +666,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",
@@ -675,6 +685,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = iosApp/iosApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = WDJG82TS77;
 				ENABLE_PREVIEWS = YES;
@@ -684,6 +695,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",

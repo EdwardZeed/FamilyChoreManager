@@ -16,6 +16,9 @@ struct AddChildPage: View {
     @State var theme = ""
     var themes: [String] = ["default", "basketball"]
     
+    @EnvironmentObject var addChildViewModel: AddChildViewModel
+    @Environment(\.presentationMode) var presentationMode
+    
     var body: some View {
         ZStack {
             Image("Background").resizable()
@@ -66,6 +69,7 @@ struct AddChildPage: View {
                 
                 
                 Button {
+                    addChildViewModel.addChild(name: childName, dateOfBirth: dateOfBirth, theme: theme)
                     
                 } label: {
                     Text("Add child")
@@ -83,6 +87,11 @@ struct AddChildPage: View {
         }
         .onTapGesture {
             hideKeyboard()
+        }
+        .onReceive(addChildViewModel.$success) { success in
+            if success{
+                presentationMode.wrappedValue.dismiss()
+            }
         }
         
     }

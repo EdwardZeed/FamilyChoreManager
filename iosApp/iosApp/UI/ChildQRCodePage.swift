@@ -9,11 +9,11 @@
 import SwiftUI
 import shared
 
-var child10 = Child(userID: 1, name: "Linda", dateOfBirth: "2012/02/14", chooseTheme: Theme(name: "Disney"), avatarPic: "Poly")
+var child10 = Child(userID: "1", name: "Linda", dateOfBirth: "2012/02/14", chooseTheme: Theme(name: "Disney"), avatarPic: "Poly")
 
-var child11 = Child(userID: 2, name: "Anna", dateOfBirth: "2012/03/14", chooseTheme: Theme(name: "Marvel"), avatarPic: "IronMan")
+var child11 = Child(userID: "2", name: "Anna", dateOfBirth: "2012/03/14", chooseTheme: Theme(name: "Marvel"), avatarPic: "IronMan")
 
-var child12 = Child(userID: 3, name: "Bulankin", dateOfBirth: "2012/05/14", chooseTheme: Theme(name: "T-34"), avatarPic: "PP_50")
+var child12 = Child(userID: "3", name: "Bulankin", dateOfBirth: "2012/05/14", chooseTheme: Theme(name: "T-34"), avatarPic: "PP_50")
 
 
 
@@ -45,7 +45,7 @@ struct ChildQRCodePage: View {
 
 struct ChildQRCodePage_Previews: PreviewProvider {
     static var previews: some View {
-        ChildQRCodePage(child: Child(userID: 0, name: "Chris", dateOfBirth: "1234/05/06", chooseTheme: Theme(name: "Devil May Cry"), avatarPic: "Nero"))
+        ChildQRCodePage(child: Child(userID: "0", name: "Chris", dateOfBirth: "1234/05/06", chooseTheme: Theme(name: "Devil May Cry"), avatarPic: "Nero"))
         
     }
 }

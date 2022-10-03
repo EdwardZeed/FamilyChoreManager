@@ -167,7 +167,43 @@ class AuthViewModel: ObservableObject{
             }
             
         }
+    }
+    
+    func authenticateWithApple (credential: ASAuthorizationAppleIDCredential, currentNonce: String){
+        guard let token = credential.identityToken else{
+            print("error with firebase")
+            return
         }
+        print("I am tokemn: \n",token)
+        guard let tokenString = String(data:token, encoding: .utf8) else{
+            print("Error with token")
+            return
+        }
+        
+        let firebaseCredential = OAuthProvider.credential(withProviderID: "apple.com", idToken: tokenString, rawNonce: currentNonce)
+        
+        Auth.auth().signIn(with: firebaseCredential){
+            result, error in
+            if let error = error{
+                print("DEBUG: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let user = result?.user else{return}
+            print("DEBUG: \(user.displayName)")
+            
+            self.userSession = user
+           
+            self.fetchUser()
+            if self.currentUser == nil{
+                print("DEBUG: registering for third party apple")
+                let fullname: String = (credential.fullName?.givenName ?? "") + " " + (credential.fullName?.familyName ?? "")
+                let email: String = credential.email ?? ""
+                self.registerForThirdparty(email: email, name: fullname, userId: user.uid)
+                self.fetchUser()
+            }
+        }
+    }
     
     func register(email: String, password: String, name: String, dateOfBirth: Date?) {
         
@@ -176,6 +212,7 @@ class AuthViewModel: ObservableObject{
         }
        
         let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/YYYY"
         let birthday = dateFormatter.string(from: dateOfBirth!)
         print("DEBUG: \(birthday)")
         
@@ -273,41 +310,7 @@ class AuthViewModel: ObservableObject{
         
     }
     
-    func authenticateWithApple (credential: ASAuthorizationAppleIDCredential, currentNonce: String){
-        guard let token = credential.identityToken else{
-            print("error with firebase")
-            return
-        }
-        print("I am tokemn: \n",token)
-        guard let tokenString = String(data:token, encoding: .utf8) else{
-            print("Error with token")
-            return
-        }
-        
-        let firebaseCredential = OAuthProvider.credential(withProviderID: "apple.com", idToken: tokenString, rawNonce: currentNonce)
-        
-        Auth.auth().signIn(with: firebaseCredential){
-            result, error in
-            if let error = error{
-                print("DEBUG: \(error.localizedDescription)")
-                return
-            }
-            
-            guard let user = result?.user else{return}
-            print("DEBUG: \(user.displayName)")
-            
-            self.userSession = user
-           
-            self.fetchUser()
-            if self.currentUser == nil{
-                print("DEBUG: registering for third party apple")
-                let fullname: String = (credential.fullName?.givenName ?? "") + " " + (credential.fullName?.familyName ?? "")
-                let email: String = credential.email ?? ""
-                self.registerForThirdparty(email: email, name: fullname, userId: user.uid)
-                self.fetchUser()
-            }
-        }
-    }
+    
     
 }
 
