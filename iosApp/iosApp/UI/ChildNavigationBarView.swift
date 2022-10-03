@@ -38,7 +38,7 @@ struct ChildNavigationBarView: View {
                                 Label("Family", systemImage: "house")
                             }
                             .tag(Tab.dashboard)
-                        ChildAccountPage(currentChild: Child(userID: 10, name: userName, dateOfBirth: "2015/01/03", chooseTheme: Theme(name: "Viva"), avatarPic: "Rifle"))
+                        ChildAccountPage(currentChild: Child(userID: "10", name: userName, dateOfBirth: "2015/01/03", chooseTheme: Theme(name: "Viva"), avatarPic: "Rifle"))
                             .tabItem{//使用label 创建tabitem图文
                                 Label("Account", systemImage: "person")
                             }

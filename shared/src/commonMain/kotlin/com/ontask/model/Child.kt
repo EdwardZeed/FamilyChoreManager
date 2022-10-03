@@ -10,7 +10,7 @@ package com.ontask.model
  * @param dateOfBirth
  */
 data class Child(
-    val userID: Int = 0,
+    val userID: String,
     var name: String,
     var dateOfBirth: String,
     var chooseTheme: Theme,

@@ -15,34 +15,32 @@ struct Preview_DashBoardPage: PreviewProvider {
     static var previews: some View {
         
         var currentParent = Parent(userID: "0", name: "Chris", dateOfBirth: "2002/02/14", chooseTheme: Theme(name: "The Boys"), avatarPic: "Dragon")
-        var child1 = Child(userID: 1, name: "Linda", dateOfBirth: "2012/02/14", chooseTheme: Theme(name: "Disney"), avatarPic: "Poly")
+        var child1 = Child(userID: "1", name: "Linda", dateOfBirth: "2012/02/14", chooseTheme: Theme(name: "Disney"), avatarPic: "Poly")
 
-        var child2 = Child(userID: 2, name: "Anna", dateOfBirth: "2012/03/14", chooseTheme: Theme(name: "Marvel"), avatarPic: "IronMan")
+        var child2 = Child(userID: "2", name: "Anna", dateOfBirth: "2012/03/14", chooseTheme: Theme(name: "Marvel"), avatarPic: "IronMan")
 
-        var child3 = Child(userID: 3, name: "Bulankin", dateOfBirth: "2012/05/14", chooseTheme: Theme(name: "T-34"), avatarPic: "PP_50")
+        var child3 = Child(userID: "3", name: "Bulankin", dateOfBirth: "2012/05/14", chooseTheme: Theme(name: "T-34"), avatarPic: "PP_50")
 
-        var child4: Child = Child(userID: 4, name: "Frank", dateOfBirth: "2001", chooseTheme: Theme(name: "T-34"), avatarPic: "Default")
+        var child4: Child = Child(userID: "4", name: "Frank", dateOfBirth: "2001", chooseTheme: Theme(name: "T-34"), avatarPic: "Default")
 
-        var child5: Child = Child(userID: 5, name: "Frank", dateOfBirth: "2001", chooseTheme: Theme(name: "Minecraft"), avatarPic: "Default")
+        var child5: Child = Child(userID: "5", name: "Frank", dateOfBirth: "2001", chooseTheme: Theme(name: "Minecraft"), avatarPic: "Default")
 
 
         var childList = [child3,child2,child1]
         var parentList = [currentParent]
-        DashBoardPage(children: childList, parents:  parentList)
+        DashBoardPage()
     }
 }
 
 
 struct DashBoardPage: View {
-    var children: [Child]
-    var parents: [Parent]
-    
-
     @State var goToChildProfilePage = false
     @State var goToParentProfilePage = false
     
     @EnvironmentObject var authViewModel: AuthViewModel
-    @State var currentSelectChild: Child = Child(userID: -1, name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: "")
+    @State var currentSelectChild: Child = Child(userID: "1", name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: "")
+    
+    @EnvironmentObject var addChildViewModel: AddChildViewModel
     
     var body: some View {
         
@@ -72,7 +70,7 @@ struct DashBoardPage: View {
                             Title_and_home_Page().frame(width: UIScreen.main.bounds.width*0.95,alignment: .leading)
                             
                             LazyVStack{
-                                ForEach(parents,id:\.self){parent in
+                                ForEach(self.addChildViewModel.parents, id: \.self){parent in
                                     HStack{
                                         Button(action: {
                                             goToParentProfilePage = true
@@ -93,7 +91,7 @@ struct DashBoardPage: View {
 //                                    }
                                     
                                 }
-                                ForEach(children,id:\.self){child in
+                                ForEach(self.addChildViewModel.children, id: \.self){child in
                                     HStack{
                                         Button(action: {
                                             goToChildProfilePage = true
