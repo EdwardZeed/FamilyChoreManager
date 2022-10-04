@@ -88,11 +88,9 @@ fun assignChoresPageContents(navController: NavHostController) {
                     color = Color.White
                 )
             }
-
         }
     }
 }
-
 
 @Composable
 fun choreCard(choreTask: ChoreTask) {
@@ -139,15 +137,10 @@ fun choreCard(choreTask: ChoreTask) {
                 Spacer(modifier = Modifier.padding(23.dp))
                 threePointButton()
             }
-
         }
-
     }
-
     Spacer(modifier = Modifier.padding(10.dp))
-
 }
-
 
 // reference: https://stackoverflow.com/questions/66048620/how-to-change-button-background-color-on-click-of-the-button
 @Composable
@@ -171,7 +164,6 @@ fun onePointButton() {
 // reference: https://stackoverflow.com/questions/66048620/how-to-change-button-background-color-on-click-of-the-button
 @Composable
 fun twoPointButton() {
-
     var selected by remember { mutableStateOf(false) }
     val color = if (selected) Color(0xffA195E9) else Color.White
 
@@ -190,7 +182,6 @@ fun twoPointButton() {
 // reference: https://stackoverflow.com/questions/66048620/how-to-change-button-background-color-on-click-of-the-button
 @Composable
 fun threePointButton() {
-
     var selected by remember { mutableStateOf(false) }
     val color = if (selected) Color(0xffA195E9) else Color.White
 

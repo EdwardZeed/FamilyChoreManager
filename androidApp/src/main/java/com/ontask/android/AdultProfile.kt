@@ -159,13 +159,9 @@ fun AdultProfilePageContents(navController: NavHostController) {
                 modifier = Modifier
                     .size(width = cardWidth, height = 120.dp),
                 border = BorderStroke(1.dp, Color(0xff878787)),
-//                elevation = 10.dp, // shadow around box
+                //elevation = 10.dp, // shadow around box
                 shape = RoundedCornerShape(10.dp)
-            ) {
-
-            }
-
+            ) {}
         }
-
     }
 }

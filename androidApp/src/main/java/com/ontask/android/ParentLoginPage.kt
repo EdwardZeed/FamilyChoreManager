@@ -224,7 +224,6 @@ fun emailInput(modifier: Modifier = Modifier, localFocusManager: FocusManager): 
             focusedBorderColor = Color(0xff656565),
             unfocusedBorderColor = Color(0xff989898)
         )
-
     )
 
     return email
@@ -235,7 +234,8 @@ fun passwordInput(modifier: Modifier, loaclFoucsManager: FocusManager): String{
     var password by remember { mutableStateOf("") }
     var passwordHidden by remember { mutableStateOf(true) }
 
-    OutlinedTextField(value = password,
+    OutlinedTextField(
+        value = password,
         onValueChange = { password = it },
         label = { Text(text = "Password") },
         visualTransformation = if (passwordHidden) PasswordVisualTransformation() else VisualTransformation.None,
@@ -247,7 +247,8 @@ fun passwordInput(modifier: Modifier, loaclFoucsManager: FocusManager): String{
                 imageVector = Icons.Filled.Lock,
                 contentDescription = "password leading icon",
                 tint = Color(0xff656565)
-            ) },
+            )
+        },
         trailingIcon = {
             IconButton(onClick = { passwordHidden = !passwordHidden }) {
                 val visibilityIcon =
@@ -261,7 +262,6 @@ fun passwordInput(modifier: Modifier, loaclFoucsManager: FocusManager): String{
             focusedBorderColor = Color(0xff656565),
             unfocusedBorderColor = Color(0xff989898)
         )
-
     )
 
     return password

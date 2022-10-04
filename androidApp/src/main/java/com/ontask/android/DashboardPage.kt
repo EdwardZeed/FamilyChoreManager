@@ -1,5 +1,7 @@
 package com.ontask.android
 
+import com.ontask.model.Child
+import com.ontask.model.Theme
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -35,8 +37,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.ontask.model.Child
-import com.ontask.model.Theme
 
 @Composable
 fun dashboardPage(navController: NavHostController) {
@@ -56,7 +56,6 @@ fun dashboardPageContents(navController: NavHostController) {
         .focusable()
         .background(color = Color.White)
     ) {
-
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxSize()
@@ -92,7 +91,6 @@ fun dashboardPageContents(navController: NavHostController) {
                 Spacer(modifier = Modifier.size(width = 100.dp, height = 0.dp)) // TODO: the space here needs to be device-dependent OR make the floating action button bottom right overlayed the actual screen
 
                 DashboardActionButton(navController)
-
             }
 
             Row(
@@ -116,18 +114,16 @@ fun dashboardPageContents(navController: NavHostController) {
                         fontSize = 17.sp
                     )
                 }
-
-
             }
 
-            // tODO: dummy data
+            // TODO: dummy data
             val childList = listOf(
-                Child(1, "Anna", "", Theme(""), "daughter"),
-                Child(2, "Bob", "", Theme(""), "son"),
-                Child(3, "Carol", "", Theme(""), "daughter"),
-                Child(4, "Denise", "", Theme(""), "daughter"),
-                Child(5, "Emily", "", Theme(""), "daughter"),
-                Child(6, "Felix", "", Theme(""), "son")
+                Child("1", "Anna", "", Theme(""), "daughter"),
+                Child("2", "Bob", "", Theme(""), "son"),
+                Child("3", "Carol", "", Theme(""), "daughter"),
+                Child("4", "Denise", "", Theme(""), "daughter"),
+                Child("5", "Emily", "", Theme(""), "daughter"),
+                Child("6", "Felix", "", Theme(""), "son")
             )
 
             Column(
@@ -140,7 +136,6 @@ fun dashboardPageContents(navController: NavHostController) {
             }
         }
     }
-
 }
 
 @Composable
@@ -156,7 +151,7 @@ fun childProfileCard(child: Child, navController: NavHostController) {
                 navController.navigate("childProfile_screen")
             },
         border = BorderStroke(1.5.dp, Color.White),
-        elevation = 10.dp, // shadow around box
+        elevation = 10.dp, //shadow around box
         shape = RoundedCornerShape(10.dp)
     ) {
         Column() {
@@ -172,7 +167,7 @@ fun childProfileCard(child: Child, navController: NavHostController) {
 
                 Column(
                     modifier = Modifier
-//                        .height(23.dp)
+                        //.height(23.dp)
                         .padding(23.dp)
                 ) {
                     Text(
@@ -183,7 +178,6 @@ fun childProfileCard(child: Child, navController: NavHostController) {
             }
 
             Row() {
-
                 Image(
                     painter = painterResource(id = R.drawable.medal_icon),
                     contentDescription = "medal icon",
@@ -222,7 +216,6 @@ fun childProfileCard(child: Child, navController: NavHostController) {
                 Column(modifier = Modifier.padding(10.dp)) {
                     Text(text = "{20}")
                 }
-
             }
         }
     }
@@ -240,16 +233,18 @@ fun DashboardActionButton(
     val list = listOf("Add Child","Add Chore")
     var context = LocalContext.current
     var selectedItem = remember{mutableStateOf("")}
-//    Column(
-//        modifier = Modifier
-//            .fillMaxSize()
-//            .fillMaxHeight()
-//            .fillMaxWidth()
-//            .padding(20.dp),
-//
-//        verticalArrangement = Arrangement.Bottom,
-//        horizontalAlignment = Alignment.End
-//    ) {
+
+    //    Column(
+    //        modifier = Modifier
+    //            .fillMaxSize()
+    //            .fillMaxHeight()
+    //            .fillMaxWidth()
+    //            .padding(20.dp),
+    //
+    //        verticalArrangement = Arrangement.Bottom,
+    //        horizontalAlignment = Alignment.End
+    //    ) {}
+
     Box(){
         FloatingActionButton(
             onClick = {
@@ -273,9 +268,6 @@ fun DashboardActionButton(
             DropdownMenuItem(onClick = { navController.navigate("addChore_screen") }) {
                 Text(text = "Add Chores")
             }
-
         }
     }
-
-
 }

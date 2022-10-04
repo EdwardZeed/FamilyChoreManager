@@ -30,7 +30,6 @@ fun childProfilePage(navController: NavHostController) {
 
 @Composable
 fun childProfilePageContents(navController: NavHostController) {
-
     Box(modifier = Modifier
         .fillMaxSize()
         .focusable()
@@ -42,7 +41,6 @@ fun childProfilePageContents(navController: NavHostController) {
                 .padding(20.dp)
         ) {
             Row() {
-
                 Text(
                     text = "{Child name}",
                     fontWeight = FontWeight.Bold,
@@ -57,7 +55,6 @@ fun childProfilePageContents(navController: NavHostController) {
             Spacer(modifier = Modifier.height(5.dp))
 
             Row() {
-
                 Image(
                     painter = painterResource(id = R.drawable.daughter), // TODO: the icons from dashboard page branch need to be copied over to this branch
                     contentDescription = "daughter icon",
@@ -73,7 +70,6 @@ fun childProfilePageContents(navController: NavHostController) {
                         .height(70.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-
                     Image(
                         painter = painterResource(id = R.drawable.medal_icon),
                         contentDescription = "medal icon",
@@ -112,7 +108,6 @@ fun childProfilePageContents(navController: NavHostController) {
                     Column(modifier = Modifier.padding(10.dp)) {
                         Text(text = "20")
                     }
-
                 }
             }
 
@@ -167,12 +162,9 @@ fun childProfilePageContents(navController: NavHostController) {
                 modifier = Modifier
                     .size(width = cardWidth, height = 120.dp),
                 border = BorderStroke(1.dp, Color(0xff878787)),
-//                elevation = 10.dp, // shadow around box
+                //elevation = 10.dp, // shadow around box
                 shape = RoundedCornerShape(10.dp)
-            ) {
-
-
-            }
+            ) {}
 
             Spacer(modifier = Modifier.height(5.dp))
 
@@ -199,17 +191,11 @@ fun childProfilePageContents(navController: NavHostController) {
                 modifier = Modifier
                     .size(width = cardWidth, height = 120.dp),
                 border = BorderStroke(1.dp, Color(0xff878787)),
-//                elevation = 10.dp, // shadow around box
+                //elevation = 10.dp, // shadow around box
                 shape = RoundedCornerShape(10.dp)
-            ) {
-
-
-            }
-
-
+            ) {}
         }
     }
-
 }
 
 // reference: https://www.geeksforgeeks.org/floating-action-button-in-android-using-jetpack-compose/
@@ -218,20 +204,23 @@ fun ActionButton_2(navController: NavHostController) {
     var showMenu by remember {
         mutableStateOf(false)
     }
-//    Column(
-//        modifier = Modifier
-//            .fillMaxSize()
-//            .fillMaxHeight()
-//            .fillMaxWidth()
-//            .padding(20.dp),
-//
-//        verticalArrangement = Arrangement.Bottom,
-//        horizontalAlignment = Alignment.End
-//    ) {
+
+    //    Column(
+    //        modifier = Modifier
+    //            .fillMaxSize()
+    //            .fillMaxHeight()
+    //            .fillMaxWidth()
+    //            .padding(20.dp),
+    //
+    //        verticalArrangement = Arrangement.Bottom,
+    //        horizontalAlignment = Alignment.End
+    //    ) {
+    //    }
+
     Box(){
         FloatingActionButton(
             onClick = {
-                showMenu = !showMenu//TODO: click the plus button should do something here -- open up a menu with some options
+                showMenu = !showMenu //TODO: click the plus button should do something here -- open up a menu with some options
             },
             backgroundColor = Color(0xff689FEC),
             contentColor = Color.White,
@@ -250,9 +239,6 @@ fun ActionButton_2(navController: NavHostController) {
             }) {
                 Text(text = "Assign Chores")
             }
-
         }
     }
-//    }
 }
-
