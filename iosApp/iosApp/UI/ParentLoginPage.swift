@@ -251,24 +251,20 @@ struct ThirdPartyLogo: View {
 //    }
     
     func performSignIn(using requests: [ASAuthorizationRequest], currentNonce: String){
-        print("DEBUG:  1")
         signInWithAppleDelegates = SignInWithAppleDelegates(window: window, currentNonce, authViewModel: authViewModel, onSignedIn: { result in
             switch result{
             case .success(let userId):
-                print("DEBUG: 2")
                 print("DEBUG: sign in succeed \(userId)")
             case .failure(let error):
                 print("DEBUG: sign in with apple error \(error.localizedDescription)")
                 print("DEBUG: \(error)")
             }
         })
-        print("DEBUG: 3")
         let controller = ASAuthorizationController(authorizationRequests: requests)
         controller.delegate = self.signInWithAppleDelegates
         controller.presentationContextProvider = signInWithAppleDelegates
         
         controller.performRequests()
-        print("DEBUG: 4")
     }
 }
 

@@ -97,11 +97,13 @@ class AuthViewModel: ObservableObject{
                 }
                 
                 guard let user = result?.user else{return}
-                print("DEBUG: \(user.displayName)")
+                print("DEBUG: login with google \(user.uid)")
                 
                 self.userSession = user
-//                self.currentUser = Parent(userID: user.uid, name: user.displayName ?? "", dateOfBirth: "", chooseTheme: nil, avatarPic: "")
+                self.currentUser == nil
+                
                 self.fetchUser()
+                print("DEBUG: user session\(self.userSession?.uid)")
                 
                 if self.currentUser == nil{
                     print("DEBUG: registring for third party google")
@@ -147,9 +149,11 @@ class AuthViewModel: ObservableObject{
                             }
                             
                             guard let user = result?.user else{return}
-                            print("DEBUG: \(user.displayName)")
+                            print("DEBUG: login with facebook\(user.uid)")
                             
                             self.userSession = user
+                            self.currentUser = nil
+                            
                             self.fetchUser()
                             print(user.uid)
                             
@@ -190,9 +194,10 @@ class AuthViewModel: ObservableObject{
             }
             
             guard let user = result?.user else{return}
-            print("DEBUG: \(user.displayName)")
+            print("DEBUG: login with apple \(user.uid)")
             
             self.userSession = user
+            self.currentUser = nil
            
             self.fetchUser()
             if self.currentUser == nil{
