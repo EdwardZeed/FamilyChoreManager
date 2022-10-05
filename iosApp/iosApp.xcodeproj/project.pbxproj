@@ -188,6 +188,7 @@
 				05D24AEC28C489640097A7C2 /* Dashboard.swift */,
 				2B3B10AC28BDE43A003E24DE /* ParentProfilePage.swift */,
 				37FD897B28C3C1A700B5ABFE /* ChildProfilePage.swift */,
+				2B3B10B128C0B16C003E24DE /* AddChildPage.swift */,
 				37FD897F28C3C27F00B5ABFE /* AssignChorePopUpWindow.swift */,
 				37FD898128C3C4A100B5ABFE /* RandomItem.swift */,
 				05D24AE828C489170097A7C2 /* SignContractPage.swift */,
@@ -197,7 +198,6 @@
 				37613CFC28C60D1D00422234 /* ChildDashboard.swift */,
 				37613CFE28C61B1300422234 /* ChildNavigationBarView.swift */,
 				37613D0028C61D2B00422234 /* ChildAccountPage.swift */,
-				2B3B10B128C0B16C003E24DE /* AddChildPage.swift */,
 				2B57827228D84E8400EFBB1C /* ProgressSpinner.swift */,
 			);
 			path = UI;

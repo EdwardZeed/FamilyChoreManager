@@ -131,48 +131,6 @@ struct ParentLoginPage_Previews: PreviewProvider {
 
 
 
-
-struct CustomizedTextField: View{
-    @Binding var inputStream: String
-    let label: String
-    let placeholder: String
-    
-    var body: some View{
-        
-        VStack{
-     
-            TextField(placeholder, text: $inputStream)
-            //                .padding(.horizontal)
-                .background(Image("emailTextField-1"))
-                .frame(width: UIScreen.main.bounds.width*0.69, height: 40)
-               
-            
-            
-            
-        }
-        
-    }
-}
-
-struct CustomizedSecureField: View{
-    @Binding var inputStream: String
-    let label: String
-    let placeholder: String
-    
-    var body: some View{
-        
-        VStack{
-            
-            
-            SecureField(placeholder, text: $inputStream)
-            //                .padding(.horizontal)
-                .background(Image("passwordTextField-1"))
-                .frame(width: UIScreen.main.bounds.width*0.69, height: 40)
-        }
-    }
-}
-
-
 struct ProfilePhoto: View {
     var body: some View {
         ZStack{
@@ -220,27 +178,7 @@ struct ThirdPartyLogo: View {
     var body: some View {
         HStack{
             Spacer()
-//            Image("AppleLoginBtn")
-//            SignInWithAppleButton(.continue) { request in
-//                request.requestedScopes = [.email, .fullName]
-//            } onCompletion: { result in
-//                switch result{
-//                case .success(let auth):
-//                    switch auth.credential{
-//                    case let credential as ASAuthorizationAppleIDCredential:
-//                        let userId = credential.user
-//
-//                        let email = credential.email
-//                        let firstName = credential.fullName?.familyName
-//                        let lastName = credential.fullName?.givenName
-//                        print("DEBUG: \(firstName)")
-//                    default:
-//                        break
-//                    }
-//                case .failure(let error):
-//                    print("DEBUG: \(error)")
-//                }
-//            }
+            
             Button(action: showAppleLogin, label: {Image("AppleLoginBtn")})
             
             Spacer()
