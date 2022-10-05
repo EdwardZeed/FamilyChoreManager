@@ -8,6 +8,9 @@
 
 import SwiftUI
 import shared
+import CoreImage.CIFilterBuiltins
+import Foundation
+
 
 var child10 = Child(userID: "1", name: "Linda", dateOfBirth: "2012/02/14", chooseTheme: Theme(name: "Disney"), avatarPic: "Poly")
 
@@ -21,12 +24,31 @@ struct ChildQRCodePage: View {
     var child : Child
     @State var goToChildDashboard = false
     
+    let filter = CIFilter.qrCodeGenerator()
+    let context = CIContext()
+    
+    func generateQRCodeImage(_ url : String) -> UIImage {
+        let data = Data(url.utf8)
+        
+        filter.setValue(data, forKey: "inputMessage")
+        
+        if let qrCodeImage = filter.outputImage {
+            if let qrCodeCGImage = context.createCGImage(qrCodeImage, from: qrCodeImage.extent){
+                return UIImage(cgImage: qrCodeCGImage)
+            }
+            
+        }
+        return UIImage(systemName: "xmark") ?? UIImage()
+    }
+    
+    
+    
     var body: some View {
         ZStack{
             Image("Background").resizable().edgesIgnoringSafeArea(.all)
                 .opacity(0.2)
             VStack{
-                Image("QRCodeView")
+                Image(uiImage: generateQRCodeImage(child.userID)).interpolation(.none).resizable().frame(width: 330, height: 330, alignment: .center)
                 Button(action: {goToChildDashboard = true}, label: {Text("Please scan the QR code using " + child.name + " device")})
                 
             }

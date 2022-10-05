@@ -51,6 +51,8 @@
 	<string>7401100f84f758265b4fb6af79e97c7f</string>
 	<key>FacebookDisplayName</key>
 	<string>OnTaskArchiver</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>
