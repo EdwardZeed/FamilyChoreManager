@@ -113,7 +113,12 @@ struct ChildProfilePage: View {
                 Button(action: {isAddDialogShow.toggle()}, label: {
                     Text("Assign Chores")
                 })
-                Button("QR Code Scan"){goToChildQRCodePage = true}
+                Button("QR Code Scan"){
+                    goToChildQRCodePage = true
+                    print(currentChild.userID)
+                
+                    
+                }
                 
                 
             } label: {

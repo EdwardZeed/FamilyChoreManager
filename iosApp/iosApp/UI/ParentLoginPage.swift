@@ -10,6 +10,7 @@ import shared
 import Firebase
 import AuthenticationServices
 import CryptoKit
+import CodeScanner
 
 var child1 = Child(userID: "1", name: "Linda", dateOfBirth: "2012/02/14", chooseTheme: Theme(name: "Disney"), avatarPic: "Poly")
 
@@ -30,6 +31,21 @@ struct ParentLoginPage: View {
     @State var logInFail = false
     
     @EnvironmentObject var authViewModel: AuthViewModel
+    @State var isPresentingScanner = false
+    @State var scannedCode: String = "Scan A QR Code"
+        
+    var scannerSheet : some View {
+        CodeScannerView(
+            codeTypes: [.qr],
+            completion: { result in
+                if case let .success(code) = result {
+                    //self.scannedCode = code
+                    self.isPresentingScanner = false
+                }
+            })
+    }
+                
+
     
     var body: some View {
 
@@ -40,9 +56,14 @@ struct ParentLoginPage: View {
 //                another way to navigate with button and NavigationLink
                 Button(action: {
                     goToScan = true
+                    self.isPresentingScanner = true
                 }, label: {
                     Image("QrCodeScan")
                 })
+                .sheet(isPresented: $isPresentingScanner){
+                    self.scannerSheet
+                    
+                }
                 .frame(width: UIScreen.main.bounds.width*0.9, height: UIScreen.main.bounds.height*0.9, alignment: .topTrailing)
                 .zIndex(100)
 

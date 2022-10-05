@@ -12,6 +12,7 @@ import shared
 
 class AddChildViewModel: ObservableObject{
     @Published var children = [Child]()
+   
     @Published var parents = [Parent]()
     @Published var success = false
     let service = DashBoardService()

@@ -3,6 +3,7 @@ import shared
 import Firebase
 import GoogleSignIn
 import FBSDKCoreKit
+import CoreImage
 
 class AppDelegate: NSObject, UIApplicationDelegate {
   func application(_ application: UIApplication,
