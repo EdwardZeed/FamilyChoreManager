@@ -3,15 +3,16 @@ package com.ontask.android
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
+import com.google.firebase.auth.FirebaseAuth
 
 @Composable
-fun NavMap(navController: NavHostController, starDest:String) {
+fun NavMap(navController: NavHostController, starDest:String, auth: FirebaseAuth) {
     androidx.navigation.compose.NavHost(navController = navController, startDestination = starDest){
         composable(route = "Register_screen"){
             Register(navController = navController)
         }
         composable(route = "Login_screen"){
-            parentLoginPage(navController = navController)
+            parentLoginPage(navController = navController,viewModel = LoginScreenViewModel(), auth)
         }
         composable(route = "dashboard_screen"){
             dashboardPage(navController = navController)

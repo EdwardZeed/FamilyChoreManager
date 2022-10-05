@@ -1,0 +1,126 @@
+{
+  "project_info": {
+    "project_number": "292460730947",
+    "project_id": "myapplication-40cd3",
+    "storage_bucket": "myapplication-40cd3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:292460730947:android:2171d924afcc90dfd552f6",
+        "android_client_info": {
+          "package_name": "com.androiddevs.firebasegooglesignin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "292460730947-l0651uunkedv6bblti5mnk1dunn17omr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKixmw-PDkSvONRiQm09y_yJ_6Me_NyVE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "292460730947-l0651uunkedv6bblti5mnk1dunn17omr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "292460730947-0b1ehrhpgg8v24oeo7rpe2aorfnns2dp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.onTaskAchiever"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:292460730947:android:bdb9f8b715f51cffd552f6",
+        "android_client_info": {
+          "package_name": "com.ontask.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "292460730947-l0651uunkedv6bblti5mnk1dunn17omr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKixmw-PDkSvONRiQm09y_yJ_6Me_NyVE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "292460730947-l0651uunkedv6bblti5mnk1dunn17omr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "292460730947-0b1ehrhpgg8v24oeo7rpe2aorfnns2dp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.onTaskAchiever"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:292460730947:android:96aae9c092726aa3d552f6",
+        "android_client_info": {
+          "package_name": "com.ontask.android_peter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "292460730947-hg24hqankig2tuhimuipmmnevtkpg4ih.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ontask.android_peter",
+            "certificate_hash": "402c4cc2b4fdf24bed8c0be062f88fc674e43181"
+          }
+        },
+        {
+          "client_id": "292460730947-l0651uunkedv6bblti5mnk1dunn17omr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKixmw-PDkSvONRiQm09y_yJ_6Me_NyVE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "292460730947-l0651uunkedv6bblti5mnk1dunn17omr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "292460730947-0b1ehrhpgg8v24oeo7rpe2aorfnns2dp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.onTaskAchiever"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

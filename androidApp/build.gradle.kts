@@ -44,6 +44,9 @@ dependencies {
     implementation("androidx.compose.material:material-icons-extended:1.0.0")
 
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
+    implementation("com.google.firebase:firebase-auth-ktx:21.0.8")
+    implementation("com.google.android.gms:play-services-auth:20.3.0")
+
 
     debugImplementation("androidx.compose.ui:ui-tooling:1.2.1")
     debugImplementation("androidx.compose.ui:ui-test-manifest:1.1.0-beta01")
@@ -54,4 +57,10 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.1.0-beta01")
     implementation ("androidx.navigation:navigation-compose:2.4.0-alpha04")
+
+
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.5.0")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0")
 }

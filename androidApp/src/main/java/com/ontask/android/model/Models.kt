@@ -7,7 +7,6 @@ package com.ontask.android.model
  * NOTE: We will need to figure out how to track the different devices within a family so that they can access
  * the family information and so that they can receive push notifications.
  */
-import com.ontask.model.Theme
 import java.time.LocalDate
 
 /**
