@@ -10,17 +10,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity: ComponentActivity() {
-    lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        auth = FirebaseAuth.getInstance()
+        //FirebaseApp.initializeApp(this)
         setContent {
             val navController = rememberNavController()
-            NavMap(navController = navController, starDest = "Login_screen",auth)
+            NavMap(navController = navController, starDest = "Login_screen")
         }
     }
 }

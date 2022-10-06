@@ -6,22 +6,24 @@ import androidx.navigation.NavHostController
 import com.ontask.android.Utils.LoadingState
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 class LoginScreenViewModel : ViewModel() {
 
-    val loadingState = MutableStateFlow(LoadingState.IDLE)
+    //val loadingState = MutableStateFlow(LoadingState.IDLE)
 
-    fun signWithGoogleCredential(credential: AuthCredential,auth: FirebaseAuth, navController: NavHostController) = viewModelScope.launch {
+    fun signWithGoogleCredential(credential: AuthCredential, navController: NavHostController) = viewModelScope.launch {
         try {
-            loadingState.emit(LoadingState.LOADING)
-            auth.signInWithCredential(credential).await()
-            loadingState.emit(LoadingState.LOADED)
+            //loadingState.emit(LoadingState.LOADING)
+            Firebase.auth.signInWithCredential(credential).await()
+            //loadingState.emit(LoadingState.LOADED)
             navController.navigate("dashboard_screen")
         } catch (e: Exception) {
-            loadingState.emit(LoadingState.error(e.localizedMessage))
+            //loadingState.emit(LoadingState.error(e.localizedMessage))
         }
     }
 

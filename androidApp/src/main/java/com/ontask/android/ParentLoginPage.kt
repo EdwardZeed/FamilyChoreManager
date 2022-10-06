@@ -52,11 +52,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 
 @Composable
-fun parentLoginPage(navController: NavHostController,  viewModel: LoginScreenViewModel = viewModel(), auth: FirebaseAuth) {
+fun parentLoginPage(navController: NavHostController,  viewModel: LoginScreenViewModel = viewModel()) {
 
-    val status by viewModel.loadingState.collectAsState()
+    //val status by viewModel.loadingState.collectAsState()
     val context = LocalContext.current
-    val token = stringResource(R.string.default_web_client_id)
+    val token = stringResource(R.string.web_client_id)
 
 
     val launcher = rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) {
@@ -64,7 +64,7 @@ fun parentLoginPage(navController: NavHostController,  viewModel: LoginScreenVie
         try {
             val account = task.getResult(ApiException::class.java)!!
             val credential = GoogleAuthProvider.getCredential(account.idToken!!, null)
-            viewModel.signWithGoogleCredential(credential,auth,navController)
+            viewModel.signWithGoogleCredential(credential,navController)
         } catch (e: ApiException) {
             Log.w("TAG", "Google sign in failed", e)
         }

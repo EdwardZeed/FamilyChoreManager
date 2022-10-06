@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     id ("kotlin-android-extensions")
+
 }
 
 android {
@@ -64,3 +65,6 @@ dependencies {
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.5.0")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0")
 }
+
+apply(plugin = "com.google.gms.google-services")
+
