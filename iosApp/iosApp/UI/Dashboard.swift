@@ -40,7 +40,8 @@ struct DashBoardPage: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     @State var currentSelectChild: Child = Child(userID: "1", name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: "")
     
-    @EnvironmentObject var addChildViewModel: AddChildViewModel
+    @StateObject var addChildViewModel: AddChildViewModel = AddChildViewModel()
+    
     
     var body: some View {
         
@@ -92,27 +93,14 @@ struct DashBoardPage: View {
                                     
                                 }
                                 ForEach(self.addChildViewModel.children, id: \.self){child in
-                                    HStack{
-                                        Button(action: {
-                                            goToChildProfilePage = true
-                                        
-                                            currentSelectChild = child
-                                         
-                                        }, label: {
-                                            Button_Label(currentChild: child).foregroundColor(Color("AdaptiveColorForText"))
-                                        }).frame(width: UIScreen.main.bounds.width*0.95, height: UIScreen.main.bounds.width*0.3)
-                                            .background(Color("AdaptiveColorForBackground"))
-                                            .cornerRadius(25)
-                                            .shadow(color: Color.gray, radius: 10)
-                                
-                                    }
+                                    
+                                    childCard(child: child)
+                                    
                                 }
                                
                                 
                             }
-                            NavigationLink(destination: ChildProfilePage(currentChild: currentSelectChild), isActive: $goToChildProfilePage){
-                                EmptyView()
-                            }
+                            
                             
                         }
                        
@@ -123,6 +111,7 @@ struct DashBoardPage: View {
 
         }.navigationBarBackButtonHidden(true)
             .navigationBarHidden(true)
+            .environmentObject(addChildViewModel)
          
        
         
@@ -199,6 +188,30 @@ struct Plus_button_in_DashBoard: View{
 }
 
 //Menu button and drop down menu at the top left corner
+
+struct childCard: View{
+    var child: Child
+    @State var goToChildProfilePage = false
+    
+    var body: some View{
+        HStack{
+            Button(action: {
+                goToChildProfilePage = true
+             
+            }, label: {
+                Button_Label(currentChild: child).foregroundColor(Color("AdaptiveColorForText"))
+            }).frame(width: UIScreen.main.bounds.width*0.95, height: UIScreen.main.bounds.width*0.3)
+                .background(Color("AdaptiveColorForBackground"))
+                .cornerRadius(25)
+                .shadow(color: Color.gray, radius: 10)
+            
+            NavigationLink(destination: ChildProfilePage(currentChild: child), isActive: $goToChildProfilePage){
+                EmptyView()
+            }
+    
+        }
+    }
+}
 
 
 struct Title_and_home_Page: View{
