@@ -44,4 +44,20 @@ class ContractCreater: ObservableObject{
     func append_new_reward(newReward: RewardCreater){
         rewardArray.append(newReward)
     }
+    
+    func get_rewardArray() -> Array<String>{
+        var rewardItemArray: [String] = []
+        for reward in rewardArray{
+            rewardItemArray.append(reward.name)
+        }
+        return rewardItemArray
+    }
+    
+    func get_pointArray() -> Array<Int>{
+        var pointArray: [Int] = []
+        for reward in rewardArray{
+            pointArray.append(Int(reward.point) ?? 0)
+        }
+        return pointArray
+    }
 }

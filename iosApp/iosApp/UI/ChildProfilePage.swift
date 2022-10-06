@@ -19,8 +19,9 @@ struct ChildProfilePage: View {
     @State var isDeleteDialogShow = false
     @State var eventList:[RandomItem] = [RandomItem(title: "test")]
     @State var curDelItem: RandomItem = RandomItem(title: "")
-    
+    @State var goToAddContract = false
     @State var goToChildQRCodePage = false
+    var contractViewModel = ContractViewModel()
     
     var body: some View {
         
@@ -28,6 +29,8 @@ struct ChildProfilePage: View {
         
         ScrollView{
             VStack{
+                
+                
                 
                 
                 HStack(alignment: .center, spacing: 30){
@@ -116,9 +119,11 @@ struct ChildProfilePage: View {
                 Button("QR Code Scan"){
                     goToChildQRCodePage = true
                     print(currentChild.userID)
+                    contractViewModel.getContractDetail(childID: currentChild.userID)
                 
                     
                 }
+                Button("Add contract"){goToAddContract = true}
                 
                 
             } label: {
@@ -128,6 +133,12 @@ struct ChildProfilePage: View {
             }
             NavigationLink(isActive: $goToChildQRCodePage) {
                 ChildQRCodePage(child: currentChild)
+            } label: {
+                EmptyView()
+            }
+        
+            NavigationLink(isActive: $goToAddContract) {
+                SignContractPage(child: currentChild)
             } label: {
                 EmptyView()
             }

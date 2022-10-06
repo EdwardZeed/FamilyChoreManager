@@ -39,5 +39,4 @@ class AddChildViewModel: ObservableObject{
             self.children = result
         }
     }
-    
 }

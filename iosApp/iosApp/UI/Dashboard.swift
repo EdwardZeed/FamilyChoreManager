@@ -176,7 +176,7 @@ struct Plus_button_in_DashBoard: View{
             Menu {
                 Button("Add child"){goToAddChild = true}
                 Button("Add chore"){goToAddChore = true}
-                Button("Add contract"){goToAddContract = true}
+                
             } label: {
                 Image("PlusIcon")
             }
@@ -193,11 +193,7 @@ struct Plus_button_in_DashBoard: View{
                 EmptyView()
             }
             
-            NavigationLink(isActive: $goToAddContract) {
-                SignContractPage(username: "ikaros")
-            } label: {
-                EmptyView()
-            }
+            
         }
     }
 }
