@@ -30,7 +30,7 @@ struct AddChildPage: View {
                 Image("AddUserIcon")
                     .padding(.top, UIScreen.main.bounds.height*0.05)
                     .padding(.bottom, UIScreen.main.bounds.height*0.1)
-                EntryField(textValue: $childName, icon: Image("userIcon"), placeholder: "child name", prompt: "name cannot be empty", validation: $addChildViewModel.nameValid, isPassword: false)
+                EntryField(textValue: $childName, icon: Image("userIcon"), placeholder: "child name", prompt: addChildViewModel.namePrompt, validation: $addChildViewModel.nameValid, isPassword: false)
                     .overlay(GeometryReader{
                         proxy -> AnyView in
                         DispatchQueue.main.async {

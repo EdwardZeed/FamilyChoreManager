@@ -109,9 +109,10 @@ struct ParentLoginPage: View {
                     ThirdPartyLogo()
                 }
             }
-//            .onTapGesture {
-//                hideKeyboard()
-//            }
+            .onTapGesture {
+                print("DEBUG: tapped")
+                hideKeyboard()
+            }
 
         }
         .navigationBarHidden(true)

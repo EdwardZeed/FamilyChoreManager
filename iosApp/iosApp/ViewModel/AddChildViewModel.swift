@@ -17,6 +17,7 @@ class AddChildViewModel: ObservableObject{
     @Published var success = false
     
     @Published var nameValid: Float = 0
+    @Published var namePrompt = ""
     @Published var dateValid: Float = 0
     let service = DashBoardService()
     
@@ -51,7 +52,7 @@ class AddChildViewModel: ObservableObject{
     }
     
     func checkValid(name: String?, date: Date?, theme: String?) -> Bool{
-        guard name != "" else{nameValid = 2; return false}
+        guard name != "" else{nameValid = 2; namePrompt = "name cannot be empty"; return false}
         guard date != nil else {dateValid = 2; return false}
         guard theme != nil else{return false}
         return true
