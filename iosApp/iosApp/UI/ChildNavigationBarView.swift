@@ -11,7 +11,6 @@ import shared
 
 struct ChildNavigationBarView: View {
 
-    var userName : String
     var childrenlist : [Child]
 
     @State private var selection: Tab = .exclusion
@@ -24,8 +23,7 @@ struct ChildNavigationBarView: View {
 
         }
     
-    init(username: String, childList: [Child]){
-        self.userName = username
+    init(childList: [Child]){
         self.childrenlist = childList
 
     }
@@ -33,12 +31,13 @@ struct ChildNavigationBarView: View {
     var body: some View {
             NavigationView { //整体设置，下级页面不会在出现底部tabbar
                 TabView(selection: $selection) {
-                        ChildDashBoardPage(username: userName, children: childrenlist, parents: [])
+                        //ChildDashBoardPage(username: userName, children: childrenlist, parents: [])
+                        ChildDashBoardPage()
                             .tabItem{//使用label 创建tabitem图文
                                 Label("Family", systemImage: "house")
                             }
                             .tag(Tab.dashboard)
-                        ChildAccountPage(currentChild: Child(userID: "10", name: userName, dateOfBirth: "2015/01/03", chooseTheme: Theme(name: "Viva"), avatarPic: "Rifle"))
+                        ChildAccountPage(currentChild: Child(userID: "10", name: "", dateOfBirth: "2015/01/03", chooseTheme: Theme(name: "Viva"), avatarPic: "Rifle"))
                             .tabItem{//使用label 创建tabitem图文
                                 Label("Account", systemImage: "person")
                             }

@@ -27,20 +27,30 @@ struct ParentLoginPage: View {
     @State var email: String = ""
     @State var password: String = ""
     @State var goToScan = false
+    @State var goToChildDashboard = false
     @State var valid: Float = 0
     @State var logInFail = false
     
     @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var childAuthViewModel: ChildAuthViewModel
     @State var isPresentingScanner = false
-    @State var scannedCode: String = "Scan A QR Code"
+    @State var scannedCode: String = "scan qr code"
+    
         
     var scannerSheet : some View {
         CodeScannerView(
             codeTypes: [.qr],
             completion: { result in
                 if case let .success(code) = result {
-                    //self.scannedCode = code
+                    self.scannedCode = code.string
                     self.isPresentingScanner = false
+                    
+                    if(scannedCode != "scan qr code"){
+                        childAuthViewModel.childSession = scannedCode
+                        childAuthViewModel.fetchChildren()
+                        goToChildDashboard = true
+                       
+                    }
                 }
             })
     }
@@ -55,7 +65,7 @@ struct ParentLoginPage: View {
 
 //                another way to navigate with button and NavigationLink
                 Button(action: {
-                    goToScan = true
+                   // goToScan = true
                     self.isPresentingScanner = true
                 }, label: {
                     Image("QrCodeScan")
@@ -67,7 +77,12 @@ struct ParentLoginPage: View {
                 .frame(width: UIScreen.main.bounds.width*0.9, height: UIScreen.main.bounds.height*0.9, alignment: .topTrailing)
                 .zIndex(100)
 
-                NavigationLink(destination: ChildLoginPage(), isActive: $goToScan){
+//                NavigationLink(destination: ChildLoginPage(), isActive: $goToScan){
+//                    EmptyView()
+//                }
+//                .navigationBarHidden(true)
+                
+                NavigationLink(destination: ChildNavigationBarView( childList: []), isActive: $goToChildDashboard){
                     EmptyView()
                 }
                 .navigationBarHidden(true)
@@ -124,11 +139,11 @@ struct ParentLoginPage: View {
 }
 
 
-struct ParentLoginPage_Previews: PreviewProvider {
-    static var previews: some View {
-        ParentLoginPage()
-    }
-}
+//struct ParentLoginPage_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ParentLoginPage()
+//    }
+//}
 
 
 

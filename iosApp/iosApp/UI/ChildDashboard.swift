@@ -28,23 +28,27 @@ struct Preview_ChildDashBoardPage: PreviewProvider {
 
         var childList = [child3,child2,child1]
         var parentList = [currentParent]
-        ChildDashBoardPage(username: "Chris",children: childList, parents:  parentList)
+        //ChildDashBoardPage(username: "Chris",children: childList, parents:  parentList)
     }
 }
 
 
 struct ChildDashBoardPage: View {
-    let username: String
-    var children: [Child]
-    var parents: [Parent]
-    
+    //let username: String
+    //var children: [Child]
+    //var parents: [Parent]
 
     @State var goToChildProfilePage = false
     
     @State var currentSelectChild: Child = Child(userID: "-1", name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: "")
+    @EnvironmentObject var childAuthViewModel: ChildAuthViewModel
+    
+    
+    
     
     
     var body: some View {
+        
         
         NavigationView {
             ZStack{
@@ -58,7 +62,8 @@ struct ChildDashBoardPage: View {
                             
                             HStack{
                                 UserPhoto()
-                                Message_And_Name(username: username)
+                                //Message_And_Name(username: username)
+                                Message_And_Name(username: String(childAuthViewModel.childSession.split(separator: " ")[0]))
                                 
                             }.frame(width: UIScreen.main.bounds.width*0.85, alignment: .leading)
                                 .padding(.top, 3)
@@ -69,28 +74,31 @@ struct ChildDashBoardPage: View {
                             
                             //Spacer(minLength: 50)
                             Title_and_home_Page().frame(width: UIScreen.main.bounds.width*0.95,alignment: .leading)
-                            
-                            LazyVStack{
-                                ForEach(children,id:\.self){child in
-                                    HStack{
-                                        Button(action: {
-                                            goToChildProfilePage = true
-                                            currentSelectChild = child
-                                         
-                                        }, label: {
-                                            Button_Label(currentChild: child, currentContarct: ContractViewModel(childID: child.userID))
-                                        }).frame(width: UIScreen.main.bounds.width*0.95, height: UIScreen.main.bounds.width*0.3)
-                                            .background(Color.white)
-                                            .cornerRadius(25)
-                                            .shadow(color: Color.gray, radius: 10)
-                                        
-                                        
-                                        
-                                    }
-                                }
-                               
-                                
+                            ForEach(self.childAuthViewModel.children, id: \.self){child in
+                                childCard(child: child, currentContract: ContractViewModel(childID: currentSelectChild.userID))
                             }
+                            
+//                            LazyVStack{
+//                                ForEach(children,id:\.self){child in
+//                                    HStack{
+//                                        Button(action: {
+//                                            goToChildProfilePage = true
+//                                            currentSelectChild = child
+//
+//                                        }, label: {
+//                                            Button_Label(currentChild: child)
+//                                        }).frame(width: UIScreen.main.bounds.width*0.95, height: UIScreen.main.bounds.width*0.3)
+//                                            .background(Color.white)
+//                                            .cornerRadius(25)
+//                                            .shadow(color: Color.gray, radius: 10)
+//
+//
+//
+//                                    }
+//                                }
+//
+//
+//                            }
                             NavigationLink(destination: ChildProfilePage(currentChild: currentSelectChild, contractViewModel: ContractViewModel(childID: currentSelectChild.userID)), isActive: $goToChildProfilePage){
                                 EmptyView()
                             }
@@ -174,17 +182,17 @@ struct ChildDashBoardPage: View {
 //                    .resizable()
 //                    .aspectRatio(contentMode: .fit)
 //                    .frame(width: 80, height: 80, alignment: .center)
-//                
-//                
+//
+//
 //                Image("userPhoto")
 //                    .resizable()
 //                    .aspectRatio(contentMode: .fit)
 //                    .frame(width: 50, height: 50, alignment: .center)
-//                
+//
 //            }.frame( alignment: .leading)
 //            VStack{
 //                Text(currentChild.name).frame(width: UIScreen.main.bounds.width*0.6,height: UIScreen.main.bounds.width*0.16, alignment: .topLeading)
-//                
+//
 //                HStack{
 //                    Spacer()
 //                    Image("token 5_In_DashBoard")
