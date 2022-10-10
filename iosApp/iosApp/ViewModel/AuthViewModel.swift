@@ -13,6 +13,7 @@ import GoogleSignIn
 import shared
 import CryptoKit
 import AuthenticationServices
+import FirebaseAuth
 
 import FacebookCore
 import FacebookLogin
@@ -45,6 +46,7 @@ class AuthViewModel: ObservableObject{
     init(){
         self.userSession = Auth.auth().currentUser
         self.fetchUser()
+        
     }
     
     func loginWithEmail(email: String, password: String){
@@ -60,7 +62,11 @@ class AuthViewModel: ObservableObject{
                 guard let user = auth?.user else {return}
                 self.progressing = false
                 self.userSession = user
-                self.fetchUser()
+                self.reload { success in
+                    if !success{
+                        print("DEBUG: login failed")
+                    }
+                }
                 
                
             }
@@ -102,13 +108,12 @@ class AuthViewModel: ObservableObject{
                 self.userSession = user
                 self.currentUser == nil
                 
-                self.fetchUser()
-                print("DEBUG: user session\(self.userSession?.uid)")
-                
-                if self.currentUser == nil{
-                    print("DEBUG: registring for third party google")
-                    self.registerForThirdparty(email: user.email ?? "", name: user.displayName ?? "", userId: user.uid)
-                    self.fetchUser()
+                self.reload { success in
+                    if !success {
+                        print("DEBUG: registring for third party google")
+                        self.registerForThirdparty(email: user.email ?? "", name: user.displayName ?? "", userId: user.uid)
+                        self.fetchUser()
+                    }
                 }
             }
             
@@ -154,13 +159,12 @@ class AuthViewModel: ObservableObject{
                             self.userSession = user
                             self.currentUser = nil
                             
-                            self.fetchUser()
-                            print(user.uid)
-                            
-                            if self.currentUser == nil{
-                                print("DEBUG: registring for third party google")
-                                self.registerForThirdparty(email: user.email ?? "", name: user.displayName ?? "", userId: user.uid)
-                                self.fetchUser()
+                            self.reload { success in
+                                if !success{
+                                    print("DEBUG: registring for third party google")
+                                    self.registerForThirdparty(email: user.email ?? "", name: user.displayName ?? "", userId: user.uid)
+                                    self.fetchUser()
+                                }
                             }
                         }
                         
@@ -198,14 +202,15 @@ class AuthViewModel: ObservableObject{
             
             self.userSession = user
             self.currentUser = nil
-           
-            self.fetchUser()
-            if self.currentUser == nil{
-                print("DEBUG: registering for third party apple")
-                let fullname: String = (credential.fullName?.givenName ?? "") + " " + (credential.fullName?.familyName ?? "")
-                let email: String = credential.email ?? ""
-                self.registerForThirdparty(email: email, name: fullname, userId: user.uid)
-                self.fetchUser()
+            
+            self.reload { success in
+                if !success{
+                    print("DEBUG: registering for third party apple")
+                    let fullname: String = (credential.fullName?.givenName ?? "") + " " + (credential.fullName?.familyName ?? "")
+                    let email: String = credential.email ?? ""
+                    self.registerForThirdparty(email: email, name: fullname, userId: user.uid)
+                    self.fetchUser()
+                }
             }
         }
     }
@@ -235,7 +240,12 @@ class AuthViewModel: ObservableObject{
                 Firestore.firestore().collection("users")
                     .document(user.uid)
                     .setData(data)
-                self.fetchUser()
+                self.reload { success in
+                    print("DEBUG: \(success)")
+                    if !success{
+                        print("DEBUG: no user found")
+                    }
+                }
                 
             }
             
@@ -251,8 +261,9 @@ class AuthViewModel: ObservableObject{
     
     func signOut(){
         self.userSession = nil
+        self.currentUser = nil 
         try? Auth.auth().signOut()
-        print("DEBUG: \(userSession)")
+        print("DEBUG: user logged out \(userSession == nil)")
     }
     
     func checkValid(email: String, password: String, name: String, dateOfBirth: Date?) -> Bool{
@@ -307,12 +318,22 @@ class AuthViewModel: ObservableObject{
     }
     
     func fetchUser(){
-        guard let uid = self.userSession?.uid else {return}
-        
+        guard let uid = Auth.auth().currentUser?.uid else { return}
         self.service.fetchUser(uid: uid) { user in
+            
             self.currentUser = user
         }
         
+    }
+    
+    func reload(completion: @escaping (Bool) -> Void){
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        
+        self.service.fetchUser(uid: uid) { user in
+            self.currentUser = user
+            
+            completion(self.currentUser != nil)
+        }
     }
     
     
