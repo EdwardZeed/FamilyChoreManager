@@ -11,6 +11,8 @@
 		05386DA728ED575A00A28BF9 /* UploadContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05386DA628ED575A00A28BF9 /* UploadContract.swift */; };
 		05386DA928ED578700A28BF9 /* CheckContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05386DA828ED578700A28BF9 /* CheckContract.swift */; };
 		05386DAB28ED92FD00A28BF9 /* ContractViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05386DAA28ED92FD00A28BF9 /* ContractViewModel.swift */; };
+		05386DAD28F45FCB00A28BF9 /* UploadChore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05386DAC28F45FCB00A28BF9 /* UploadChore.swift */; };
+		05386DAF28F464FA00A28BF9 /* AddChoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05386DAE28F464FA00A28BF9 /* AddChoreModel.swift */; };
 		058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
 		058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
 		05D24AE928C489170097A7C2 /* SignContractPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05D24AE828C489170097A7C2 /* SignContractPage.swift */; };
@@ -99,6 +101,8 @@
 		05386DA628ED575A00A28BF9 /* UploadContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadContract.swift; sourceTree = "<group>"; };
 		05386DA828ED578700A28BF9 /* CheckContract.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckContract.swift; sourceTree = "<group>"; };
 		05386DAA28ED92FD00A28BF9 /* ContractViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractViewModel.swift; sourceTree = "<group>"; };
+		05386DAC28F45FCB00A28BF9 /* UploadChore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadChore.swift; sourceTree = "<group>"; };
+		05386DAE28F464FA00A28BF9 /* AddChoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChoreModel.swift; sourceTree = "<group>"; };
 		058557BA273AAA24004C7B11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		05D24AE828C489170097A7C2 /* SignContractPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignContractPage.swift; sourceTree = "<group>"; };
@@ -236,6 +240,7 @@
 				2BF4E55A28E9F79D006CC58E /* DashBoardService.swift */,
 				05386DA628ED575A00A28BF9 /* UploadContract.swift */,
 				3702D4DC28EFCDBA00269906 /* ChildrenDashboardService.swift */,
+				05386DAC28F45FCB00A28BF9 /* UploadChore.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -247,6 +252,7 @@
 				2B4536BD28CF902900678D0D /* AuthViewModel.swift */,
 				05386DAA28ED92FD00A28BF9 /* ContractViewModel.swift */,
 				37ACC16028EFDDEF003FE5E2 /* ChildAuthViewModel.swift */,
+				05386DAE28F464FA00A28BF9 /* AddChoreModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -473,6 +479,7 @@
 				05D24AED28C489640097A7C2 /* Dashboard.swift in Sources */,
 				2B3B10A728B3BD1F003E24DE /* SignUpPage.swift in Sources */,
 				37613CFB28C6086000422234 /* ChildQRCodePage.swift in Sources */,
+				05386DAD28F45FCB00A28BF9 /* UploadChore.swift in Sources */,
 				2B57827628D85C2C00EFBB1C /* UserService.swift in Sources */,
 				2B3B10AD28BDE43A003E24DE /* ParentProfilePage.swift in Sources */,
 				2BF4E55B28E9F79D006CC58E /* DashBoardService.swift in Sources */,
@@ -484,6 +491,7 @@
 				2B57827C28E19BD500EFBB1C /* EnvironmentWindowKey.swift in Sources */,
 				2B57827128D835E900EFBB1C /* ApplicationUtil.swift in Sources */,
 				2BDE71F228C38D4B005821C6 /* KeyboardExtension.swift in Sources */,
+				05386DAF28F464FA00A28BF9 /* AddChoreModel.swift in Sources */,
 				3781DDCC28C4B453009F9904 /* NavigationBarView.swift in Sources */,
 				37FD897C28C3C1A700B5ABFE /* ChildProfilePage.swift in Sources */,
 				05386DA728ED575A00A28BF9 /* UploadContract.swift in Sources */,

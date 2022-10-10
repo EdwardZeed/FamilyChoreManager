@@ -116,8 +116,9 @@ struct ChildProfilePage: View {
                     Text("Assign Chores")
                 })
                 Button("QR Code Scan"){
+                    
                     goToChildQRCodePage = true
-                    print(ContractViewModel(childID: currentChild.userID).getResult())
+                    print(currentChild.userID)
                 
                     
                 }

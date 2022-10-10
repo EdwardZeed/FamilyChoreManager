@@ -94,25 +94,10 @@ struct DashBoardPage: View {
                                 }
                                 ForEach(self.addChildViewModel.children, id: \.self){child in
                                     var contractViewModel = ContractViewModel(childID: child.userID)
-                                    var s = false
-                                    contractViewModel.getResult { state in
-                                        s = state
-                                    }
-                                    if s{
-                                        childCard(child: child, currentContract: contractViewModel)
-                                    }
-                                    else{
-                                        childCard(child: child, currentContract:  contractViewModel)
-                                    }
-                                    
+                                    childCard(child: child, currentContract:  contractViewModel)
                                 }
-                               
-                                
                             }
-                            
-                            
                         }
-                       
                     }
                 }
                
@@ -322,3 +307,5 @@ struct Parent_Button_Label: View{
         }.frame( width: 300)
     }
 }
+
+
