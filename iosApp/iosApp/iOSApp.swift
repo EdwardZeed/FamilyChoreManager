@@ -34,6 +34,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct iOSApp: App {
     @StateObject var authViewModel = AuthViewModel()
+    @StateObject var childAuthViewModel = ChildAuthViewModel()
     // register app delegate for Firebase setup
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
@@ -42,6 +43,7 @@ struct iOSApp: App {
             
             ContentView()
                 .environmentObject(authViewModel)
+                .environmentObject(childAuthViewModel)
             
             
             

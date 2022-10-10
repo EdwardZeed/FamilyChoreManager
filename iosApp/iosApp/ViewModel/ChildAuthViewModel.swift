@@ -9,30 +9,46 @@
 import Foundation
 import Firebase
 import shared
+import SwiftUI
 
 class ChildAuthViewModel: ObservableObject{
     @Published var children = [Child]()
     @Published var success = false
     
-    @Published var userID: String
+    @Published var childSession : String
     let service = ChildrenDashBoardService()
     
-    
-    
     init() {
+        self.childSession = "nil nil"
         print("DEBUG: dashboard view model initializing")
         self.fetchChildren()
-        
+
         //add listener to children collection
-        self.service.listenChildren(viewModel: self, currentUserID: userID)
+        self.service.listenChildren(viewModel: self, currentUserID: childSession)
     }
     
     func fetchChildren(){
-        service.fetchChildren(currentUserID: userID) { result in
+        let parentID : String = String(childSession.split(separator: " ")[0])
+        print(parentID)
+        service.fetchChildren(currentUserID: childSession) { result in
             self.children = result
+            print("now there is " + String(self.children.count) + " in this user")
         }
     }
     
+    func signOut(){
+        self.childSession = "nil nil"
+        print("DEBUG: \(childSession)")
+    }
+    
+//    func setUserID(userID : String){
+//        self.userID = userID
+//        self.fetchChildren()
+//
+//        //add listener to children collection
+//        self.service.listenChildren(viewModel: self, currentUserID: userID)
+//    }
+//
     
     
     

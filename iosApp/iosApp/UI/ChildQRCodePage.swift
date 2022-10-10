@@ -11,6 +11,13 @@ import shared
 import CoreImage.CIFilterBuiltins
 import Foundation
 
+import Firebase
+
+import shared
+import CryptoKit
+import AuthenticationServices
+
+
 
 var child10 = Child(userID: "1", name: "Linda", dateOfBirth: "2012/02/14", chooseTheme: Theme(name: "Disney"), avatarPic: "Poly")
 
@@ -23,6 +30,7 @@ var child12 = Child(userID: "3", name: "Bulankin", dateOfBirth: "2012/05/14", ch
 struct ChildQRCodePage: View {
     var child : Child
     @State var goToChildDashboard = false
+    
     
     let filter = CIFilter.qrCodeGenerator()
     let context = CIContext()
@@ -48,15 +56,16 @@ struct ChildQRCodePage: View {
             Image("Background").resizable().edgesIgnoringSafeArea(.all)
                 .opacity(0.2)
             VStack{
-                Image(uiImage: generateQRCodeImage(child.userID)).interpolation(.none).resizable().frame(width: 330, height: 330, alignment: .center)
+                let info = child.userID + " " + Auth.auth().currentUser!.uid
+                Image(uiImage: generateQRCodeImage(info)).interpolation(.none).resizable().frame(width: 330, height: 330, alignment: .center)
                 Button(action: {goToChildDashboard = true}, label: {Text("Please scan the QR code using " + child.name + " device")})
                 
             }
         }
         var li = [child10, child12, child11]
-        NavigationLink(destination: ChildNavigationBarView(username: child.name,childList: li).ignoresSafeArea(), isActive: $goToChildDashboard){
-            EmptyView()
-        }.navigationBarHidden(true)
+//        NavigationLink(destination: ChildNavigationBarView(username: child.name,childList: li).ignoresSafeArea(), isActive: $goToChildDashboard){
+//            EmptyView()
+//        }.navigationBarHidden(true)
     }
    
    
