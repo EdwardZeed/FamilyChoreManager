@@ -35,7 +35,11 @@ struct SignContractPage: View {
     var body: some View {
         
         NavigationView{
-            ZStack{
+            GeometryReader{ geo in
+                Image("Background").resizable().ignoresSafeArea().opacity(0.2)
+                    .onTapGesture {
+                        hideKeyboard()
+                    }
                 ScrollView{
                     VStack{
                         Username_and_Avator(username: authViewModel.currentUser?.name ?? "")
@@ -48,8 +52,9 @@ struct SignContractPage: View {
                             .frame(width: UIScreen.main.bounds.width, alignment: .center)
                     }
                 }
-            }.background(Image("Background").resizable().scaledToFill().opacity(0.2))
-                .navigationBarHidden(true)
+            }
+            .navigationBarHidden(true)
+            
         }
     }
 }

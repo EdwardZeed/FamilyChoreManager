@@ -13,7 +13,7 @@ import shared
 
 class UserService: ObservableObject{
     
-    func fetchUser(uid: String, completion: @escaping (Parent) -> Void){
+    func fetchUser(uid: String, completion: @escaping (Parent?) -> Void){
         Firestore.firestore().collection("users")
             .document(uid)
             .getDocument { snapshot, error in
@@ -21,9 +21,9 @@ class UserService: ObservableObject{
                     print("DEBUG: fetch user information failed, \(error.localizedDescription)")
                     return
                 }
-                guard let snapshot = snapshot else{return}
+                guard let snapshot = snapshot else{completion(nil) ;return}
                 
-                guard let data = snapshot.data() else {return}
+                guard let data = snapshot.data() else {completion(nil); return}
                 print("DEBUG: in service \(data)")
                 
                 let userId: String = data["userId"] as! String
