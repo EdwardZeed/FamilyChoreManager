@@ -61,7 +61,6 @@ struct ParentLoginPage: View {
 
         NavigationView {
             ZStack {
-                Image("Background").resizable().scaledToFill().ignoresSafeArea().opacity(0.2)
 
 //                another way to navigate with button and NavigationLink
                 Button(action: {
@@ -124,6 +123,7 @@ struct ParentLoginPage: View {
                     ThirdPartyLogo()
                 }
             }
+            .background(Image("Background").ignoresSafeArea().opacity(0.2))
             .onTapGesture {
                 print("DEBUG: tapped")
                 hideKeyboard()

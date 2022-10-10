@@ -21,9 +21,9 @@ struct AddChildPage: View {
     
     var body: some View {
         ZStack {
-            Image("Background").resizable()
-                .ignoresSafeArea()
-                .opacity(0.2)
+//            Image("Background")
+//                .ignoresSafeArea()
+//                .opacity(0.2)
             
             VStack{
                 
@@ -89,10 +89,11 @@ struct AddChildPage: View {
                 Spacer(minLength: UIScreen.main.bounds.width*0.3)
         
             }
+            
         }
-        .onTapGesture {
+        .background(Image("Background").ignoresSafeArea().opacity(0.2).onTapGesture {
             hideKeyboard()
-        }
+        })
         .onReceive(addChildViewModel.$success) { success in
             if success{
                 presentationMode.wrappedValue.dismiss()
