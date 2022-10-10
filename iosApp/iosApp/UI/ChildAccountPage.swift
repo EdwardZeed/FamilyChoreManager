@@ -12,6 +12,7 @@ import shared
 struct ChildAccountPage: View {
     
     var currentChild : Child
+    @EnvironmentObject var childAuthViewModel: ChildAuthViewModel
     
     var body: some View {
         NavigationView {
@@ -93,6 +94,12 @@ struct ChildAccountPage: View {
                 
                 
             }.navigationTitle(currentChild.name)
+                .toolbar{Menu {
+                    Button(action: { childAuthViewModel.signOut()}, label: {
+                        Text("sign out")
+                    })} label: {
+                        Image("PlusIcon-ChildProfilePage")
+                    }}
         }
                 
     }

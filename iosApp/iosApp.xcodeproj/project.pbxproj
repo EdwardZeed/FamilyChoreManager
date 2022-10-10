@@ -46,6 +46,7 @@
 		2B57828728E57F3A00EFBB1C /* AddChildViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B57828628E57F3A00EFBB1C /* AddChildViewModel.swift */; };
 		2BDE71F228C38D4B005821C6 /* KeyboardExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDE71F128C38D4B005821C6 /* KeyboardExtension.swift */; };
 		2BF4E55B28E9F79D006CC58E /* DashBoardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4E55A28E9F79D006CC58E /* DashBoardService.swift */; };
+		3702D4DD28EFCDBA00269906 /* ChildrenDashboardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3702D4DC28EFCDBA00269906 /* ChildrenDashboardService.swift */; };
 		37183FDD28EC35A5000A574A /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 37183FDC28EC35A5000A574A /* CodeScanner */; };
 		3759E52B28B39C50000E0419 /* ChildLoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759E52A28B39C50000E0419 /* ChildLoginPage.swift */; };
 		3759E52F28B39CC6000E0419 /* ParentLoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759E52E28B39CC6000E0419 /* ParentLoginPage.swift */; };
@@ -58,6 +59,7 @@
 		37AA76CD28E339CB003F134A /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = 37AA76CC28E339CB003F134A /* FacebookCore */; };
 		37AA76CF28E339CB003F134A /* FacebookLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 37AA76CE28E339CB003F134A /* FacebookLogin */; };
 		37AA76D128E339CB003F134A /* FacebookShare in Frameworks */ = {isa = PBXBuildFile; productRef = 37AA76D028E339CB003F134A /* FacebookShare */; };
+		37ACC16128EFDDEF003FE5E2 /* ChildAuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ACC16028EFDDEF003FE5E2 /* ChildAuthViewModel.swift */; };
 		37FD897C28C3C1A700B5ABFE /* ChildProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FD897B28C3C1A700B5ABFE /* ChildProfilePage.swift */; };
 		37FD897E28C3C22E00B5ABFE /* PopUpWindowModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FD897D28C3C22E00B5ABFE /* PopUpWindowModifier.swift */; };
 		37FD898028C3C27F00B5ABFE /* AssignChorePopUpWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FD897F28C3C27F00B5ABFE /* AssignChorePopUpWindow.swift */; };
@@ -114,6 +116,7 @@
 		2B57828628E57F3A00EFBB1C /* AddChildViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddChildViewModel.swift; sourceTree = "<group>"; };
 		2BDE71F128C38D4B005821C6 /* KeyboardExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardExtension.swift; sourceTree = "<group>"; };
 		2BF4E55A28E9F79D006CC58E /* DashBoardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashBoardService.swift; sourceTree = "<group>"; };
+		3702D4DC28EFCDBA00269906 /* ChildrenDashboardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildrenDashboardService.swift; sourceTree = "<group>"; };
 		3759E52A28B39C50000E0419 /* ChildLoginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildLoginPage.swift; sourceTree = "<group>"; };
 		3759E52E28B39CC6000E0419 /* ParentLoginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentLoginPage.swift; sourceTree = "<group>"; };
 		37613CFA28C6086000422234 /* ChildQRCodePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildQRCodePage.swift; sourceTree = "<group>"; };
@@ -122,6 +125,7 @@
 		37613D0028C61D2B00422234 /* ChildAccountPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildAccountPage.swift; sourceTree = "<group>"; };
 		3781DDCB28C4B453009F9904 /* NavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarView.swift; sourceTree = "<group>"; };
 		37AA76C928E33287003F134A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "iosApp/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		37ACC16028EFDDEF003FE5E2 /* ChildAuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildAuthViewModel.swift; sourceTree = "<group>"; };
 		37FD897B28C3C1A700B5ABFE /* ChildProfilePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildProfilePage.swift; sourceTree = "<group>"; };
 		37FD897D28C3C22E00B5ABFE /* PopUpWindowModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpWindowModifier.swift; sourceTree = "<group>"; };
 		37FD897F28C3C27F00B5ABFE /* AssignChorePopUpWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignChorePopUpWindow.swift; sourceTree = "<group>"; };
@@ -223,6 +227,7 @@
 			children = (
 				2B57827528D85C2C00EFBB1C /* UserService.swift */,
 				2BF4E55A28E9F79D006CC58E /* DashBoardService.swift */,
+				3702D4DC28EFCDBA00269906 /* ChildrenDashboardService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -232,6 +237,7 @@
 			children = (
 				2B57828628E57F3A00EFBB1C /* AddChildViewModel.swift */,
 				2B4536BD28CF902900678D0D /* AuthViewModel.swift */,
+				37ACC16028EFDDEF003FE5E2 /* ChildAuthViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -462,6 +468,7 @@
 				2BF4E55B28E9F79D006CC58E /* DashBoardService.swift in Sources */,
 				05EE617128E1FFAD007C1354 /* AppleLoginUtil.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
+				37ACC16128EFDDEF003FE5E2 /* ChildAuthViewModel.swift in Sources */,
 				2B3B10B228C0B16D003E24DE /* AddChildPage.swift in Sources */,
 				37613CFD28C60D1D00422234 /* ChildDashboard.swift in Sources */,
 				2B57827C28E19BD500EFBB1C /* EnvironmentWindowKey.swift in Sources */,
@@ -478,6 +485,7 @@
 				2B3B10AB28B7956A003E24DE /* DatePickerTextField.swift in Sources */,
 				37FD897E28C3C22E00B5ABFE /* PopUpWindowModifier.swift in Sources */,
 				2B57828728E57F3A00EFBB1C /* AddChildViewModel.swift in Sources */,
+				3702D4DD28EFCDBA00269906 /* ChildrenDashboardService.swift in Sources */,
 				2B57827328D84E8400EFBB1C /* ProgressSpinner.swift in Sources */,
 				37FD898028C3C27F00B5ABFE /* AssignChorePopUpWindow.swift in Sources */,
 				05D24AE928C489170097A7C2 /* SignContractPage.swift in Sources */,
