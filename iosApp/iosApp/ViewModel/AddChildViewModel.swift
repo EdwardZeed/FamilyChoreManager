@@ -24,8 +24,6 @@ class AddChildViewModel: ObservableObject{
     init() {
         print("DEBUG: dashboard view model initializing")
         self.fetchChildren()
-        
-//        add listener to children collection
         self.service.listenChildren(viewModel: self)
     }
     
@@ -57,5 +55,4 @@ class AddChildViewModel: ObservableObject{
         guard theme != nil else{return false}
         return true
     }
-    
 }

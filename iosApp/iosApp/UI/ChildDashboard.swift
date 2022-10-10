@@ -78,7 +78,7 @@ struct ChildDashBoardPage: View {
                                             currentSelectChild = child
                                          
                                         }, label: {
-                                            Button_Label(currentChild: child)
+                                            Button_Label(currentChild: child, currentContarct: ContractViewModel(childID: child.userID))
                                         }).frame(width: UIScreen.main.bounds.width*0.95, height: UIScreen.main.bounds.width*0.3)
                                             .background(Color.white)
                                             .cornerRadius(25)
@@ -91,7 +91,7 @@ struct ChildDashBoardPage: View {
                                
                                 
                             }
-                            NavigationLink(destination: ChildProfilePage(currentChild: currentSelectChild), isActive: $goToChildProfilePage){
+                            NavigationLink(destination: ChildProfilePage(currentChild: currentSelectChild, contractViewModel: ContractViewModel(childID: currentSelectChild.userID)), isActive: $goToChildProfilePage){
                                 EmptyView()
                             }
                             

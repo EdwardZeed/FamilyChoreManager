@@ -28,6 +28,7 @@ struct SignContractPage: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     @ObservedObject var contractCreator = ContractCreater()
     @ObservedObject var errormessage = errormessagehandler()
+    
     init(child: Child ){
         self.child = child
     }
@@ -107,6 +108,7 @@ struct Contarct_Detail_View: View{
     @State var goToDashboardPage = false
     @ObservedObject var contractCreator: ContractCreater
     @ObservedObject var errormessagehandler: errormessagehandler
+    
     var uploadContract = UploafContract()
     
     
