@@ -22,6 +22,9 @@ struct Preview_AddChorePage: PreviewProvider {
 
 struct AddChorePage: View {
     @State var choreName: String = ""
+    @ObservedObject var addChoreModel = AddChoreModel()
+    @Environment(\.presentationMode) var presentationMode
+    var uploadchore = UploadChore()
     var body: some View {
         
         GeometryReader{ geo in
@@ -73,10 +76,8 @@ struct AddChorePage: View {
                     Button(action: {
                         
                         
-                        //            var con = ContractCreator()
-                        //            var result = con.rewardList[0].name
-                        //            print("This is result:" + result)
-                        
+                        uploadchore.addChore(choreName: choreName, chorePic: "TestString")
+                        addChoreModel.checkSuccessAdded = true
                         
                         
                     }, label: {
@@ -90,6 +91,10 @@ struct AddChorePage: View {
                 }.frame(width: UIScreen.main.bounds.width)
             }.frame(width: UIScreen.main.bounds.width, alignment: .center)
             
+        }.onReceive(addChoreModel.$checkSuccessAdded) { success in
+            if success{
+                presentationMode.wrappedValue.dismiss()
+            }
         }
         
         

@@ -93,17 +93,11 @@ struct DashBoardPage: View {
                                     
                                 }
                                 ForEach(self.addChildViewModel.children, id: \.self){child in
-                                    
-                                    childCard(child: child)
-                                    
+                                    var contractViewModel = ContractViewModel(childID: child.userID)
+                                    childCard(child: child, currentContract:  contractViewModel)
                                 }
-                               
-                                
                             }
-                            
-                            
                         }
-                       
                     }
                 }
                
@@ -165,7 +159,7 @@ struct Plus_button_in_DashBoard: View{
             Menu {
                 Button("Add child"){goToAddChild = true}
                 Button("Add chore"){goToAddChore = true}
-                Button("Add contract"){goToAddContract = true}
+                
             } label: {
                 Image("PlusIcon")
             }
@@ -182,11 +176,7 @@ struct Plus_button_in_DashBoard: View{
                 EmptyView()
             }
             
-            NavigationLink(isActive: $goToAddContract) {
-                SignContractPage(username: "ikaros")
-            } label: {
-                EmptyView()
-            }
+            
         }
     }
 }
@@ -195,7 +185,13 @@ struct Plus_button_in_DashBoard: View{
 
 struct childCard: View{
     var child: Child
+    var currentContract: ContractViewModel
     @State var goToChildProfilePage = false
+    init(child: Child, currentContract: ContractViewModel){
+        self.child = child
+        self.currentContract = currentContract
+    }
+    
     
     var body: some View{
         HStack{
@@ -203,18 +199,20 @@ struct childCard: View{
                 goToChildProfilePage = true
              
             }, label: {
-                Button_Label(currentChild: child).foregroundColor(Color("AdaptiveColorForText"))
+                Button_Label(currentChild: child,currentContarct: currentContract).foregroundColor(Color("AdaptiveColorForText"))
             }).frame(width: UIScreen.main.bounds.width*0.95, height: UIScreen.main.bounds.width*0.3)
                 .background(Color("AdaptiveColorForBackground"))
                 .cornerRadius(25)
                 .shadow(color: Color.gray, radius: 10)
             
-            NavigationLink(destination: ChildProfilePage(currentChild: child), isActive: $goToChildProfilePage){
+            NavigationLink(destination: ChildProfilePage(currentChild: child, contractViewModel: currentContract), isActive: $goToChildProfilePage){
                 EmptyView()
             }
     
         }
     }
+    
+    
 }
 
 
@@ -233,7 +231,16 @@ struct Title_and_home_Page: View{
 
 struct Button_Label: View{
     var currentChild : Child
+    var currentContract: ContractViewModel
+    @State private var result: Result<ContractViewModel, Error>?
+    init(currentChild: Child, currentContarct:ContractViewModel) {
+        self.currentChild = currentChild
+        self.currentContract = currentContarct
+        
+    }
+    
     var body: some View{
+
         HStack{
             ZStack{
                 Image("photoframe")
@@ -262,16 +269,18 @@ struct Button_Label: View{
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 20, height: 20, alignment: .leading)
-                    Text("100")
+                    Text(String(currentContract.maxpoint))
                     Image("RewardIcon_Dashboard")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 20, height: 20, alignment: .leading)
-                    Text("2/5")
+                    Text("2/" + String(currentContract.totalCheckpoint))
                 }
             }
         }.frame( width: 300)
+        
     }
+        
 }
 
 
@@ -298,3 +307,5 @@ struct Parent_Button_Label: View{
         }.frame( width: 300)
     }
 }
+
+

@@ -75,8 +75,7 @@ struct ChildDashBoardPage: View {
                             //Spacer(minLength: 50)
                             Title_and_home_Page().frame(width: UIScreen.main.bounds.width*0.95,alignment: .leading)
                             ForEach(self.childAuthViewModel.children, id: \.self){child in
-                                childCard(child: child)
-
+                                childCard(child: child, currentContract: ContractViewModel(childID: currentSelectChild.userID))
                             }
                             
 //                            LazyVStack{
@@ -100,7 +99,7 @@ struct ChildDashBoardPage: View {
 //
 //
 //                            }
-                            NavigationLink(destination: ChildProfilePage(currentChild: currentSelectChild), isActive: $goToChildProfilePage){
+                            NavigationLink(destination: ChildProfilePage(currentChild: currentSelectChild, contractViewModel: ContractViewModel(childID: currentSelectChild.userID)), isActive: $goToChildProfilePage){
                                 EmptyView()
                             }
                             
@@ -183,17 +182,17 @@ struct ChildDashBoardPage: View {
 //                    .resizable()
 //                    .aspectRatio(contentMode: .fit)
 //                    .frame(width: 80, height: 80, alignment: .center)
-//                
-//                
+//
+//
 //                Image("userPhoto")
 //                    .resizable()
 //                    .aspectRatio(contentMode: .fit)
 //                    .frame(width: 50, height: 50, alignment: .center)
-//                
+//
 //            }.frame( alignment: .leading)
 //            VStack{
 //                Text(currentChild.name).frame(width: UIScreen.main.bounds.width*0.6,height: UIScreen.main.bounds.width*0.16, alignment: .topLeading)
-//                
+//
 //                HStack{
 //                    Spacer()
 //                    Image("token 5_In_DashBoard")

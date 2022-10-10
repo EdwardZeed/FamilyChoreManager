@@ -15,12 +15,15 @@ import shared
 struct ChildProfilePage: View {
     
     var currentChild : Child
+    var contractViewModel: ContractViewModel
     @State var isAddDialogShow = false
     @State var isDeleteDialogShow = false
     @State var eventList:[RandomItem] = [RandomItem(title: "test")]
     @State var curDelItem: RandomItem = RandomItem(title: "")
-    
+    @State var goToAddContract = false
     @State var goToChildQRCodePage = false
+    
+    
     
     var body: some View {
         
@@ -30,6 +33,8 @@ struct ChildProfilePage: View {
             VStack{
                 
                 
+                
+                
                 HStack(alignment: .center, spacing: 30){
                     Image("ChildIcon-ChildProfilePage")
                     
@@ -37,9 +42,9 @@ struct ChildProfilePage: View {
                     Image("Point-ChildProfilePage")
                     Text("25").padding(.leading, -20)
                     Image("Goal-ChildProfilePage")
-                    Text("68").padding(.leading, -20)
+                    Text(String(contractViewModel.maxpoint)).padding(.leading, -20)
                     Image("RewardIcon-ChildProfilePage")
-                    Text("2/8").padding(.leading, -20)
+                    Text("2/" + String(contractViewModel.totalCheckpoint)).padding(.leading, -20)
                 }
                 
                 VStack(alignment: .leading){
@@ -72,9 +77,6 @@ struct ChildProfilePage: View {
                         ScrollView(.horizontal){
                             HStack{
                                 SingleReward_ChildProfilePage()
-                                
-                                
-                                
                             }.padding(.horizontal, 7)
                         }
                         
@@ -114,11 +116,13 @@ struct ChildProfilePage: View {
                     Text("Assign Chores")
                 })
                 Button("QR Code Scan"){
+                    
                     goToChildQRCodePage = true
                     print(currentChild.userID)
                 
                     
                 }
+                Button("Add contract"){goToAddContract = true}
                 
                 
             } label: {
@@ -128,6 +132,12 @@ struct ChildProfilePage: View {
             }
             NavigationLink(isActive: $goToChildQRCodePage) {
                 ChildQRCodePage(child: currentChild)
+            } label: {
+                EmptyView()
+            }
+        
+            NavigationLink(isActive: $goToAddContract) {
+                SignContractPage(child: currentChild)
             } label: {
                 EmptyView()
             }
