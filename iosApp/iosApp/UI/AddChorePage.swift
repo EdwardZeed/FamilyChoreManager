@@ -12,16 +12,19 @@ import SwiftUI
 import shared
 import UIKit
 
-struct Preview_AddChorePage: PreviewProvider {
-    
-    static var previews: some View {
-        AddChorePage(choreName: "")
-    }
-}
+//struct Preview_AddChorePage: PreviewProvider {
+//
+//    static var previews: some View {
+//        AddChorePage(choreName: "")
+//    }
+//}
 
 
 struct AddChorePage: View {
+    var cuurentParent: Parent
     @State var choreName: String = ""
+    @State var showingLocalImage: Bool = false
+    @State var choreImage: UIImage? = (UIImage(named: "Default_Image"))
     @ObservedObject var addChoreModel = AddChoreModel()
     @Environment(\.presentationMode) var presentationMode
     var uploadchore = UploadChore()
@@ -67,16 +70,38 @@ struct AddChorePage: View {
                             
                         }.frame(width: UIScreen.main.bounds.width*0.9,alignment: .leading)
                         
-                        Image("Rectangle 44")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 200, height: 200, alignment: .center)
+                        Button(action: {
+                            //                var createReward = RewardCreater()
+                            //                rewardList.append(createReward)
+                            showingLocalImage.toggle()
+                            
+                            
+                        }, label: {
+                            VStack{
+                                if let image = self.choreImage{
+                                    Image(uiImage: choreImage!)
+                                        .resizable()
+                                        .frame(width: 200, height: 200)
+                                        .scaledToFill()
+                                        .cornerRadius(10)
+                                }else{
+                                    Image("Rectangle 44")
+                                        .resizable()
+                                        .frame(width: 200, height: 200)
+                                        .scaledToFill()
+                                        
+                                }
+                            }
+                        }).frame(width: 200, height: 200, alignment: .center)
+                        
+                        
+                            
                     }
                     
                     Button(action: {
+                        let imageData = choreImage?.jpegData(compressionQuality: 0.1)
                         
-                        
-                        uploadchore.addChore(choreName: choreName, chorePic: "TestString")
+                        uploadchore.addChore(choreName: choreName, chorePic: imageData,parentID: cuurentParent.userID)
                         addChoreModel.checkSuccessAdded = true
                         
                         
@@ -91,7 +116,11 @@ struct AddChorePage: View {
                 }.frame(width: UIScreen.main.bounds.width)
             }.frame(width: UIScreen.main.bounds.width, alignment: .center)
             
-        }.onReceive(addChoreModel.$checkSuccessAdded) { success in
+        }
+        .fullScreenCover(isPresented: $showingLocalImage, content: {
+            ImagePicker(image: $choreImage)
+        })
+        .onReceive(addChoreModel.$checkSuccessAdded) { success in
             if success{
                 presentationMode.wrappedValue.dismiss()
             }
