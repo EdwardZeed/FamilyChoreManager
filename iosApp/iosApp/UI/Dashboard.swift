@@ -39,6 +39,7 @@ struct DashBoardPage: View {
     
     @EnvironmentObject var authViewModel: AuthViewModel
     @State var currentSelectChild: Child = Child(userID: "1", name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: "")
+    @State var currentParent: Parent = Parent(userID: "", name: "", dateOfBirth: "", chooseTheme: nil, avatarPic: nil)
     
     @StateObject var addChildViewModel: AddChildViewModel = AddChildViewModel()
     
@@ -62,7 +63,7 @@ struct DashBoardPage: View {
                             }.frame(width: UIScreen.main.bounds.width*0.85, alignment: .leading)
                                 .padding(.top, 3)
                             
-                            Plus_button_in_DashBoard()
+                            Plus_button_in_DashBoard(currentParent: authViewModel.currentUser ?? currentParent)
                         }
                         
                         VStack{
@@ -153,6 +154,7 @@ struct Plus_button_in_DashBoard: View{
     @State var goToAddChild = false
     @State var goToAddChore = false
     @State var goToAddContract = false
+    var currentParent: Parent
     
     var body: some View{
         HStack{
@@ -171,7 +173,7 @@ struct Plus_button_in_DashBoard: View{
             }
 
             NavigationLink(isActive: $goToAddChore) {
-                AddChorePage()
+                AddChorePage(cuurentParent: currentParent)
             } label: {
                 EmptyView()
             }

@@ -11,9 +11,9 @@ import Firebase
 import shared
 
 struct UploadChore{
-    func addChore(choreName: String, chorePic: String){
+    func addChore(choreName: String, chorePic: Data?, parentID: String){
         
-        let data = ["Name": choreName, "Picture": chorePic]
+        let data = ["Name": choreName, "Picture": chorePic, "ParentID": parentID] as [String : Any]
         
         let chore = Firestore.firestore().collection("chore")
 

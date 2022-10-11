@@ -40,16 +40,4 @@ class ChildAuthViewModel: ObservableObject{
         self.childSession = "nil nil"
         print("DEBUG: \(childSession)")
     }
-    
-//    func setUserID(userID : String){
-//        self.userID = userID
-//        self.fetchChildren()
-//
-//        //add listener to children collection
-//        self.service.listenChildren(viewModel: self, currentUserID: userID)
-//    }
-//
-    
-    
-    
 }
