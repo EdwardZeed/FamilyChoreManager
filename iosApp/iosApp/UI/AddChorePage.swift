@@ -21,13 +21,12 @@ import UIKit
 
 
 struct AddChorePage: View {
-    var cuurentParent: Parent
     @State var choreName: String = ""
     @State var showingLocalImage: Bool = false
-    @State var choreImage: UIImage? = (UIImage(named: "Default_Image"))
-    @ObservedObject var addChoreModel = AddChoreModel()
+    @State var choreImage: UIImage?
+    @EnvironmentObject var addChoreViewModel: ChoreViewModel
     @Environment(\.presentationMode) var presentationMode
-    var uploadchore = UploadChore()
+    var uploadchore = ChoreService()
     var body: some View {
         
         GeometryReader{ geo in
@@ -99,11 +98,7 @@ struct AddChorePage: View {
                     }
                     
                     Button(action: {
-                        let imageData = choreImage?.jpegData(compressionQuality: 0.1)
-                        
-                        uploadchore.addChore(choreName: choreName, chorePic: imageData,parentID: cuurentParent.userID)
-                        addChoreModel.checkSuccessAdded = true
-                        
+                        addChoreViewModel.addChore(choreName: choreName, choreImage: choreImage)
                         
                     }, label: {
                         Text("ADD CHORE")
@@ -120,7 +115,7 @@ struct AddChorePage: View {
         .fullScreenCover(isPresented: $showingLocalImage, content: {
             ImagePicker(image: $choreImage)
         })
-        .onReceive(addChoreModel.$checkSuccessAdded) { success in
+        .onReceive(addChoreViewModel.$addChoreImageSuccess) { success in
             if success{
                 presentationMode.wrappedValue.dismiss()
             }

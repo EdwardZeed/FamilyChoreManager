@@ -173,7 +173,7 @@ struct Plus_button_in_DashBoard: View{
             }
 
             NavigationLink(isActive: $goToAddChore) {
-                AddChorePage(cuurentParent: currentParent)
+                AddChorePage()
             } label: {
                 EmptyView()
             }
@@ -255,6 +255,7 @@ struct Button_Label: View{
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 50, height: 50, alignment: .center)
+                    
                 
             }.frame( alignment: .leading)
             VStack{

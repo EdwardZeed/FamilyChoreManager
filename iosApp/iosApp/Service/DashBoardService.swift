@@ -81,7 +81,7 @@ struct DashBoardService{
             if let error = error {
                 print("DEBUG: failed to fetch children. \(error.localizedDescription)")
             }
-            let uid = Auth.auth().currentUser?.uid
+            
             snapshot.documentChanges.forEach { changes in
                 if changes.type == .added {
                     print("DEBUG: detected child added")
