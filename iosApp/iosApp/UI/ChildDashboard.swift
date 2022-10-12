@@ -33,6 +33,7 @@ struct ChildDashBoardPage: View {
     
     @State var currentSelectChild: Child = Child(userID: "-1", name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: "")
     @EnvironmentObject var childAuthViewModel: ChildAuthViewModel
+    @EnvironmentObject var contractViewModel: ContractViewModel
     
     
     
@@ -66,7 +67,7 @@ struct ChildDashBoardPage: View {
                             //Spacer(minLength: 50)
                             Title_and_home_Page().frame(width: UIScreen.main.bounds.width*0.95,alignment: .leading)
                             ForEach(self.childAuthViewModel.children, id: \.self){child in
-                                childCard(child: child, currentContract: ContractViewModel())
+                                childCard(child: child, currentContract: contractViewModel)
                             }
                             
 //                            LazyVStack{
@@ -90,7 +91,7 @@ struct ChildDashBoardPage: View {
 //
 //
 //                            }
-                            NavigationLink(destination: ChildProfilePage(currentChild: currentSelectChild, result: [0]), isActive: $goToChildProfilePage){
+                            NavigationLink(destination: ChildAccountPage(currentChild: currentSelectChild), isActive: $goToChildProfilePage){
                                 EmptyView()
                             }
                             
@@ -103,6 +104,11 @@ struct ChildDashBoardPage: View {
 
         }.navigationBarBackButtonHidden(true)
             .navigationBarHidden(true)
+            .environmentObject(contractViewModel)
+            .onAppear {
+                contractViewModel.setParentID(parentID: String(childAuthViewModel.childSession.split(separator: " ")[1]))
+                contractViewModel.getContractDetail(parentID: String(childAuthViewModel.childSession.split(separator: " ")[1]))
+            }
          
        
         
