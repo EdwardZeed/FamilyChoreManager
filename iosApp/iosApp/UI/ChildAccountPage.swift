@@ -13,6 +13,7 @@ struct ChildAccountPage: View {
     
     var currentChild : Child
     @EnvironmentObject var childAuthViewModel: ChildAuthViewModel
+
     
     var body: some View {
         NavigationView {

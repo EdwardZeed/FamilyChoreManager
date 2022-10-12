@@ -15,18 +15,9 @@ struct Preview_ChildDashBoardPage: PreviewProvider {
     static var previews: some View {
 
         var currentParent = Parent(userID: "0", name: "Chris", dateOfBirth: "2002/02/14", chooseTheme: Theme(name: "The Boys"), avatarPic: "Dragon")
-        var child1 = Child(userID: "1", name: "Linda", dateOfBirth: "2012/02/14", chooseTheme: Theme(name: "Disney"), avatarPic: "Poly")
-
-        var child2 = Child(userID: "2", name: "Anna", dateOfBirth: "2012/03/14", chooseTheme: Theme(name: "Marvel"), avatarPic: "IronMan")
-
-        var child3 = Child(userID: "3", name: "Bulankin", dateOfBirth: "2012/05/14", chooseTheme: Theme(name: "T-34"), avatarPic: "PP_50")
-
-        var child4: Child = Child(userID: "4", name: "Frank", dateOfBirth: "2001", chooseTheme: Theme(name: "T-34"), avatarPic: "Default")
-
-        var child5: Child = Child(userID: "5", name: "Frank", dateOfBirth: "2001", chooseTheme: Theme(name: "Minecraft"), avatarPic: "Default")
 
 
-        var childList = [child3,child2,child1]
+//        var childList = [child3,child2,child1]
         var parentList = [currentParent]
         //ChildDashBoardPage(username: "Chris",children: childList, parents:  parentList)
     }
@@ -75,7 +66,7 @@ struct ChildDashBoardPage: View {
                             //Spacer(minLength: 50)
                             Title_and_home_Page().frame(width: UIScreen.main.bounds.width*0.95,alignment: .leading)
                             ForEach(self.childAuthViewModel.children, id: \.self){child in
-                                childCard(child: child, currentContract: ContractViewModel(childID: currentSelectChild.userID))
+                                childCard(child: child, currentContract: ContractViewModel())
                             }
                             
 //                            LazyVStack{
@@ -99,7 +90,7 @@ struct ChildDashBoardPage: View {
 //
 //
 //                            }
-                            NavigationLink(destination: ChildProfilePage(currentChild: currentSelectChild, contractViewModel: ContractViewModel(childID: currentSelectChild.userID)), isActive: $goToChildProfilePage){
+                            NavigationLink(destination: ChildProfilePage(currentChild: currentSelectChild, result: [0]), isActive: $goToChildProfilePage){
                                 EmptyView()
                             }
                             

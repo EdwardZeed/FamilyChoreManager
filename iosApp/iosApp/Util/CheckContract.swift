@@ -92,10 +92,39 @@ func checkCorrespond(rewardArray: Array<String>, pointArray: Array<Int>) -> Int{
 
 
 func checkMaxpointMatch(pointArray: Array<Int>, maxpoint: Int) -> Int{
-    if (pointArray[pointArray.count - 1] != maxpoint){
-        return -5
+    if(pointArray.count > 3){
+        if (pointArray[pointArray.count - 1] != maxpoint){
+            return -5
+        }
+    }else{
+        var i = 2
+        while(i >= 0){
+            print("Debug: ", pointArray[i])
+            if(pointArray[i] != 0){
+                if(pointArray[i] != maxpoint){
+                    return -5
+                }else{
+                    return 1
+                }
+                
+            }
+            i = i - 1
+        }
     }
     return 1
+}
+
+func removeZero(pointArray: Array<Int>) -> Array<Int>{
+    var cleanArray = pointArray
+    var i = 2
+    while(i >= 0){
+        print("Debug: ", pointArray[i])
+        if(pointArray[i] == 0){
+            cleanArray.removeLast()
+        }
+        i = i - 1
+    }
+    return cleanArray   
 }
 
 class errormessagehandler: ObservableObject {

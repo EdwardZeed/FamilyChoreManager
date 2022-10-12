@@ -9,6 +9,7 @@
 import Foundation
 import Firebase
 import shared
+import SwiftUI
 
 struct DashBoardService{
     
@@ -62,9 +63,9 @@ struct DashBoardService{
                 let theme = Theme(name: doc["theme"] as? String ?? "")
                 
                 let child = Child(userID: doc.documentID, name: name, dateOfBirth: dateOfBirth, chooseTheme: theme, avatarPic: "")
+
+
                 result.append(child)
-                
-                
             })
             compeltion(result)
         }
@@ -92,6 +93,33 @@ struct DashBoardService{
                 }
             }
         }
+    }
+    
+    func fetchContract(parentId: String, childId: String, completion: @escaping (Contract) -> Contract) -> Contract?{
+        var result: Contract?
+        
+        Firestore.firestore().collection("users").document(parentId).collection("children").document(childId).collection("contract").getDocuments { snapshot, error in
+            if let error = error{
+                print("DEBUG: failed to fetch children. \(error.localizedDescription)")
+                return
+            }
+            print("DEBUG: fetching contract")
+            
+            snapshot?.documents.forEach({ doc in
+                let parentId = doc["ParentID"] as? String ?? ""
+                let childID = doc["ChildID"] as? String ?? ""
+                let description = doc["Description"] as? String ?? ""
+                let pointArray = doc["PointArray"] as? Array<String> ?? []
+                let rewardArray = doc["RewardArray"] as? Array<String> ?? []
+                let maxPoint = doc["maxPoint"] as? Int32 ?? 0
+                let childName = doc["ChildName"] as? String ?? ""
+                result = Contract(parentId: parentId, childName: childName, childId: childID, maxPoint: maxPoint, rewardList: rewardArray, pointList: pointArray, detail: description)
+                
+                completion(result!)
+            })
+     
+        }
+        return result
     }
     
 }

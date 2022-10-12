@@ -15,18 +15,10 @@ struct Preview_DashBoardPage: PreviewProvider {
     static var previews: some View {
         
         var currentParent = Parent(userID: "0", name: "Chris", dateOfBirth: "2002/02/14", chooseTheme: Theme(name: "The Boys"), avatarPic: "Dragon")
-        var child1 = Child(userID: "1", name: "Linda", dateOfBirth: "2012/02/14", chooseTheme: Theme(name: "Disney"), avatarPic: "Poly")
-
-        var child2 = Child(userID: "2", name: "Anna", dateOfBirth: "2012/03/14", chooseTheme: Theme(name: "Marvel"), avatarPic: "IronMan")
-
-        var child3 = Child(userID: "3", name: "Bulankin", dateOfBirth: "2012/05/14", chooseTheme: Theme(name: "T-34"), avatarPic: "PP_50")
-
-        var child4: Child = Child(userID: "4", name: "Frank", dateOfBirth: "2001", chooseTheme: Theme(name: "T-34"), avatarPic: "Default")
-
-        var child5: Child = Child(userID: "5", name: "Frank", dateOfBirth: "2001", chooseTheme: Theme(name: "Minecraft"), avatarPic: "Default")
 
 
-        var childList = [child3,child2,child1]
+
+        //var childList = [child3,child2,child1]
         var parentList = [currentParent]
         DashBoardPage()
     }
@@ -36,13 +28,13 @@ struct Preview_DashBoardPage: PreviewProvider {
 struct DashBoardPage: View {
     @State var goToChildProfilePage = false
     @State var goToParentProfilePage = false
-    
+    @EnvironmentObject var contractViewModel:ContractViewModel
     @EnvironmentObject var authViewModel: AuthViewModel
     @State var currentSelectChild: Child = Child(userID: "1", name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: "")
     @State var currentParent: Parent = Parent(userID: "", name: "", dateOfBirth: "", chooseTheme: nil, avatarPic: nil)
     
     @StateObject var addChildViewModel: AddChildViewModel = AddChildViewModel()
-    
+
     
     var body: some View {
         
@@ -94,8 +86,7 @@ struct DashBoardPage: View {
                                     
                                 }
                                 ForEach(self.addChildViewModel.children, id: \.self){child in
-                                    var contractViewModel = ContractViewModel(childID: child.userID)
-                                    childCard(child: child, currentContract:  contractViewModel)
+                                    childCard(child: child, currentContract: contractViewModel)
                                 }
                             }
                         }
@@ -107,6 +98,12 @@ struct DashBoardPage: View {
         }.navigationBarBackButtonHidden(true)
             .navigationBarHidden(true)
             .environmentObject(addChildViewModel)
+            .environmentObject(contractViewModel)
+            .environmentObject(contractViewModel)
+            .onAppear {
+                contractViewModel.setParentID(parentID: authViewModel.userSession!.uid)
+                contractViewModel.getContractDetail(parentID: authViewModel.userSession!.uid)
+            }
          
        
         
@@ -188,10 +185,14 @@ struct Plus_button_in_DashBoard: View{
 struct childCard: View{
     var child: Child
     var currentContract: ContractViewModel
+    var contractResultDic: [String: Array<Int>] = [:]
+    var result: [Int] = []
     @State var goToChildProfilePage = false
     init(child: Child, currentContract: ContractViewModel){
         self.child = child
         self.currentContract = currentContract
+        self.contractResultDic = currentContract.contractResultDic
+        self.result = contractResultDic[child.userID] ?? [0]
     }
     
     
@@ -201,13 +202,13 @@ struct childCard: View{
                 goToChildProfilePage = true
              
             }, label: {
-                Button_Label(currentChild: child,currentContarct: currentContract).foregroundColor(Color("AdaptiveColorForText"))
+                Button_Label(currentChild: child,contractResultDic: contractResultDic).foregroundColor(Color("AdaptiveColorForText"))
             }).frame(width: UIScreen.main.bounds.width*0.95, height: UIScreen.main.bounds.width*0.3)
                 .background(Color("AdaptiveColorForBackground"))
                 .cornerRadius(25)
                 .shadow(color: Color.gray, radius: 10)
             
-            NavigationLink(destination: ChildProfilePage(currentChild: child, contractViewModel: currentContract), isActive: $goToChildProfilePage){
+            NavigationLink(destination: ChildProfilePage(currentChild: child, result: removeZero(pointArray: result)), isActive: $goToChildProfilePage){
                 EmptyView()
             }
     
@@ -233,14 +234,15 @@ struct Title_and_home_Page: View{
 
 struct Button_Label: View{
     var currentChild : Child
-    var currentContract: ContractViewModel
-    @State private var result: Result<ContractViewModel, Error>?
-    init(currentChild: Child, currentContarct:ContractViewModel) {
+    var contractResultDic: [String: Array<Int>] = [:]
+    var result: [Int] = []
+    init(currentChild: Child, contractResultDic: [String: Array<Int>]) {
         self.currentChild = currentChild
-        self.currentContract = currentContarct
+        self.contractResultDic = contractResultDic
+        self.result = contractResultDic[currentChild.userID] ?? [0]
+
         
     }
-    
     var body: some View{
 
         HStack{
@@ -272,12 +274,12 @@ struct Button_Label: View{
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 20, height: 20, alignment: .leading)
-                    Text(String(currentContract.maxpoint))
+                    Text(String(removeZero(pointArray: result)[removeZero(pointArray: result).count - 1]))
                     Image("RewardIcon_Dashboard")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 20, height: 20, alignment: .leading)
-                    Text("2/" + String(currentContract.totalCheckpoint))
+                    Text("2/" + String(removeZero(pointArray: result).count))
                 }
             }
         }.frame( width: 300)
