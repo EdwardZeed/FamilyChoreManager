@@ -19,11 +19,7 @@ import AuthenticationServices
 
 
 
-var child10 = Child(userID: "1", name: "Linda", dateOfBirth: "2012/02/14", chooseTheme: Theme(name: "Disney"), avatarPic: "Poly")
 
-var child11 = Child(userID: "2", name: "Anna", dateOfBirth: "2012/03/14", chooseTheme: Theme(name: "Marvel"), avatarPic: "IronMan")
-
-var child12 = Child(userID: "3", name: "Bulankin", dateOfBirth: "2012/05/14", chooseTheme: Theme(name: "T-34"), avatarPic: "PP_50")
 
 
 
@@ -62,7 +58,7 @@ struct ChildQRCodePage: View {
                 
             }
         }
-        var li = [child10, child12, child11]
+        //var li = [child10, child12, child11]
 //        NavigationLink(destination: ChildNavigationBarView(username: child.name,childList: li).ignoresSafeArea(), isActive: $goToChildDashboard){
 //            EmptyView()
 //        }.navigationBarHidden(true)
