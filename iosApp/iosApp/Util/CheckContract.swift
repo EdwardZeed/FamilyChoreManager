@@ -116,19 +116,18 @@ func checkMaxpointMatch(pointArray: Array<Int>, maxpoint: Int) -> Int{
 
 func removeZero(pointArray: Array<Int>) -> Array<Int>{
     var cleanArray = pointArray
-    var i = 2
-    if(cleanArray.count == 0){
-        while(i >= 0){
-            print("Debug: ", cleanArray[i])
-            if(cleanArray[i] == 0){
-                cleanArray.removeLast()
-            }
-            i = i - 1
-        }
-        return cleanArray
-    }else{
+    if(cleanArray.count == 1){
         return [0]
     }
+    var i = 2
+    while(i >= 0){
+        print("Debug: ", pointArray[i])
+        if(pointArray[i] == 0){
+            cleanArray.removeLast()
+        }
+        i = i - 1
+    }
+    return cleanArray   
 }
 
 class errormessagehandler: ObservableObject {
