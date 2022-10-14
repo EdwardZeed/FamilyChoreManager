@@ -1,5 +1,6 @@
 package com.ontask.android
 
+import android.os.Bundle
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -37,7 +38,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import android.util.Log
+import android.widget.Toast
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.*
 import androidx.compose.ui.platform.*
@@ -45,16 +49,19 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.rememberNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.ontask.module.LoginModule
+
 
 @Composable
-fun parentLoginPage(navController: NavHostController,  viewModel: LoginScreenViewModel = viewModel()) {
+fun parentLoginPage(navController: NavHostController,viewModel: LoginScreenViewModel = viewModel(), auth: FirebaseAuth) {
 
-    //val status by viewModel.loadingState.collectAsState()
     val context = LocalContext.current
     val token = stringResource(R.string.web_client_id)
 
@@ -71,6 +78,8 @@ fun parentLoginPage(navController: NavHostController,  viewModel: LoginScreenVie
     }
 
 
+    var login_username: String by remember { mutableStateOf("") }
+    var login_password: String by remember { mutableStateOf("") }
     var paddingState by remember { mutableStateOf(16.dp) }
     val padding by animateDpAsState(
         targetValue = paddingState,
@@ -147,8 +156,8 @@ fun parentLoginPage(navController: NavHostController,  viewModel: LoginScreenVie
                     }
                 }
                 .apply {
-                    emailInput(this, localFocusManager)
-                    passwordInput(this, localFocusManager)
+                    login_username = emailInput(this, localFocusManager)
+                    login_password = passwordInput(this, localFocusManager)
                 }
 
             ClickableText(
@@ -165,7 +174,35 @@ fun parentLoginPage(navController: NavHostController,  viewModel: LoginScreenVie
 
             Button(
                 onClick = {
-                    navController.navigate("dashboard_screen")
+                    val log = LoginModule()
+                    var login_boolean: Boolean? = null
+                    login_boolean = log.final_check(login_username,login_password)
+
+                    if(login_boolean == true){
+                        auth.signInWithEmailAndPassword(login_username,login_password).addOnCompleteListener { task->
+                            if(task.isSuccessful){
+                                Toast.makeText(context, "login valid and correct!", Toast.LENGTH_SHORT).show()
+                                val user = auth.currentUser
+                                // Then move to the dashboard.
+                                navController.navigate("dashboard_screen")
+                            }
+                            else{
+                                Toast.makeText(context, "login valid but failed!", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+
+                    }
+                    else if(log.authenticate_1(login_username) == true && log.checkPassword(login_password)==false){
+                        Toast.makeText(context, "login password invalid!", Toast.LENGTH_SHORT).show()
+                    }
+                    else if(log.authenticate_1(login_username) == false && log.checkPassword(login_password)==true){
+                        Toast.makeText(context, "login username invalid!", Toast.LENGTH_SHORT).show()
+                    }
+                    else if(log.authenticate_1(login_username) == false && log.checkPassword(login_password)==false){
+                        Toast.makeText(context, "login both invalid!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "password length: " + login_password.length, Toast.LENGTH_SHORT).show()
+                    }
+
                 },
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = Color(0.41f, 0.62f, 0.93f),

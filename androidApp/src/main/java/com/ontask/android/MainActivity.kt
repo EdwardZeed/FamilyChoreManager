@@ -14,14 +14,14 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity: ComponentActivity() {
-
+    lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        auth = FirebaseAuth.getInstance()
         //FirebaseApp.initializeApp(this)
         setContent {
             val navController = rememberNavController()
-            NavMap(navController = navController, starDest = "Login_screen")
+            NavMap(navController = navController, starDest = "Login_screen",auth = auth)
         }
     }
 }

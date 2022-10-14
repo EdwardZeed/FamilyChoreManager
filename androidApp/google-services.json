@@ -58,6 +58,14 @@
           }
         },
         {
+          "client_id": "292460730947-l6f0l10ogqpmu7q6ljva20oag4kdhs1o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ontask.android",
+            "certificate_hash": "b5eeb8347f571ae25108bca957ccc894466044db"
+          }
+        },
+        {
           "client_id": "292460730947-l0651uunkedv6bblti5mnk1dunn17omr.apps.googleusercontent.com",
           "client_type": 3
         }
