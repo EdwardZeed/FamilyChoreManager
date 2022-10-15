@@ -12,6 +12,8 @@ import shared
 struct ChildAccountPage: View {
     
     var currentChild : Child
+    @EnvironmentObject var childAuthViewModel: ChildAuthViewModel
+
     
     var body: some View {
         NavigationView {
@@ -93,6 +95,12 @@ struct ChildAccountPage: View {
                 
                 
             }.navigationTitle(currentChild.name)
+                .toolbar{Menu {
+                    Button(action: { childAuthViewModel.signOut()}, label: {
+                        Text("sign out")
+                    })} label: {
+                        Image("PlusIcon-ChildProfilePage")
+                    }}
         }
                 
     }
@@ -107,9 +115,9 @@ struct ChildAccountPage_Previews: PreviewProvider {
         //These are the dummy data of chore cards which assigned to the children
         let achievement = Achievement(points: 3, message: "well done")
         
-        var singleChore1 = ChoreTask(taskID: 1, name: "Make the bed", description: "None", achievement: achievement, iconImage: "BedIcon-ChildProfilePage")
-        var singleChore2 = ChoreTask(taskID: 2, name: "Sweep the floor", description: "None", achievement: achievement, iconImage: "broom")
-        var singleChore3 = ChoreTask(taskID: 3, name: "Wash the dishes", description: "None", achievement: achievement, iconImage: "WashDishes")
+        var singleChore1 = ChoreTask(taskID: "1", name: "Make the bed", description: "None", achievement: achievement, iconImage: "BedIcon-ChildProfilePage")
+        var singleChore2 = ChoreTask(taskID: "2", name: "Sweep the floor", description: "None", achievement: achievement, iconImage: "broom")
+        var singleChore3 = ChoreTask(taskID: "3", name: "Wash the dishes", description: "None", achievement: achievement, iconImage: "WashDishes")
         
         
         

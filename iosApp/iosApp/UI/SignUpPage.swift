@@ -147,6 +147,7 @@ struct EntryField: View {
     @Binding var validation: Float
     var isPassword: Bool
     
+    
     var body: some View {
         HStack{
             icon

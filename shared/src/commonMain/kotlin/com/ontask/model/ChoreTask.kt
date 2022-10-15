@@ -11,9 +11,9 @@ package com.ontask.model
  * @constructor Create empty Chore task
  */
 class ChoreTask(
-    var taskID:Int,
+    var taskID:String,
     var name: String,
-    var description: String,
+    var description: String?,
     var achievement: Achievement,
     var iconImage: String) {
     var children: ArrayList<Child> = ArrayList()

@@ -21,16 +21,16 @@ struct AddChildPage: View {
     
     var body: some View {
         ZStack {
-            Image("Background").resizable()
-                .ignoresSafeArea()
-                .opacity(0.2)
+//            Image("Background")
+//                .ignoresSafeArea()
+//                .opacity(0.2)
             
             VStack{
                 
                 Image("AddUserIcon")
                     .padding(.top, UIScreen.main.bounds.height*0.05)
                     .padding(.bottom, UIScreen.main.bounds.height*0.1)
-                EntryField(textValue: $childName, icon: Image("userIcon"), placeholder: "child name", prompt: "", validation: $valid, isPassword: false)
+                EntryField(textValue: $childName, icon: Image("userIcon"), placeholder: "child name", prompt: addChildViewModel.namePrompt, validation: $addChildViewModel.nameValid, isPassword: false)
                     .overlay(GeometryReader{
                         proxy -> AnyView in
                         DispatchQueue.main.async {
@@ -48,6 +48,11 @@ struct AddChildPage: View {
                 .background(Color(UIColor.secondarySystemBackground))
                 .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
                 .frame(width: UIScreen.main.bounds.width*0.8,height: textFieldHeight, alignment: .leading)
+                .border(.red, width: CGFloat(addChildViewModel.dateValid))
+                
+                if (addChildViewModel.dateValid == 2){
+                    Text("date of birth field cannot be empty")
+                }
                 
                 
                 
@@ -84,10 +89,11 @@ struct AddChildPage: View {
                 Spacer(minLength: UIScreen.main.bounds.width*0.3)
         
             }
+            
         }
-        .onTapGesture {
+        .background(Image("Background").ignoresSafeArea().opacity(0.2).onTapGesture {
             hideKeyboard()
-        }
+        })
         .onReceive(addChildViewModel.$success) { success in
             if success{
                 presentationMode.wrappedValue.dismiss()

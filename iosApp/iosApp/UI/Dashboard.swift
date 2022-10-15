@@ -15,18 +15,10 @@ struct Preview_DashBoardPage: PreviewProvider {
     static var previews: some View {
         
         var currentParent = Parent(userID: "0", name: "Chris", dateOfBirth: "2002/02/14", chooseTheme: Theme(name: "The Boys"), avatarPic: "Dragon")
-        var child1 = Child(userID: "1", name: "Linda", dateOfBirth: "2012/02/14", chooseTheme: Theme(name: "Disney"), avatarPic: "Poly")
-
-        var child2 = Child(userID: "2", name: "Anna", dateOfBirth: "2012/03/14", chooseTheme: Theme(name: "Marvel"), avatarPic: "IronMan")
-
-        var child3 = Child(userID: "3", name: "Bulankin", dateOfBirth: "2012/05/14", chooseTheme: Theme(name: "T-34"), avatarPic: "PP_50")
-
-        var child4: Child = Child(userID: "4", name: "Frank", dateOfBirth: "2001", chooseTheme: Theme(name: "T-34"), avatarPic: "Default")
-
-        var child5: Child = Child(userID: "5", name: "Frank", dateOfBirth: "2001", chooseTheme: Theme(name: "Minecraft"), avatarPic: "Default")
 
 
-        var childList = [child3,child2,child1]
+
+        //var childList = [child3,child2,child1]
         var parentList = [currentParent]
         DashBoardPage()
     }
@@ -36,11 +28,13 @@ struct Preview_DashBoardPage: PreviewProvider {
 struct DashBoardPage: View {
     @State var goToChildProfilePage = false
     @State var goToParentProfilePage = false
-    
+    @EnvironmentObject var contractViewModel:ContractViewModel
     @EnvironmentObject var authViewModel: AuthViewModel
     @State var currentSelectChild: Child = Child(userID: "1", name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: "")
+    @State var currentParent: Parent = Parent(userID: "", name: "", dateOfBirth: "", chooseTheme: nil, avatarPic: nil)
     
-    @EnvironmentObject var addChildViewModel: AddChildViewModel
+    @StateObject var addChildViewModel: AddChildViewModel = AddChildViewModel()
+
     
     var body: some View {
         
@@ -61,7 +55,7 @@ struct DashBoardPage: View {
                             }.frame(width: UIScreen.main.bounds.width*0.85, alignment: .leading)
                                 .padding(.top, 3)
                             
-                            Plus_button_in_DashBoard()
+                            Plus_button_in_DashBoard(currentParent: authViewModel.currentUser ?? currentParent)
                         }
                         
                         VStack{
@@ -92,30 +86,10 @@ struct DashBoardPage: View {
                                     
                                 }
                                 ForEach(self.addChildViewModel.children, id: \.self){child in
-                                    HStack{
-                                        Button(action: {
-                                            goToChildProfilePage = true
-                                        
-                                            currentSelectChild = child
-                                         
-                                        }, label: {
-                                            Button_Label(currentChild: child).foregroundColor(Color("AdaptiveColorForText"))
-                                        }).frame(width: UIScreen.main.bounds.width*0.95, height: UIScreen.main.bounds.width*0.3)
-                                            .background(Color("AdaptiveColorForBackground"))
-                                            .cornerRadius(25)
-                                            .shadow(color: Color.gray, radius: 10)
-                                
-                                    }
+                                    childCard(child: child, currentContract: contractViewModel)
                                 }
-                               
-                                
                             }
-                            NavigationLink(destination: ChildProfilePage(currentChild: currentSelectChild), isActive: $goToChildProfilePage){
-                                EmptyView()
-                            }
-                            
                         }
-                       
                     }
                 }
                
@@ -123,6 +97,13 @@ struct DashBoardPage: View {
 
         }.navigationBarBackButtonHidden(true)
             .navigationBarHidden(true)
+            .environmentObject(addChildViewModel)
+            .environmentObject(contractViewModel)
+            .environmentObject(contractViewModel)
+            .onAppear {
+                contractViewModel.setParentID(parentID: authViewModel.userSession!.uid)
+                contractViewModel.getContractDetail(parentID: authViewModel.userSession!.uid)
+            }
          
        
         
@@ -170,13 +151,14 @@ struct Plus_button_in_DashBoard: View{
     @State var goToAddChild = false
     @State var goToAddChore = false
     @State var goToAddContract = false
+    var currentParent: Parent
     
     var body: some View{
         HStack{
             Menu {
                 Button("Add child"){goToAddChild = true}
                 Button("Add chore"){goToAddChore = true}
-                Button("Add contract"){goToAddContract = true}
+                
             } label: {
                 Image("PlusIcon")
             }
@@ -193,16 +175,48 @@ struct Plus_button_in_DashBoard: View{
                 EmptyView()
             }
             
-            NavigationLink(isActive: $goToAddContract) {
-                SignContractPage(username: "ikaros")
-            } label: {
-                EmptyView()
-            }
+            
         }
     }
 }
 
 //Menu button and drop down menu at the top left corner
+
+struct childCard: View{
+    var child: Child
+    var currentContract: ContractViewModel
+    var contractResultDic: [String: Array<Int>] = [:]
+    var result: [Int] = []
+    @State var goToChildProfilePage = false
+    init(child: Child, currentContract: ContractViewModel){
+        self.child = child
+        self.currentContract = currentContract
+        self.contractResultDic = currentContract.contractResultDic
+        self.result = contractResultDic[child.userID] ?? [0]
+    }
+    
+    
+    var body: some View{
+        HStack{
+            Button(action: {
+                goToChildProfilePage = true
+             
+            }, label: {
+                Button_Label(currentChild: child,contractResultDic: contractResultDic).foregroundColor(Color("AdaptiveColorForText"))
+            }).frame(width: UIScreen.main.bounds.width*0.95, height: UIScreen.main.bounds.width*0.3)
+                .background(Color("AdaptiveColorForBackground"))
+                .cornerRadius(25)
+                .shadow(color: Color.gray, radius: 10)
+            
+            NavigationLink(destination: ChildProfilePage(currentChild: child, result: removeZero(pointArray: result)), isActive: $goToChildProfilePage){
+                EmptyView()
+            }
+    
+        }
+    }
+    
+    
+}
 
 
 struct Title_and_home_Page: View{
@@ -220,7 +234,17 @@ struct Title_and_home_Page: View{
 
 struct Button_Label: View{
     var currentChild : Child
+    var contractResultDic: [String: Array<Int>] = [:]
+    var result: [Int] = []
+    init(currentChild: Child, contractResultDic: [String: Array<Int>]) {
+        self.currentChild = currentChild
+        self.contractResultDic = contractResultDic
+        self.result = contractResultDic[currentChild.userID] ?? [0]
+
+        
+    }
     var body: some View{
+
         HStack{
             ZStack{
                 Image("photoframe")
@@ -233,6 +257,7 @@ struct Button_Label: View{
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 50, height: 50, alignment: .center)
+                    
                 
             }.frame( alignment: .leading)
             VStack{
@@ -249,16 +274,18 @@ struct Button_Label: View{
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 20, height: 20, alignment: .leading)
-                    Text("100")
+                    Text(String(removeZero(pointArray: result)[removeZero(pointArray: result).count - 1]))
                     Image("RewardIcon_Dashboard")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 20, height: 20, alignment: .leading)
-                    Text("2/5")
+                    Text("2/" + String(removeZero(pointArray: result).count))
                 }
             }
         }.frame( width: 300)
+        
     }
+        
 }
 
 
@@ -285,3 +312,5 @@ struct Parent_Button_Label: View{
         }.frame( width: 300)
     }
 }
+
+

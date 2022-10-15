@@ -8,11 +8,13 @@
 
 import SwiftUI
 import shared
+import Kingfisher
 
 struct ParentProfilePage: View {
     @State var numberOfChildren = "2"
     @State var numberOfRelatives = "2"
     @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var choreViewModel: ChoreViewModel
     var chores: [ChoreTask]
     
     
@@ -47,18 +49,22 @@ struct ParentProfilePage: View {
                         
                         //                display all chores
                         LazyVStack {
-                            ForEach(chores, id: \.self){chore in
-                                Button {
-                                    
-                                } label: {
-                                    ChoreCard(chore: chore)
-                                }
-                                .frame(width: UIScreen.main.bounds.width*0.95, height: UIScreen.main.bounds.width*0.3)
-                                .background(Color("AdaptiveColorForBackground"))
-                                .cornerRadius(25)
-                                .shadow(color: Color.gray, radius: 10)
+                            ForEach(choreViewModel.chores, id: \.self){chore in
+//                                Button {
+//
+//                                } label: {
+//                                    ChoreCard(chore: chore)
+//                                }
+//                                .frame(width: UIScreen.main.bounds.width*0.95, height: UIScreen.main.bounds.width*0.3)
+//                                .background(Color("AdaptiveColorForBackground"))
+//                                .cornerRadius(25)
+//                                .shadow(color: Color.gray, radius: 10)
 
-//                                ChoreCard(chore: chore)
+                                ChoreCard(chore: chore)
+                                    .frame(width: UIScreen.main.bounds.width*0.95, height: UIScreen.main.bounds.width*0.3)
+                                    .background(Color("AdaptiveColorForBackground"))
+                                    .cornerRadius(25)
+                                    .shadow(color: Color.gray, radius: 10)
                                     
                                 
                             }
@@ -80,7 +86,7 @@ struct ParentProfilePage: View {
 struct ParentProfilePage_Previews: PreviewProvider {
     static var previews: some View {
         let achievement = Achievement(points: 1, message: "free three")
-        let chore = ChoreTask(taskID: 0, name: "Make bed", description: "Make bed", achievement: achievement, iconImage: "BedIcon")
+        let chore = ChoreTask(taskID: "0", name: "Make bed", description: "Make bed", achievement: achievement, iconImage: "BedIcon")
         Group {
             ParentProfilePage(chores: [chore])
                 .preferredColorScheme(.light)
@@ -101,6 +107,7 @@ struct AvatorBar: View {
                 .resizable()
                 .frame(width: 80, height: 80)
                 .padding(.horizontal, 7)
+                .clipShape(Circle())
             Spacer()
             HStack {
                 HStack{
@@ -124,7 +131,8 @@ struct ChoreCard: View {
     var chore: ChoreTask
     var body: some View {
         HStack{
-            Image(chore.iconImage)
+            KFImage(URL(string: chore.iconImage))
+                .resizable()
                 .frame(width: 59, height: 59)
                 .padding(.horizontal, 7)
             
@@ -133,7 +141,6 @@ struct ChoreCard: View {
                 Text(chore.name)
                     .font(.title)
                     .fontWeight(.semibold)
-                
                 
                 HStack{
                     Text(chore.achievement.message + ":")
