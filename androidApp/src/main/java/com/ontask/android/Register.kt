@@ -44,7 +44,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import java.util.*
 
-
 @Composable
 fun Register(navController: NavHostController) {
     var paddingState by remember { mutableStateOf(16.dp) }
@@ -52,7 +51,6 @@ fun Register(navController: NavHostController) {
         targetValue = paddingState,
         tween(durationMillis = 1000)
     )
-
     val context = LocalContext.current
 
     Box(modifier = Modifier
@@ -64,7 +62,6 @@ fun Register(navController: NavHostController) {
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxSize()
         ) {
-
             Text(
                 text = "Let's get started",
                 textAlign = TextAlign.Center,
@@ -117,7 +114,7 @@ fun Register(navController: NavHostController) {
                 )
             }
 
-// TODO: https://developer.android.com/jetpack/compose/layouts/material -- add shadow on the button?
+            // TODO: https://developer.android.com/jetpack/compose/layouts/material -- add shadow on the button?
             Button(
                 onClick = {
                     navController.navigate("dashboard_screen")
@@ -215,7 +212,6 @@ fun usernameInput(modifier: Modifier = Modifier, localFocusManager: FocusManager
     )
 
     return username
-
 }
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -254,7 +250,6 @@ fun registerEmailInput(modifier: Modifier = Modifier, localFocusManager: FocusMa
     )
 
     return email
-
 }
 
 @Composable
@@ -276,11 +271,13 @@ fun registerPasswordInput(modifier: Modifier, localFocusManager: FocusManager): 
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Done),
         keyboardActions = KeyboardActions(onDone = {localFocusManager.clearFocus()}),
         modifier = modifier,
-        leadingIcon = { Icon(
-            imageVector = Icons.Filled.Lock,
-            contentDescription = "password leading icon",
-            tint = Color(0xff656565)
-        ) },
+        leadingIcon = {
+            Icon(
+                imageVector = Icons.Filled.Lock,
+                contentDescription = "password leading icon",
+                tint = Color(0xff656565)
+            )
+        },
         trailingIcon = {
             IconButton(onClick = { passwordHidden = !passwordHidden }) {
                 val visibilityIcon = if (passwordHidden) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
@@ -369,4 +366,3 @@ fun dateOfBirth(modifier: Modifier, localFocusManager: FocusManager): String {
 
     return mDate.value
 }
-

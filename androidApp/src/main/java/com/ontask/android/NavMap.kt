@@ -36,5 +36,3 @@ fun NavMap(navController: NavHostController, starDest:String) {
         }
     }
 }
-
-

@@ -57,7 +57,6 @@ fun AddChoresPageContents(navController: NavHostController) {
                 .fillMaxSize()
                 .padding(20.dp)
         ) {
-
             Row {
                 Image(
                     painter = painterResource(id = R.drawable.cleaning),
@@ -133,7 +132,6 @@ fun AddChoresPageContents(navController: NavHostController) {
                 }
             }
         }
-
     }
 }
 
@@ -167,4 +165,3 @@ fun AddChoreInput(modifier: Modifier = Modifier, localFocusManager: FocusManager
 
     return newChore
 }
-

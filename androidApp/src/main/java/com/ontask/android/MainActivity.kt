@@ -79,7 +79,8 @@ fun BottomNavigationBar(navController: NavController) {
                         // reselecting the same item
                         launchSingleTop = true
                         // Restore state when reselecting a previously selected item
-                        restoreState = true
+                        // restoreState = true
+                        restoreState = false
                     }
                 }
             )

@@ -99,7 +99,7 @@ fun addChildProfileContents(navController: NavHostController) {
                     fontWeight = FontWeight.Normal,
                 ),
                 color = Color.Black
-//                color = Color(0xFFADADAD)
+                //color = Color(0xFFADADAD)
             )
 
             val localFocusManager = LocalFocusManager.current
@@ -108,17 +108,17 @@ fun addChildProfileContents(navController: NavHostController) {
                 .apply {
                     childNameInput(this, localFocusManager)
                     childDateOfBirth(this, localFocusManager)
-//                    themesDropDown(this) // TODO: uncomment this for the themes dropdown menu
+                    //themesDropDown(this) // TODO: uncomment this for the themes dropdown menu
                 }
 
             Button(
                 onClick = {
-                          //TODO: make this button do something
+                    //TODO: make this button do something
                 },
                 modifier = Modifier
                     .fillMaxWidth(0.71f)
                     .height(50.dp),
-//                    .padding(10.dp),
+                    //.padding(10.dp),
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF689FEC)),
             ) {
                 Text(
@@ -131,7 +131,6 @@ fun addChildProfileContents(navController: NavHostController) {
                     color = Color.White
                 )
             }
-
         }
     }
 }
@@ -139,7 +138,6 @@ fun addChildProfileContents(navController: NavHostController) {
 // reference: https://www.geeksforgeeks.org/drop-down-menu-in-android-using-jetpack-compose/
 @Composable
 fun themesDropDown(modifier: Modifier) {
-
     // Declaring a boolean value to store
     // the expanded state of the Text Field
     var mExpanded by remember { mutableStateOf(false) }
@@ -147,7 +145,7 @@ fun themesDropDown(modifier: Modifier) {
     // Create a string value to store the selected city
     var mSelectedText by remember { mutableStateOf("") }
 
-//    var mTextFieldSize by remember { mutableStateOf(Size.Zero)}
+    //var mTextFieldSize by remember { mutableStateOf(Size.Zero)}
 
     // Create a list of cities TODO change this to the themes available. --> have this call the list of themes from backend?
     val mCities = listOf("Delhi", "Mumbai", "Chennai", "Kolkata", "Hyderabad", "Bengaluru", "Pune")
@@ -190,8 +188,8 @@ fun themesDropDown(modifier: Modifier) {
     DropdownMenu(
         expanded = mExpanded,
         onDismissRequest = { mExpanded = false },
-//        modifier = Modifier
-//            .width(with(LocalDensity.current){mTextFieldSize.width.toDp()})
+        //modifier = Modifier
+        //.width(with(LocalDensity.current){mTextFieldSize.width.toDp()})
     ) {
         mCities.forEach { label ->
             DropdownMenuItem(onClick = {
