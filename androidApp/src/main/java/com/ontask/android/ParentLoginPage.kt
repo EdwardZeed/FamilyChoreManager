@@ -181,11 +181,6 @@ fun parentLoginPage(navController: NavHostController) {
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.apple_login_btn),
-                    contentDescription = "Apple logo icon",
-                    modifier = Modifier.height(50.dp).width(50.dp).padding(10.dp)
-                )
-                Image(
                     painter = painterResource(id = R.drawable.google_login_btn),
                     contentDescription = "Google logo icon",
                     modifier = Modifier.height(50.dp).width(50.dp).padding(10.dp)
