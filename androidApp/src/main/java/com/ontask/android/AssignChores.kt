@@ -61,9 +61,9 @@ fun assignChoresPageContents(navController: NavHostController) {
             // TODO: get a list of chores
             // dummy data
             val choreList = arrayOf(
-                ChoreTask(1, "Wash the dishes", "dishes", Achievement(1, ""), "dish_washing_icon.png"),
-                ChoreTask(1, "Make bed", "bed", Achievement(1, ""), "bed_icon.png"),
-                ChoreTask(1, "Clean room", "clean", Achievement(1, ""), "vacuum_icon.png")
+                ChoreTask("1", "Wash the dishes", "dishes", Achievement(1, ""), "dish_washing_icon.png"),
+                ChoreTask("1", "Make bed", "bed", Achievement(1, ""), "bed_icon.png"),
+                ChoreTask("1", "Clean room", "clean", Achievement(1, ""), "vacuum_icon.png")
             )
 
             for (chore in choreList)
