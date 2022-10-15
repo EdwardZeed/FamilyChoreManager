@@ -38,6 +38,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.core.*
@@ -67,6 +68,7 @@ fun parentLoginPage(navController: NavHostController) {
         targetValue = paddingState,
         tween(durationMillis = 1000)
     )
+    val context = LocalContext.current
 
     Box(modifier = Modifier
         .fillMaxSize()
@@ -180,16 +182,32 @@ fun parentLoginPage(navController: NavHostController) {
                 .fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.google_login_btn),
-                    contentDescription = "Google logo icon",
-                    modifier = Modifier.height(50.dp).width(50.dp).padding(10.dp)
-                )
-                Image(
-                    painter = painterResource(id = R.drawable.facebook_login_btn),
-                    contentDescription = "Facebook logo icon",
-                    modifier = Modifier.height(50.dp).width(50.dp).padding(10.dp)
-                )
+                Button(
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
+                    elevation = null,
+                    onClick = {
+                        Toast.makeText(context, "This button should redirect the user to a Google login page", Toast.LENGTH_SHORT).show()
+                    }
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.google_login_btn),
+                        contentDescription = "Google logo icon",
+                        modifier = Modifier.height(50.dp).width(50.dp).padding(10.dp)
+                    )
+                }
+                Button(
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
+                    elevation = null,
+                    onClick = {
+                        Toast.makeText(context, "This button should redirect the user to a Facebook login page", Toast.LENGTH_SHORT).show()
+                    }
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.facebook_login_btn),
+                        contentDescription = "Facebook logo icon",
+                        modifier = Modifier.height(50.dp).width(50.dp).padding(10.dp)
+                    )
+                }
             }
         }
     }
