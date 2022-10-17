@@ -12,15 +12,15 @@ import AuthenticationServices
 import CryptoKit
 import CodeScanner
 
-var child1 = Child(userID: "1", name: "Linda", dateOfBirth: "2012/02/14", chooseTheme: Theme(name: "Disney"), avatarPic: "Poly")
-
-var child2 = Child(userID: "2", name: "Anna", dateOfBirth: "2012/03/14", chooseTheme: Theme(name: "Marvel"), avatarPic: "IronMan")
-
-var child3 = Child(userID: "3", name: "Bulankin", dateOfBirth: "2012/05/14", chooseTheme: Theme(name: "T-34"), avatarPic: "PP_50")
-
-var child4: Child = Child(userID: "4", name: "Frank", dateOfBirth: "2001", chooseTheme: Theme(name: "T-34"), avatarPic: "Default")
-
-var child5: Child = Child(userID: "5", name: "Frank", dateOfBirth: "2001", chooseTheme: Theme(name: "Minecraft"), avatarPic: "Default")
+//var child1 = Child(userID: "1", name: "Linda", dateOfBirth: "2012/02/14", chooseTheme: Theme(name: "Disney"), avatarPic: "Poly")
+//
+//var child2 = Child(userID: "2", name: "Anna", dateOfBirth: "2012/03/14", chooseTheme: Theme(name: "Marvel"), avatarPic: "IronMan")
+//
+//var child3 = Child(userID: "3", name: "Bulankin", dateOfBirth: "2012/05/14", chooseTheme: Theme(name: "T-34"), avatarPic: "PP_50")
+//
+//var child4: Child = Child(userID: "4", name: "Frank", dateOfBirth: "2001", chooseTheme: Theme(name: "T-34"), avatarPic: "Default")
+//
+//var child5: Child = Child(userID: "5", name: "Frank", dateOfBirth: "2001", chooseTheme: Theme(name: "Minecraft"), avatarPic: "Default")
 
 struct ParentLoginPage: View {
     
@@ -33,6 +33,7 @@ struct ParentLoginPage: View {
     
     @EnvironmentObject var authViewModel: AuthViewModel
     @EnvironmentObject var childAuthViewModel: ChildAuthViewModel
+    @EnvironmentObject var contractViewModel: ContractViewModel
     @State var isPresentingScanner = false
     @State var scannedCode: String = "scan qr code"
     
@@ -46,8 +47,9 @@ struct ParentLoginPage: View {
                     self.isPresentingScanner = false
                     
                     if(scannedCode != "scan qr code"){
-                        childAuthViewModel.childSession = scannedCode
-                        childAuthViewModel.fetchChildren()
+//                        childAuthViewModel.childSession = scannedCode
+//                        childAuthViewModel.fetchChildren()
+                        self.childAuthViewModel.signIn(childSession: scannedCode)
                         goToChildDashboard = true
                        
                     }
@@ -81,10 +83,10 @@ struct ParentLoginPage: View {
 //                }
 //                .navigationBarHidden(true)
                 
-                NavigationLink(destination: ChildNavigationBarView( childList: []), isActive: $goToChildDashboard){
-                    EmptyView()
-                }
-                .navigationBarHidden(true)
+//                NavigationLink(destination: ChildNavigationBarView(), isActive: $goToChildDashboard){
+//                    EmptyView()
+//                }
+//                .navigationBarHidden(true)
 
                 VStack {
 
@@ -108,14 +110,19 @@ struct ParentLoginPage: View {
                         Text("email or password is incorrect")
                     }
 
-                    Button(action: {authViewModel.loginWithEmail(email: email, password: password)},
+                    Button(action: {
+                        contractViewModel.setParentID(parentID: authViewModel.userSession?.uid ?? "Empty UID")
+                        authViewModel.loginWithEmail(email: email, password: password)
+                        
+                        
+                    },
                            label: {
                         Image("loginBtn")
                     })
                     .padding(.bottom, UIScreen.main.bounds.height*0.03)
 
 
-                    var li = [child1, child2, child3, child4, child5]
+//                    var li = [child1, child2, child3, child4, child5]
 
                     Image("separateLine")
                         .padding(.bottom, UIScreen.main.bounds.height*0.03)
@@ -189,19 +196,29 @@ struct WelcomeAndSignUpText: View {
 
 struct ThirdPartyLogo: View {
     @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var contractViewModel: ContractViewModel
     @State private var signInWithAppleDelegates: SignInWithAppleDelegates! = nil
     @Environment(\.window) private var window: UIWindow?
     var body: some View {
         HStack{
             Spacer()
             
-            Button(action: showAppleLogin, label: {Image("AppleLoginBtn")})
+            Button(action: {
+                showAppleLogin()
+                contractViewModel.setParentID(parentID: authViewModel.userSession?.uid ?? "Empty ID")
+            }, label: {Image("AppleLoginBtn")})
             
             Spacer()
             
-            Button(action: authViewModel.loginWithGoogle, label: {Image("GoogleLoginBtn")})
+            Button(action: {
+                authViewModel.loginWithGoogle()
+                contractViewModel.setParentID(parentID: authViewModel.userSession?.uid ?? "Empty ID")
+            }, label: {Image("GoogleLoginBtn")})
             Spacer()
-            Button(action: authViewModel.loginWithFacebook, label: { Image("FacebookLoginBtn")})
+            Button(action: {
+                authViewModel.loginWithFacebook()
+                contractViewModel.setParentID(parentID: authViewModel.userSession?.uid ?? "Empty ID")
+            }, label: { Image("FacebookLoginBtn")})
            
             Spacer()
         }

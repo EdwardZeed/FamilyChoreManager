@@ -335,9 +335,6 @@ class AuthViewModel: ObservableObject{
             completion(self.currentUser != nil)
         }
     }
-    
-    
-    
 }
 
 

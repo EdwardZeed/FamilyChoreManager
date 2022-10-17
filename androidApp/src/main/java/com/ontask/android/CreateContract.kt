@@ -53,7 +53,6 @@ fun CreateContractPageContents(navController: NavHostController) {
                 .fillMaxSize()
                 .padding(20.dp)
         ) {
-
             Text(
                 text = "{child name}",
                 fontSize = 20.sp,
@@ -86,10 +85,7 @@ fun CreateContractPageContents(navController: NavHostController) {
             Column(
                 modifier = Modifier.verticalScroll(state = rememberScrollState())
             ) {
-
-                Row(
-
-                ) {
+                Row() {
                     Image(
                         painter = painterResource(id = R.drawable.target_icon),
                         contentDescription = "target icon",
@@ -114,7 +110,6 @@ fun CreateContractPageContents(navController: NavHostController) {
                     .apply {
                         maxPoints(this, LocalFocusManager.current)
                     }
-
 
                 Row() {
                     Column() {
@@ -196,9 +191,7 @@ fun CreateContractPageContents(navController: NavHostController) {
 
                 Spacer(modifier = Modifier.height(10.dp))
 
-                Row(
-
-                ) {
+                Row() {
                     Image(
                         painter = painterResource(id = R.drawable.description_icon),
                         contentDescription = "description icon",
@@ -229,7 +222,8 @@ fun CreateContractPageContents(navController: NavHostController) {
                 Button(
                     onClick = {
                         //TODO
-                    }, modifier = Modifier
+                    },
+                    modifier = Modifier
                         .fillMaxWidth(1f)
                         .height(50.dp),
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF689FEC))
@@ -246,10 +240,8 @@ fun CreateContractPageContents(navController: NavHostController) {
                 }
             }
         }
-
     }
 }
-
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -283,9 +275,7 @@ fun maxPoints(modifier: Modifier = Modifier, localFocusManager: FocusManager): S
 
 @Composable
 fun Award(awardNum: Int) {
-    Row(
-
-    ) {
+    Row() {
         Image(
             painter = painterResource(id = R.drawable.reward_icon),
             contentDescription = "reward icon",
@@ -338,9 +328,7 @@ fun AwardInput(modifier: Modifier = Modifier, localFocusManager: FocusManager): 
 
 @Composable
 fun Points() {
-    Row(
-
-    ) {
+    Row() {
         Image(
             painter = painterResource(id = R.drawable.medal_icon),
             contentDescription = "medal icon",
@@ -423,4 +411,3 @@ fun DescriptionBox(modifier: Modifier = Modifier, localFocusManager: FocusManage
 
     return descriptionText
 }
-

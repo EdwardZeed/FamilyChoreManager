@@ -31,7 +31,7 @@ struct UploafContract{
     
     func addContract(childName: String, childID: String, maxPoint: Int, rewardArray: Array<String>, pointArray: Array<Int>, decription: String?, parentID: String, parentName: String){
         
-        let data = ["ChildID": childID, "ChildName": childName, "Description": decription, "MaxPoint": maxPoint,  "PointArray": pointArray, "RewardArray": rewardArray, "ParentID": parentID, "ParentName": parentName] as [String : Any]
+        let data = ["ChildID": childID, "ChildName": childName, "Description": decription, "MaxPoint": maxPoint,  "PointArray": pointArray, "RewardArray": rewardArray, "ParentID": parentID] as [String : Any]
         
         let contract = Firestore.firestore().collection("contract")
 
@@ -46,6 +46,4 @@ struct UploafContract{
             }
         }
     }
-    
-    
 }

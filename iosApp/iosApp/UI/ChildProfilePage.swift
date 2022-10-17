@@ -14,9 +14,12 @@ import shared
 
 struct ChildProfilePage: View {
     
-    @State var currentChild : Child
+
     var currentParentid: String
     var contractViewModel: ContractViewModel
+
+    var result: [Int]
+
     @State var isAddDialogShow = false
     @State var isDeleteDialogShow = false
     @State var eventList:[RandomItem] = [RandomItem(title: "test")]
@@ -32,7 +35,7 @@ struct ChildProfilePage: View {
     @State var userImage: UIImage?
     @State var showingLocalImage: Bool = false
     @EnvironmentObject var childUserEditModel : editUserInfoModel
-    
+    @EnvironmentObject var childAuthViewModel: ChildAuthViewModel
     
     
     var body: some View {
@@ -52,16 +55,16 @@ struct ChildProfilePage: View {
                     Image("Point-ChildProfilePage")
                     Text("25").padding(.leading, -20)
                     Image("Goal-ChildProfilePage")
-                    Text(String(contractViewModel.maxpoint)).padding(.leading, -20)
+                    Text(String(result[result.count - 1])).padding(.leading, -20)
                     Image("RewardIcon-ChildProfilePage")
-                    Text("2/" + String(contractViewModel.totalCheckpoint)).padding(.leading, -20)
+                    Text("2/" + String(result.count)).padding(.leading, -20)
                 }
                 
                 VStack(alignment: .leading){
-                    Text("Date of birth: " + currentChild.dateOfBirth)
+                    Text("Date of birth: " + self.childAuthViewModel.currentChild.dateOfBirth)
                         .font(.footnote)
                         .fontWeight(.thin)
-                    Text("Choose Theme: " + (currentChild.chooseTheme.name))
+                    Text("Choose Theme: " + (self.childAuthViewModel.currentChild.chooseTheme.name))
                         .font(.footnote)
                         .fontWeight(.thin)
                 }.padding(.bottom, UIScreen.main.bounds.height*0.02)
@@ -120,12 +123,12 @@ struct ChildProfilePage: View {
                             }.underlinetextfield()
                             
                             Button(action: {
-                                childUserEditModel.editChildInfo(parentID: currentParentid, childID: currentChild.userID, childName: newUserName, dateOfBirth: newDateOfBirth, theme: newTheme, imageData: userImage)
+                                childUserEditModel.editChildInfo(parentID: currentParentid, childID: self.childAuthViewModel.currentChild.userID, childName: newUserName, dateOfBirth: newDateOfBirth, theme: newTheme, imageData: userImage)
                                 
                                 childUserEditModel.fetchChildren()
                                 
                                 
-                                childUserEditModel.getNewestChildInfo(childID: currentChild.userID)
+                                childUserEditModel.getNewestChildInfo(childID: self.childAuthViewModel.currentChild.userID)
                                 isPresentSheet.toggle()
                                
                                 
@@ -138,12 +141,7 @@ struct ChildProfilePage: View {
                            
                         }.fullScreenCover(isPresented: $showingLocalImage, content: {
                             ImagePicker(image: $userImage)
-                        }).onReceive(childUserEditModel.$finishedObtainNewestChildInfo) { success in
-                            if success{
-                                currentChild = childUserEditModel.currentChild
-                                print(currentChild.name + "is the current child name")
-                            }
-                        }
+                        })
 //                        .onReceive(addChoreViewModel.$addChoreImageSuccess) { success in
 //                            if success{
 //                                presentationMode.wrappedValue.dismiss()
@@ -183,7 +181,7 @@ struct ChildProfilePage: View {
                     }.padding(.bottom, -1)
                     
  
-                    ForEach(currentChild.finishedChoreList,id:\.self){choretask in
+                    ForEach(self.childAuthViewModel.currentChild.finishedChoreList,id:\.self){choretask in
                         SingleFinishChore_ChildProfilePage(singlefinishchore : choretask)
                     }
                     
@@ -198,7 +196,7 @@ struct ChildProfilePage: View {
                 eventList.append(RandomItem(title: item))
             }
             
-        }.navigationBarTitle(currentChild.name, displayMode: .inline)
+        }.navigationBarTitle(self.childAuthViewModel.currentChild.name, displayMode: .inline)
             .toolbar{Menu {
                 Button(action: {isAddDialogShow.toggle()}, label: {
                     Text("Assign Chores")
@@ -206,7 +204,7 @@ struct ChildProfilePage: View {
                 Button("QR Code Scan"){
                     
                     goToChildQRCodePage = true
-                    print(currentChild.userID)
+                    print(self.childAuthViewModel.currentChild.userID)
                 
                     
                 }
@@ -219,13 +217,13 @@ struct ChildProfilePage: View {
                 
             }
             NavigationLink(isActive: $goToChildQRCodePage) {
-                ChildQRCodePage(child: currentChild)
+                ChildQRCodePage(child: self.childAuthViewModel.currentChild)
             } label: {
                 EmptyView()
             }
         
             NavigationLink(isActive: $goToAddContract) {
-                SignContractPage(child: currentChild)
+                SignContractPage(child: self.childAuthViewModel.currentChild)
             } label: {
                 EmptyView()
             }

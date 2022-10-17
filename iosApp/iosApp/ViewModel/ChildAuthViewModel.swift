@@ -14,6 +14,7 @@ import SwiftUI
 class ChildAuthViewModel: ObservableObject{
     @Published var children = [Child]()
     @Published var success = false
+    @Published var currentChild: Child = Child(userID: "", name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: "")
     
     @Published var childSession : String
     
@@ -34,7 +35,24 @@ class ChildAuthViewModel: ObservableObject{
         service.fetchChildren(currentUserID: childSession) { result in
             self.children = result
             print("now there is " + String(self.children.count) + " in this user")
+            self.fetchChild()
         }
+    }
+    
+    func fetchChild(){
+        children.forEach { child in
+            if child.userID == String(childSession.split(separator: " ")[0]){
+                self.currentChild = child
+                return
+            }
+        }
+    }
+    
+    func signIn(childSession: String){
+        self.childSession = childSession
+        self.fetchChildren()
+//        self.fetchChild()
+        
     }
     
     func signOut(){

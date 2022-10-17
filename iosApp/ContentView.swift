@@ -14,10 +14,12 @@ import AuthenticationServices
 struct ContentView: View{
     @EnvironmentObject var authViewModel: AuthViewModel
     @EnvironmentObject var childAuthViewModel: ChildAuthViewModel
+    
     var body: some View{
         if authViewModel.userSession == nil{
             if childAuthViewModel.childSession != "nil nil"{
-                ChildNavigationBarView(childList: [])
+
+                ChildNavigationBarView()
             }else{
                 ParentLoginPage()
                     .overlay(

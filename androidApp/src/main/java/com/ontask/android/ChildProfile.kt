@@ -22,20 +22,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 class ChildProfile : ComponentActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             childProfilePage()
         }
     }
-
 }
 
 @Composable
 @Preview
 fun childProfilePage() {
-
     Box(modifier = Modifier
         .fillMaxSize()
         .focusable()
@@ -47,15 +44,12 @@ fun childProfilePage() {
                 .padding(20.dp)
         ) {
             Row() {
-
                 Text(
                     text = "{Child name}",
                     fontWeight = FontWeight.Bold,
                     fontSize = 20.sp
                 )
-
                 Spacer(modifier = Modifier.size(width = 180.dp, height = 0.dp)) // TODO: this needs to be changed so that its on the right side of the screen dependent on screen size
-
                 ActionButton()
             }
 
@@ -77,7 +71,6 @@ fun childProfilePage() {
                         .height(70.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-
                     Image(
                         painter = painterResource(id = R.drawable.medal_icon),
                         contentDescription = "medal icon",
@@ -116,7 +109,6 @@ fun childProfilePage() {
                     Column(modifier = Modifier.padding(10.dp)) {
                         Text(text = "20")
                     }
-
                 }
             }
 
@@ -171,12 +163,9 @@ fun childProfilePage() {
                 modifier = Modifier
                     .size(width = cardWidth, height = 120.dp),
                 border = BorderStroke(1.dp, Color(0xff878787)),
-//                elevation = 10.dp, // shadow around box
+                //elevation = 10.dp, // shadow around box
                 shape = RoundedCornerShape(10.dp)
-            ) {
-
-
-            }
+            ) {}
 
             Spacer(modifier = Modifier.height(5.dp))
 
@@ -203,32 +192,27 @@ fun childProfilePage() {
                 modifier = Modifier
                     .size(width = cardWidth, height = 120.dp),
                 border = BorderStroke(1.dp, Color(0xff878787)),
-//                elevation = 10.dp, // shadow around box
+                //elevation = 10.dp, // shadow around box
                 shape = RoundedCornerShape(10.dp)
-            ) {
-
-
-            }
-
-
+            ) {}
         }
     }
-
 }
 
 // reference: https://www.geeksforgeeks.org/floating-action-button-in-android-using-jetpack-compose/
 @Composable
 fun ActionButton() {
-//    Column(
-//        modifier = Modifier
-//            .fillMaxSize()
-//            .fillMaxHeight()
-//            .fillMaxWidth()
-//            .padding(20.dp),
-//
-//        verticalArrangement = Arrangement.Bottom,
-//        horizontalAlignment = Alignment.End
-//    ) {
+    //    Column(
+    //        modifier = Modifier
+    //            .fillMaxSize()
+    //            .fillMaxHeight()
+    //            .fillMaxWidth()
+    //            .padding(20.dp),
+    //
+    //        verticalArrangement = Arrangement.Bottom,
+    //        horizontalAlignment = Alignment.End
+    //    ) {
+    //    }
     FloatingActionButton(
         onClick = {
             //TODO: click the plus button should do something here -- open up a menu with some options
@@ -239,5 +223,4 @@ fun ActionButton() {
     ) {
         Icon(Icons.Filled.Add, "plus icon")
     }
-//    }
 }
