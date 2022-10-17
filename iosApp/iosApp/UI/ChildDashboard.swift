@@ -28,15 +28,13 @@ struct ChildDashBoardPage: View {
     //let username: String
     //var children: [Child]
     //var parents: [Parent]
-
+    
     @State var goToChildProfilePage = false
     
     @State var currentSelectChild: Child = Child(userID: "-1", name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: "")
     @EnvironmentObject var childAuthViewModel: ChildAuthViewModel
     @EnvironmentObject var contractViewModel: ContractViewModel
-    
-    
-    
+
     
     
     var body: some View {
@@ -49,12 +47,11 @@ struct ChildDashBoardPage: View {
                 
                 ScrollView{
                     VStack{
-                      
+                        
                         HStack{
                             
                             HStack{
                                 UserPhoto()
-                                //Message_And_Name(username: username)
                                 Message_And_Name(username: String(childAuthViewModel.childSession.split(separator: " ")[0]))
                                 
                             }.frame(width: UIScreen.main.bounds.width*0.85, alignment: .leading)
@@ -67,41 +64,18 @@ struct ChildDashBoardPage: View {
                             //Spacer(minLength: 50)
                             Title_and_home_Page().frame(width: UIScreen.main.bounds.width*0.95,alignment: .leading)
                             ForEach(self.childAuthViewModel.children, id: \.self){child in
-                                childCard(child: child, currentContract: contractViewModel)
-                            }
-                            
-//                            LazyVStack{
-//                                ForEach(children,id:\.self){child in
-//                                    HStack{
-//                                        Button(action: {
-//                                            goToChildProfilePage = true
-//                                            currentSelectChild = child
-//
-//                                        }, label: {
-//                                            Button_Label(currentChild: child)
-//                                        }).frame(width: UIScreen.main.bounds.width*0.95, height: UIScreen.main.bounds.width*0.3)
-//                                            .background(Color.white)
-//                                            .cornerRadius(25)
-//                                            .shadow(color: Color.gray, radius: 10)
-//
-//
-//
-//                                    }
-//                                }
-//
-//
-//                            }
-                            NavigationLink(destination: ChildAccountPage(currentChild: currentSelectChild), isActive: $goToChildProfilePage){
-                                EmptyView()
+
+                                childCardforChild(child: child, currentContract: contractViewModel)
+
+
                             }
                             
                         }
-                       
+                        
                     }
                 }
-               
+                
             }.navigationBarHidden(true)
-
         }.navigationBarBackButtonHidden(true)
             .navigationBarHidden(true)
             .environmentObject(contractViewModel)
@@ -109,107 +83,47 @@ struct ChildDashBoardPage: View {
                 contractViewModel.setParentID(parentID: String(childAuthViewModel.childSession.split(separator: " ")[1]))
                 contractViewModel.getContractDetail(parentID: String(childAuthViewModel.childSession.split(separator: " ")[1]))
             }
-         
-       
-        
+
     }
     
+    
+    struct childCardforChild: View{
+        var child: Child
+        var currentContract: ContractViewModel
+        var contractResultDic: [String: Array<Int>] = [:]
+        var result: [Int] = []
+        @State var goToChildProfilePage = false
+        
+        @EnvironmentObject var authViewModel: AuthViewModel
+        
+        init(child: Child, currentContract: ContractViewModel){
+            self.child = child
+            self.currentContract = currentContract
+            self.contractResultDic = currentContract.contractResultDic
+            self.result = contractResultDic[child.userID] ?? [0]
+        }
+        
+        
+        var body: some View{
+            HStack{
+                Button(action: {
+                    goToChildProfilePage = true
+                    
+                }, label: {
+                    Button_Label(currentChild: child ,contractResultDic: contractResultDic).foregroundColor(Color("AdaptiveColorForText"))
+                }).frame(width: UIScreen.main.bounds.width*0.95, height: UIScreen.main.bounds.width*0.3)
+                    .background(Color("AdaptiveColorForBackground"))
+                    .cornerRadius(25)
+                    .shadow(color: Color.gray, radius: 10)
+                
+                
+                NavigationLink(destination: ChildAccountPage(selectedChild: child, result: removeZero(pointArray: result)), isActive: $goToChildProfilePage){
+                    
+                    EmptyView()
+                }
+                
+            }
+        }
+        
+    }
 }
-
-
-
-//struct UserPhoto: View {
-//
-//
-//    var body: some View {
-//
-//        ZStack{
-//            Image("photoframe")
-//                .resizable()
-//                .aspectRatio(contentMode: .fit)
-//                .frame(width: 80, height: 80, alignment: .center)
-//
-//
-//            Image("userPhoto")
-//                .resizable()
-//                .aspectRatio(contentMode: .fit)
-//                .frame(width: 50, height: 50, alignment: .center)
-//
-//        }
-//    }
-//}
-
-//struct Message_And_Name: View{
-//    let username: String
-//    init(username: String){
-//        self.username = username
-//    }
-//    var body: some View {
-//        VStack{
-//            Text("Welcome Back").fontWeight(.thin)
-//            Text(username)
-//        }
-//    }
-//}
-
-
-
-//Menu button and drop down menu at the top left corner
-
-
-//struct Title_and_home_Page: View{
-//    var body: some View{
-//        HStack{
-//            Image("home")
-//                .resizable()
-//                .aspectRatio(contentMode: .fit)
-//                .frame(width: 30, height: 30, alignment: .leading)
-//            Text("Family List")
-//        }
-//    }
-//}
-
-
-//struct Button_Label: View{
-//    var currentChild : Child
-//    var body: some View{
-//        HStack{
-//            ZStack{
-//                Image("photoframe")
-//                    .resizable()
-//                    .aspectRatio(contentMode: .fit)
-//                    .frame(width: 80, height: 80, alignment: .center)
-//
-//
-//                Image("userPhoto")
-//                    .resizable()
-//                    .aspectRatio(contentMode: .fit)
-//                    .frame(width: 50, height: 50, alignment: .center)
-//
-//            }.frame( alignment: .leading)
-//            VStack{
-//                Text(currentChild.name).frame(width: UIScreen.main.bounds.width*0.6,height: UIScreen.main.bounds.width*0.16, alignment: .topLeading)
-//
-//                HStack{
-//                    Spacer()
-//                    Image("token 5_In_DashBoard")
-//                        .resizable()
-//                        .aspectRatio(contentMode: .fit)
-//                        .frame(width: 20, height: 20, alignment: .leading)
-//                    Text("20")
-//                    Image("goal_Dashboard")
-//                        .resizable()
-//                        .aspectRatio(contentMode: .fit)
-//                        .frame(width: 20, height: 20, alignment: .leading)
-//                    Text("100")
-//                    Image("RewardIcon_Dashboard")
-//                        .resizable()
-//                        .aspectRatio(contentMode: .fit)
-//                        .frame(width: 20, height: 20, alignment: .leading)
-//                    Text("2/5")
-//                }
-//            }
-//        }.frame( width: 300)
-//    }
-//}
-

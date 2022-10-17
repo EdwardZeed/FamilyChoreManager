@@ -11,22 +11,45 @@ import shared
 
 struct ChildNavigationBarView: View {
 
-    var childrenlist : [Child]
+//    var childrenlist = [Child]()
+//    var currentChildID  = ""
+    var currentChild = Child(userID: "", name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: "")
+    var result: [Int] = []
+    var contractResultDic: [String: Array<Int>] = [:]
+    
+    @EnvironmentObject var childAuthViewModel: ChildAuthViewModel
+    @EnvironmentObject var contractViewModel: ContractViewModel
+    
+    
 
     @State private var selection: Tab = .exclusion
 
         enum Tab {
             case dashboard
-            case currentUser
+            case currentChildUser
             case childProfile
             case exclusion
 
         }
     
-    init(childList: [Child]){
-        self.childrenlist = childList
-
-    }
+//    init(childList: [Child], currentChildID: String){
+//
+//        self.childrenlist = childList
+//        print(self.childrenlist.count)
+//        //self.currentChild = Child(userID: "", name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: "")
+//
+//
+//        for child in self.childrenlist{
+//            print("in")
+//            if child.userID == String(currentChildID){
+//                print("find the target")
+//                self.result = contractResultDic[child.userID] ?? [0]
+//                self.currentChild = Child(userID: child.userID, name: child.name, dateOfBirth: child.dateOfBirth, chooseTheme: child.chooseTheme, avatarPic: "")
+//                break;
+//            }
+//        }
+//
+//    }
     
     var body: some View {
             NavigationView { //整体设置，下级页面不会在出现底部tabbar
@@ -37,16 +60,21 @@ struct ChildNavigationBarView: View {
                                 Label("Family", systemImage: "house")
                             }
                             .tag(Tab.dashboard)
-                        ChildAccountPage(currentChild: Child(userID: "10", name: "", dateOfBirth: "2015/01/03", chooseTheme: Theme(name: "Viva"), avatarPic: "Rifle"))
+                    
+                        
+                    ChildAccountPage(result: removeZero(pointArray: result))
                             .tabItem{//使用label 创建tabitem图文
                                 Label("Account", systemImage: "person")
                             }
-                            .tag(Tab.currentUser)
+                            .tag(Tab.currentChildUser)
                        
                     
                 }
                 .accentColor(.blue) //设置文字默认选中颜色
             }.navigationBarHidden(true)
+            .onAppear {
+                print("DEBUG: child \(self.childAuthViewModel.currentChild)")
+            }
 
             
     }

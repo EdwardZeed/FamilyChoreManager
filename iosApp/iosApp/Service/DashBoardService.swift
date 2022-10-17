@@ -91,6 +91,10 @@ struct DashBoardService{
                 if changes.type == .removed {
                     viewModel.fetchChildren()
                 }
+                
+                if changes.type == .modified{
+                    viewModel.fetchChildren()
+                }
             }
         }
     }

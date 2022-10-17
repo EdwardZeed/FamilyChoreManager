@@ -47,8 +47,9 @@ struct ParentLoginPage: View {
                     self.isPresentingScanner = false
                     
                     if(scannedCode != "scan qr code"){
-                        childAuthViewModel.childSession = scannedCode
-                        childAuthViewModel.fetchChildren()
+//                        childAuthViewModel.childSession = scannedCode
+//                        childAuthViewModel.fetchChildren()
+                        self.childAuthViewModel.signIn(childSession: scannedCode)
                         goToChildDashboard = true
                        
                     }
@@ -82,10 +83,10 @@ struct ParentLoginPage: View {
 //                }
 //                .navigationBarHidden(true)
                 
-                NavigationLink(destination: ChildNavigationBarView( childList: []), isActive: $goToChildDashboard){
-                    EmptyView()
-                }
-                .navigationBarHidden(true)
+//                NavigationLink(destination: ChildNavigationBarView(), isActive: $goToChildDashboard){
+//                    EmptyView()
+//                }
+//                .navigationBarHidden(true)
 
                 VStack {
 

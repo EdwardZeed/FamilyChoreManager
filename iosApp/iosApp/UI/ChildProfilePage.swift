@@ -14,8 +14,14 @@ import shared
 
 struct ChildProfilePage: View {
     
-    var currentChild : Child
+
+
+    var currentParentid: String
+    var contractViewModel: ContractViewModel
+
+
     var result: [Int]
+
     @State var isAddDialogShow = false
     @State var isDeleteDialogShow = false
     @State var eventList:[RandomItem] = [RandomItem(title: "test")]
@@ -23,6 +29,15 @@ struct ChildProfilePage: View {
     @State var goToAddContract = false
     @State var goToChildQRCodePage = false
     
+    @State var isPresentSheet: Bool = false
+    @State var newDateOfBirth: Date?
+    @State var newUserName: String = ""
+    @State var newTheme: String = ""
+    @State var textFieldHeight: CGFloat = 0
+    @State var userImage: UIImage?
+    @State var showingLocalImage: Bool = false
+    @EnvironmentObject var childUserEditModel : editUserInfoModel
+    @EnvironmentObject var childAuthViewModel: ChildAuthViewModel
     
     var body: some View {
         
@@ -47,20 +62,93 @@ struct ChildProfilePage: View {
                 }
                 
                 VStack(alignment: .leading){
-                    Text("Date of birth: " + currentChild.dateOfBirth)
+                    Text("Date of birth: " + self.childAuthViewModel.currentChild.dateOfBirth)
                         .font(.footnote)
                         .fontWeight(.thin)
-                    Text("Choose Theme: " + (currentChild.chooseTheme.name))
+                    Text("Choose Theme: " + (self.childAuthViewModel.currentChild.chooseTheme.name))
                         .font(.footnote)
                         .fontWeight(.thin)
                 }.padding(.bottom, UIScreen.main.bounds.height*0.02)
                 
                 
-                Button(action: {}, label: {
+                Button(action: { isPresentSheet.toggle()}, label: {
                     Image("EditProfileBtn-ChildProfilePage")
                     
                 }).padding(.bottom, UIScreen.main.bounds.height*0.01).shadow(radius: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
                     .frame(width: UIScreen.main.bounds.width*0.98, alignment: .center)
+                
+                    .sheet(isPresented: $isPresentSheet){
+                        VStack{
+                            Button(action: {
+                                //                var createReward = RewardCreater()
+                                //                rewardList.append(createReward)
+                                showingLocalImage.toggle()
+                                
+                                
+                            }, label: {
+                                VStack{
+                                    if let image = self.userImage{
+                                        Image(uiImage: userImage!)
+                                            .resizable()
+                                            .frame(width: 200, height: 200)
+                                            .scaledToFill()
+                                            .cornerRadius(10)
+                                    }else{
+                                        Image("edituserphoto")
+                                            .resizable()
+                                            .frame(width: 200, height: 200)
+                                            .scaledToFill()
+                                            
+                                    }
+                                }
+                            }).frame(width: 200, height: 200, alignment: .center)
+                          
+                            HStack{
+                                Image("userIcon").resizable().frame(width: 32.0, height: 32.0)
+                                TextField("Name", text: $newUserName)
+                            }.underlinetextfield()
+                          
+                            HStack{
+                                Image("dateIcon").resizable().frame(width: 32.0, height: 32.0)
+                                DatePickerTextField(placeholder: "Date of Bitrh", date: $newDateOfBirth)
+                            }  .padding(.vertical, 20)
+                                .overlay(Rectangle().frame(width: 360, height: 2).padding(.top, 50))
+                                .foregroundColor(Color.black)
+                                .frame(width: UIScreen.main.bounds.width*0.95, height: textFieldHeight)
+                                .padding(10)
+                                
+                                    
+                            HStack{
+                                Image("brush").resizable().frame(width: 32.0, height: 32.0)
+                                TextField("Theme", text: $newTheme)
+                            }.underlinetextfield()
+                            
+                            Button(action: {
+                                childUserEditModel.editChildInfo(parentID: currentParentid, childID: self.childAuthViewModel.currentChild.userID, childName: newUserName, dateOfBirth: newDateOfBirth, theme: newTheme, imageData: userImage)
+                                
+                                childUserEditModel.fetchChildren()
+                                
+                                
+                                childUserEditModel.getNewestChildInfo(childID: self.childAuthViewModel.currentChild.userID)
+                                isPresentSheet.toggle()
+                               
+                                
+                            },
+                                   label: {
+                                Image("UpdateProfileBtn")
+                            })
+                            .padding(.bottom, UIScreen.main.bounds.height*0.03)
+                               
+                           
+                        }.fullScreenCover(isPresented: $showingLocalImage, content: {
+                            ImagePicker(image: $userImage)
+                        })
+//                        .onReceive(addChoreViewModel.$addChoreImageSuccess) { success in
+//                            if success{
+//                                presentationMode.wrappedValue.dismiss()
+//                            }
+//                        }
+                    }
                 
                 
                 VStack(alignment: .leading){
@@ -94,7 +182,7 @@ struct ChildProfilePage: View {
                     }.padding(.bottom, -1)
                     
  
-                    ForEach(currentChild.finishedChoreList,id:\.self){choretask in
+                    ForEach(self.childAuthViewModel.currentChild.finishedChoreList,id:\.self){choretask in
                         SingleFinishChore_ChildProfilePage(singlefinishchore : choretask)
                     }
                     
@@ -109,7 +197,7 @@ struct ChildProfilePage: View {
                 eventList.append(RandomItem(title: item))
             }
             
-        }.navigationBarTitle(currentChild.name)
+        }.navigationBarTitle(self.childAuthViewModel.currentChild.name, displayMode: .inline)
             .toolbar{Menu {
                 Button(action: {isAddDialogShow.toggle()}, label: {
                     Text("Assign Chores")
@@ -117,7 +205,7 @@ struct ChildProfilePage: View {
                 Button("QR Code Scan"){
                     
                     goToChildQRCodePage = true
-                    print(currentChild.userID)
+                    print(self.childAuthViewModel.currentChild.userID)
                 
                     
                 }
@@ -130,13 +218,13 @@ struct ChildProfilePage: View {
                 
             }
             NavigationLink(isActive: $goToChildQRCodePage) {
-                ChildQRCodePage(child: currentChild)
+                ChildQRCodePage(child: self.childAuthViewModel.currentChild)
             } label: {
                 EmptyView()
             }
         
             NavigationLink(isActive: $goToAddContract) {
-                SignContractPage(child: currentChild)
+                SignContractPage(child: self.childAuthViewModel.currentChild)
             } label: {
                 EmptyView()
             }
@@ -206,6 +294,16 @@ struct SingleReward_ChildProfilePage : View {
                     .fontWeight(.thin)
             }
         }
+    }
+}
+
+extension View{
+    func underlinetextfield() -> some View{
+        self
+            .padding(.vertical, 20)
+            .overlay(Rectangle().frame(width: 360, height: 2).padding(.top, 50))
+            .foregroundColor(Color.black)
+            .padding(10)
     }
 }
 

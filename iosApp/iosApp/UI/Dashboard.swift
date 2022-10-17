@@ -188,6 +188,10 @@ struct childCard: View{
     var contractResultDic: [String: Array<Int>] = [:]
     var result: [Int] = []
     @State var goToChildProfilePage = false
+    
+    @EnvironmentObject var authViewModel: AuthViewModel
+    
+    
     init(child: Child, currentContract: ContractViewModel){
         self.child = child
         self.currentContract = currentContract
@@ -208,7 +212,9 @@ struct childCard: View{
                 .cornerRadius(25)
                 .shadow(color: Color.gray, radius: 10)
             
-            NavigationLink(destination: ChildProfilePage(currentChild: child, result: removeZero(pointArray: result)), isActive: $goToChildProfilePage){
+
+            NavigationLink(destination: ChildProfilePage(currentParentid: currentParent.userID, contractViewModel: currentContract, result: removeZero(pointArray: result)), isActive: $goToChildProfilePage){
+
                 EmptyView()
             }
     

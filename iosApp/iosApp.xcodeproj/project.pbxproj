@@ -54,6 +54,8 @@
 		2BDE71F228C38D4B005821C6 /* KeyboardExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDE71F128C38D4B005821C6 /* KeyboardExtension.swift */; };
 		2BF4E55B28E9F79D006CC58E /* DashBoardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4E55A28E9F79D006CC58E /* DashBoardService.swift */; };
 		3702D4DD28EFCDBA00269906 /* ChildrenDashboardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3702D4DC28EFCDBA00269906 /* ChildrenDashboardService.swift */; };
+		37074EE928FA6CB1003675C4 /* editUserInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37074EE828FA6CB1003675C4 /* editUserInfoModel.swift */; };
+		37074EEB28FA6EBF003675C4 /* EditChildInfoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37074EEA28FA6EBF003675C4 /* EditChildInfoService.swift */; };
 		37183FDD28EC35A5000A574A /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 37183FDC28EC35A5000A574A /* CodeScanner */; };
 		3759E52B28B39C50000E0419 /* ChildLoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759E52A28B39C50000E0419 /* ChildLoginPage.swift */; };
 		3759E52F28B39CC6000E0419 /* ParentLoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759E52E28B39CC6000E0419 /* ParentLoginPage.swift */; };
@@ -130,6 +132,8 @@
 		2BDE71F128C38D4B005821C6 /* KeyboardExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardExtension.swift; sourceTree = "<group>"; };
 		2BF4E55A28E9F79D006CC58E /* DashBoardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashBoardService.swift; sourceTree = "<group>"; };
 		3702D4DC28EFCDBA00269906 /* ChildrenDashboardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildrenDashboardService.swift; sourceTree = "<group>"; };
+		37074EE828FA6CB1003675C4 /* editUserInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editUserInfoModel.swift; sourceTree = "<group>"; };
+		37074EEA28FA6EBF003675C4 /* EditChildInfoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditChildInfoService.swift; sourceTree = "<group>"; };
 		3759E52A28B39C50000E0419 /* ChildLoginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildLoginPage.swift; sourceTree = "<group>"; };
 		3759E52E28B39CC6000E0419 /* ParentLoginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentLoginPage.swift; sourceTree = "<group>"; };
 		37613CFA28C6086000422234 /* ChildQRCodePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildQRCodePage.swift; sourceTree = "<group>"; };
@@ -246,6 +250,7 @@
 				05386DA628ED575A00A28BF9 /* UploadContract.swift */,
 				3702D4DC28EFCDBA00269906 /* ChildrenDashboardService.swift */,
 				05386DAC28F45FCB00A28BF9 /* ChoreService.swift */,
+				37074EEA28FA6EBF003675C4 /* EditChildInfoService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -258,6 +263,7 @@
 				05386DAA28ED92FD00A28BF9 /* ContractViewModel.swift */,
 				37ACC16028EFDDEF003FE5E2 /* ChildAuthViewModel.swift */,
 				05386DAE28F464FA00A28BF9 /* ChoreViewModel.swift */,
+				37074EE828FA6CB1003675C4 /* editUserInfoModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -499,6 +505,7 @@
 				2B57827C28E19BD500EFBB1C /* EnvironmentWindowKey.swift in Sources */,
 				2B57827128D835E900EFBB1C /* ApplicationUtil.swift in Sources */,
 				2BDE71F228C38D4B005821C6 /* KeyboardExtension.swift in Sources */,
+				37074EE928FA6CB1003675C4 /* editUserInfoModel.swift in Sources */,
 				05386DAF28F464FA00A28BF9 /* ChoreViewModel.swift in Sources */,
 				3781DDCC28C4B453009F9904 /* NavigationBarView.swift in Sources */,
 				37FD897C28C3C1A700B5ABFE /* ChildProfilePage.swift in Sources */,
@@ -514,6 +521,7 @@
 				37FD897E28C3C22E00B5ABFE /* PopUpWindowModifier.swift in Sources */,
 				2B57828728E57F3A00EFBB1C /* AddChildViewModel.swift in Sources */,
 				3702D4DD28EFCDBA00269906 /* ChildrenDashboardService.swift in Sources */,
+				37074EEB28FA6EBF003675C4 /* EditChildInfoService.swift in Sources */,
 				2B57827328D84E8400EFBB1C /* ProgressSpinner.swift in Sources */,
 				37FD898028C3C27F00B5ABFE /* AssignChorePopUpWindow.swift in Sources */,
 				05D24AE928C489170097A7C2 /* SignContractPage.swift in Sources */,
@@ -699,6 +707,7 @@
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";
 				INFOPLIST_FILE = iosApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -728,6 +737,7 @@
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";
 				INFOPLIST_FILE = iosApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

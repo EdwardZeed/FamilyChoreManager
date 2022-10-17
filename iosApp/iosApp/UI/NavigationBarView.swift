@@ -42,7 +42,7 @@ struct NavigationBarView: View {
 
                         ParentProfilePage(chores: [chore])
                             .tabItem{
-                                Label("Account", systemImage: "person")
+                                Label("parent", systemImage: "person")
                             }
                             .tag(Tab.currentUser)
 

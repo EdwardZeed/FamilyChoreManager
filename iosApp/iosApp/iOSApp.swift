@@ -36,7 +36,10 @@ struct iOSApp: App {
     @StateObject var authViewModel = AuthViewModel()
     @StateObject var childAuthViewModel = ChildAuthViewModel()
     @StateObject var choreViewModel = ChoreViewModel()
+
+    @StateObject var userInfoEditModel = editUserInfoModel()
     @StateObject var contarctViewModel = ContractViewModel()
+
     // register app delegate for Firebase setup
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
@@ -47,8 +50,10 @@ struct iOSApp: App {
                 .environmentObject(authViewModel)
                 .environmentObject(childAuthViewModel)
                 .environmentObject(choreViewModel)
+
+                .environmentObject(userInfoEditModel)
                 .environmentObject(contarctViewModel)
-            
+
             
             
         }
