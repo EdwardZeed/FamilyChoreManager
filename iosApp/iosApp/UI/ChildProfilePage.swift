@@ -15,8 +15,10 @@ import shared
 struct ChildProfilePage: View {
     
 
+
     var currentParentid: String
     var contractViewModel: ContractViewModel
+
 
     var result: [Int]
 
@@ -36,7 +38,6 @@ struct ChildProfilePage: View {
     @State var showingLocalImage: Bool = false
     @EnvironmentObject var childUserEditModel : editUserInfoModel
     @EnvironmentObject var childAuthViewModel: ChildAuthViewModel
-    
     
     var body: some View {
         

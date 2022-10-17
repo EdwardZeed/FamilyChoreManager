@@ -34,6 +34,7 @@ struct ChildDashBoardPage: View {
     @State var currentSelectChild: Child = Child(userID: "-1", name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: "")
     @EnvironmentObject var childAuthViewModel: ChildAuthViewModel
     @EnvironmentObject var contractViewModel: ContractViewModel
+
     
     
     var body: some View {
@@ -63,7 +64,10 @@ struct ChildDashBoardPage: View {
                             //Spacer(minLength: 50)
                             Title_and_home_Page().frame(width: UIScreen.main.bounds.width*0.95,alignment: .leading)
                             ForEach(self.childAuthViewModel.children, id: \.self){child in
+
                                 childCardforChild(child: child, currentContract: contractViewModel)
+
+
                             }
                             
                         }
@@ -79,6 +83,7 @@ struct ChildDashBoardPage: View {
                 contractViewModel.setParentID(parentID: String(childAuthViewModel.childSession.split(separator: " ")[1]))
                 contractViewModel.getContractDetail(parentID: String(childAuthViewModel.childSession.split(separator: " ")[1]))
             }
+
     }
     
     
@@ -120,104 +125,5 @@ struct ChildDashBoardPage: View {
             }
         }
         
-        
     }
-    
-    
-    
-    //struct UserPhoto: View {
-    //
-    //
-    //    var body: some View {
-    //
-    //        ZStack{
-    //            Image("photoframe")
-    //                .resizable()
-    //                .aspectRatio(contentMode: .fit)
-    //                .frame(width: 80, height: 80, alignment: .center)
-    //
-    //
-    //            Image("userPhoto")
-    //                .resizable()
-    //                .aspectRatio(contentMode: .fit)
-    //                .frame(width: 50, height: 50, alignment: .center)
-    //
-    //        }
-    //    }
-    //}
-    
-    //struct Message_And_Name: View{
-    //    let username: String
-    //    init(username: String){
-    //        self.username = username
-    //    }
-    //    var body: some View {
-    //        VStack{
-    //            Text("Welcome Back").fontWeight(.thin)
-    //            Text(username)
-    //        }
-    //    }
-    //}
-    
-    
-    
-    //Menu button and drop down menu at the top left corner
-    
-    
-    //struct Title_and_home_Page: View{
-    //    var body: some View{
-    //        HStack{
-    //            Image("home")
-    //                .resizable()
-    //                .aspectRatio(contentMode: .fit)
-    //                .frame(width: 30, height: 30, alignment: .leading)
-    //            Text("Family List")
-    //        }
-    //    }
-    //}
-    
-    
-    //struct Button_Label: View{
-    //    var currentChild : Child
-    //    var body: some View{
-    //        HStack{
-    //            ZStack{
-    //                Image("photoframe")
-    //                    .resizable()
-    //                    .aspectRatio(contentMode: .fit)
-    //                    .frame(width: 80, height: 80, alignment: .center)
-    //
-    //
-    //                Image("userPhoto")
-    //                    .resizable()
-    //                    .aspectRatio(contentMode: .fit)
-    //                    .frame(width: 50, height: 50, alignment: .center)
-    //
-    //            }.frame( alignment: .leading)
-    //            VStack{
-    //                Text(currentChild.name).frame(width: UIScreen.main.bounds.width*0.6,height: UIScreen.main.bounds.width*0.16, alignment: .topLeading)
-    //
-    //                HStack{
-    //                    Spacer()
-    //                    Image("token 5_In_DashBoard")
-    //                        .resizable()
-    //                        .aspectRatio(contentMode: .fit)
-    //                        .frame(width: 20, height: 20, alignment: .leading)
-    //                    Text("20")
-    //                    Image("goal_Dashboard")
-    //                        .resizable()
-    //                        .aspectRatio(contentMode: .fit)
-    //                        .frame(width: 20, height: 20, alignment: .leading)
-    //                    Text("100")
-    //                    Image("RewardIcon_Dashboard")
-    //                        .resizable()
-    //                        .aspectRatio(contentMode: .fit)
-    //                        .frame(width: 20, height: 20, alignment: .leading)
-    //                    Text("2/5")
-    //                }
-    //            }
-    //        }.frame( width: 300)
-    //    }
-    //}
-    
 }

@@ -191,6 +191,7 @@ struct childCard: View{
     
     @EnvironmentObject var authViewModel: AuthViewModel
     
+    
     init(child: Child, currentContract: ContractViewModel){
         self.child = child
         self.currentContract = currentContract

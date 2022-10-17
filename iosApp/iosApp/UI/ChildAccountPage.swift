@@ -11,6 +11,7 @@ import shared
 
 struct ChildAccountPage: View {
     
+
 //    @State var currentChild : Child
 //    var currentParentid: String
 //    var contractViewModel: ContractViewModel
@@ -34,6 +35,7 @@ struct ChildAccountPage: View {
     @EnvironmentObject var childUserEditModel : editUserInfoModel
     @EnvironmentObject var childAuthViewModel : ChildAuthViewModel
     
+
     
     var body: some View {
         if selectedChild != nil{
