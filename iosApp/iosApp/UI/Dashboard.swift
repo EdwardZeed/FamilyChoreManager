@@ -101,8 +101,8 @@ struct DashBoardPage: View {
             .environmentObject(contractViewModel)
             .environmentObject(contractViewModel)
             .onAppear {
-                contractViewModel.setParentID(parentID: authViewModel.userSession!.uid)
-                contractViewModel.getContractDetail(parentID: authViewModel.userSession!.uid)
+                contractViewModel.setParentID(parentID: authViewModel.userSession?.uid ?? "Empty")
+                contractViewModel.getContractDetail(parentID: authViewModel.userSession?.uid ?? "Empty")
             }
          
        
