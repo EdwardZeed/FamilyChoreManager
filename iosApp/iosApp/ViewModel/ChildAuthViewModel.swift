@@ -16,6 +16,7 @@ class ChildAuthViewModel: ObservableObject{
     @Published var success = false
     
     @Published var childSession : String
+    
     let service = ChildrenDashBoardService()
     
     init() {

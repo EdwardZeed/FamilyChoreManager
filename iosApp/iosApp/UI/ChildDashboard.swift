@@ -99,7 +99,7 @@ struct ChildDashBoardPage: View {
 //
 //
 //                            }
-                            NavigationLink(destination: ChildProfilePage(currentChild: currentSelectChild, contractViewModel: ContractViewModel(childID: currentSelectChild.userID)), isActive: $goToChildProfilePage){
+                            NavigationLink(destination: ChildProfilePage(currentChild: currentSelectChild, currentParentid: String(childAuthViewModel.childSession.split(separator: " ")[0]), contractViewModel: ContractViewModel(childID: currentSelectChild.userID)), isActive: $goToChildProfilePage){
                                 EmptyView()
                             }
                             
