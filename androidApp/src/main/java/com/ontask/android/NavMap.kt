@@ -9,7 +9,7 @@ import com.google.firebase.auth.FirebaseAuth
 fun NavMap(navController: NavHostController, starDest:String, auth: FirebaseAuth) {
     androidx.navigation.compose.NavHost(navController = navController, startDestination = starDest){
         composable(route = "Register_screen"){
-            Register(navController = navController)
+            Register(navController = navController, auth = auth)
         }
         composable(route = "Login_screen"){
             parentLoginPage(navController = navController,viewModel = LoginScreenViewModel(),auth = auth)

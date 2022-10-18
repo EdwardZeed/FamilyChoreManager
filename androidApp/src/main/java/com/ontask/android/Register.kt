@@ -2,6 +2,7 @@ package com.ontask.android
 
 import android.app.DatePickerDialog
 import android.widget.DatePicker
+import android.widget.Toast
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
@@ -38,11 +39,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.google.firebase.auth.FirebaseAuth
+import com.ontask.module.LoginModule
+import com.ontask.module.RegisterModule
 import java.util.*
 
 
 @Composable
-fun Register(navController: NavHostController) {
+fun Register(navController: NavHostController,auth: FirebaseAuth) {
+    var signup_email: String by remember { mutableStateOf("") }
+    var signup_password: String by remember { mutableStateOf("") }
+    var signup_username: String by remember { mutableStateOf("") }
+    var signup_birth: String by remember { mutableStateOf("") }
     var paddingState by remember { mutableStateOf(16.dp) }
     val padding by animateDpAsState(
         targetValue = paddingState,
@@ -86,10 +94,10 @@ fun Register(navController: NavHostController) {
             Modifier.padding(3.dp)
                 .fillMaxWidth(0.72f)
                 .apply {
-                    usernameInput(this, localFocusManager)
-                    registerEmailInput(this, localFocusManager)
-                    registerPasswordInput(this, localFocusManager)
-                    dateOfBirth(this, localFocusManager)
+                    signup_username = usernameInput(this, localFocusManager)
+                    signup_email = registerEmailInput(this, localFocusManager)
+                    signup_password = registerPasswordInput(this, localFocusManager)
+                    signup_birth = dateOfBirth(this, localFocusManager)
                 }
 
             Row(){
@@ -116,7 +124,34 @@ fun Register(navController: NavHostController) {
 // TODO: https://developer.android.com/jetpack/compose/layouts/material -- add shadow on the button?
             Button(
                 onClick = {
-                    navController.navigate("dashboard_screen")
+                    val log = RegisterModule()
+                    var signup_boolean: Boolean? = null
+
+                    signup_boolean = log.final_check(signup_email,signup_password)
+                    if(signup_boolean == true){
+                        Toast.makeText(context, "Entering!", Toast.LENGTH_SHORT).show()
+                        auth.createUserWithEmailAndPassword(signup_email,signup_password).addOnCompleteListener { task->
+                            if(task.isSuccessful){
+                                Toast.makeText(context, "signup valid and correct!", Toast.LENGTH_SHORT).show()
+                                val user = auth.currentUser
+                                // Then move to the dashboard.
+                                navController.navigate("dashboard_screen")
+                            }
+                            else{
+                                Toast.makeText(context, "signup valid but failed!", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                    else if(log.authenticate_1(signup_email) == false && log.checkPassword(signup_password) == true){
+                        Toast.makeText(context, "signup email invalid!", Toast.LENGTH_SHORT).show()
+                    }
+                    else if(log.authenticate_1(signup_email) == true && log.checkPassword(signup_password) == false){
+                        Toast.makeText(context, "signup password invalid!", Toast.LENGTH_SHORT).show()
+                    }
+                    else if(log.authenticate_1(signup_email) == false && log.checkPassword(signup_password) == false){
+                        Toast.makeText(context, "signup email and password invalid!", Toast.LENGTH_SHORT).show()
+                    }
+
                 }, modifier = Modifier
                     .fillMaxWidth(0.3f)
                     .height(50.dp),
