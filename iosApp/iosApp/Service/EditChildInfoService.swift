@@ -10,18 +10,27 @@ import Foundation
 import Firebase
 import FirebaseStorage
 import shared
+import SwiftUI
 
 
 struct EditChildInfoService{
     
     private var ref: DatabaseReference = Database.database().reference()
+    @AppStorage("childSession") var childSession = ""
     
     func updateChildInfo(parentID: String, childID: String, childName: String, dateOfBirth: Date?, theme: String, imageData: Data?, completion: @escaping (Bool, [Child]) -> Void){
         
         let fileName = UUID().uuidString
         let path = "childAvatarImages/\(fileName).jpg"
         let ref = Storage.storage().reference().child(path)
-        let uid = (Auth.auth().currentUser?.uid)!
+        
+        let uid: String?
+        if Auth.auth().currentUser != nil{
+            uid = Auth.auth().currentUser?.uid
+        }
+        else{
+            uid = String(childSession.split(separator: " ")[1])
+        }
         
         var newChild = Child(userID: "", name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: "")
         
@@ -32,8 +41,9 @@ struct EditChildInfoService{
                 return
             }
             else{
-                //guard let parentId = Auth.auth().currentUser?.uid else{return}
-                Firestore.firestore().collection("users").document(uid).collection("children").document(childID).getDocument { snapshot, error in
+                guard uid != nil else{return}
+                
+                Firestore.firestore().collection("users").document(uid!).collection("children").document(childID).getDocument { snapshot, error in
                     if let error = error{
                         print("DEBUG: failed to fetch children. \(error.localizedDescription)")
                         self.fetchChildren { result in
@@ -52,11 +62,11 @@ struct EditChildInfoService{
                                 let newData = ["name": childName, "dateOfBirth": birthday, "theme": theme, "parentId": uid, "avatarPic": urlString]
                                 let db = Firestore.firestore()
                                 do{
-                                    print("start update")
+                                    print("DEBUG: start update")
                                     print(uid)
                                     print(childID)
                                     print(newData)
-                                    try db.collection("users").document(uid).collection("children").document(childID).setData(from: newData, merge: true)
+                                    try db.collection("users").document(uid!).collection("children").document(childID).setData(from: newData, merge: true)
                                     
                                     
                                 }catch{

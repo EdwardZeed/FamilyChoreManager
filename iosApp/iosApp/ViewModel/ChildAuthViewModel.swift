@@ -14,19 +14,22 @@ import SwiftUI
 class ChildAuthViewModel: ObservableObject{
     @Published var children = [Child]()
     @Published var success = false
-    @Published var currentChild: Child = Child(userID: "", name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: "")
+    @Published var currentChild: Child = Child(userID: "", name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: nil)
     
-    @Published var childSession : String
+//    @Published var childSession : String
+    
+    @AppStorage("childSession") var childSession = ""
     
     let service = ChildrenDashBoardService()
     
     init() {
-        self.childSession = "nil nil"
+//        self.childSession = "nil nil"
         print("DEBUG: dashboard view model initializing")
         self.fetchChildren()
-
+        self.fetchChild()
         //add listener to children collection
         self.service.listenChildren(viewModel: self, currentUserID: childSession)
+        
     }
     
     func fetchChildren(){
@@ -52,6 +55,7 @@ class ChildAuthViewModel: ObservableObject{
         self.childSession = childSession
         self.fetchChildren()
 //        self.fetchChild()
+        UserDefaults.standard.set(childSession, forKey: "childSession")
         
     }
     

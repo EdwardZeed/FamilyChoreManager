@@ -117,7 +117,7 @@ func checkMaxpointMatch(pointArray: Array<Int>, maxpoint: Int) -> Int{
 func removeZero(pointArray: Array<Int>) -> Array<Int>{
     var cleanArray = pointArray
 
-    if(cleanArray.count == 1){
+    if(cleanArray.count <= 1){
 
         return [0]
     }

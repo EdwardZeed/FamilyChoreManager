@@ -9,20 +9,9 @@
 import Foundation
 import SwiftUI
 import shared
-
-struct Preview_DashBoardPage: PreviewProvider {
-
-    static var previews: some View {
-        
-        var currentParent = Parent(userID: "0", name: "Chris", dateOfBirth: "2002/02/14", chooseTheme: Theme(name: "The Boys"), avatarPic: "Dragon")
+import Kingfisher
 
 
-
-        //var childList = [child3,child2,child1]
-        var parentList = [currentParent]
-        DashBoardPage()
-    }
-}
 
 
 struct DashBoardPage: View {
@@ -31,7 +20,7 @@ struct DashBoardPage: View {
     @EnvironmentObject var contractViewModel:ContractViewModel
     @EnvironmentObject var authViewModel: AuthViewModel
     @State var currentSelectChild: Child = Child(userID: "1", name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: "")
-    @State var currentParent: Parent = Parent(userID: "", name: "", dateOfBirth: "", chooseTheme: nil, avatarPic: nil)
+    @State var currentParent: Parent = Parent(userID: "", name: "", dateOfBirth: "", email: nil, chooseTheme: nil, avatarPic: nil)
     
     @StateObject var addChildViewModel: AddChildViewModel = AddChildViewModel()
 
@@ -98,8 +87,6 @@ struct DashBoardPage: View {
         }.navigationBarBackButtonHidden(true)
             .navigationBarHidden(true)
             .environmentObject(addChildViewModel)
-            .environmentObject(contractViewModel)
-            .environmentObject(contractViewModel)
             .onAppear {
                 contractViewModel.setParentID(parentID: authViewModel.userSession?.uid ?? "Empty")
                 contractViewModel.getContractDetail(parentID: authViewModel.userSession?.uid ?? "Empty")
@@ -213,7 +200,7 @@ struct childCard: View{
                 .shadow(color: Color.gray, radius: 10)
             
 
-            NavigationLink(destination: ChildProfilePage(currentParentid: currentParent.userID, contractViewModel: currentContract, result: removeZero(pointArray: result)), isActive: $goToChildProfilePage){
+            NavigationLink(destination: ChildProfilePage(currentChild: child, currentParentid: self.authViewModel.currentUser?.userID ?? "", contractViewModel: currentContract, result: removeZero(pointArray: result)), isActive: $goToChildProfilePage){
 
                 EmptyView()
             }
@@ -252,20 +239,31 @@ struct Button_Label: View{
     var body: some View{
 
         HStack{
-            ZStack{
-                Image("photoframe")
+            if currentChild.avatarPic != nil {
+                KFImage(URL(string: currentChild.avatarPic!))
                     .resizable()
-                    .aspectRatio(contentMode: .fit)
                     .frame(width: 80, height: 80, alignment: .center)
-                
-                
-                Image("userPhoto")
-                    .resizable()
+                    .clipShape(Circle())
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 50, height: 50, alignment: .center)
                     
-                
-            }.frame( alignment: .leading)
+                    
+            }
+            else{
+                ZStack{
+                    Image("photoframe")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 80, height: 80, alignment: .center)
+                    
+                    
+                    Image("userPhoto")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 50, height: 50, alignment: .center)
+                    
+                    
+                }.frame( alignment: .leading)
+            }
             VStack{
                 Text(currentChild.name).frame(width: UIScreen.main.bounds.width*0.6,height: UIScreen.main.bounds.width*0.16, alignment: .topLeading)
                 

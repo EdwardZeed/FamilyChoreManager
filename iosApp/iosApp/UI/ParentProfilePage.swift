@@ -15,7 +15,7 @@ struct ParentProfilePage: View {
     @State var numberOfRelatives = "2"
     @EnvironmentObject var authViewModel: AuthViewModel
     @EnvironmentObject var choreViewModel: ChoreViewModel
-    var chores: [ChoreTask]
+    @EnvironmentObject var childUserEditModel : editUserInfoModel
     
     
     var body: some View {
@@ -38,27 +38,23 @@ struct ParentProfilePage: View {
                         }
                         .padding(.top, 4)
                         
-                        Button(action: {}, label: {
+                        Button(action: {self.authViewModel.isEditSheetPresent.toggle()
+
+                        }, label: {
                             Text("Edit profile").foregroundColor(Color("AdaptiveColorForText"))
                                 .frame(width: UIScreen.main.bounds.width*0.9, height: 27)
                                 .background(Rectangle().fill(Color("AdaptiveColorForBackground")).shadow(color: Color.gray, radius: 1))
                                 
                         })
                         .padding(.bottom)
+                        .sheet(isPresented: self.$authViewModel.isEditSheetPresent) {
+                            EditParentProfileSheet()
+                        }
                         
                         
                         //                display all chores
                         LazyVStack {
                             ForEach(choreViewModel.chores, id: \.self){chore in
-//                                Button {
-//
-//                                } label: {
-//                                    ChoreCard(chore: chore)
-//                                }
-//                                .frame(width: UIScreen.main.bounds.width*0.95, height: UIScreen.main.bounds.width*0.3)
-//                                .background(Color("AdaptiveColorForBackground"))
-//                                .cornerRadius(25)
-//                                .shadow(color: Color.gray, radius: 10)
 
                                 ChoreCard(chore: chore)
                                     .frame(width: UIScreen.main.bounds.width*0.95, height: UIScreen.main.bounds.width*0.3)
@@ -88,9 +84,9 @@ struct ParentProfilePage_Previews: PreviewProvider {
         let achievement = Achievement(points: 1, message: "free three")
         let chore = ChoreTask(taskID: "0", name: "Make bed", description: "Make bed", achievement: achievement, iconImage: "BedIcon")
         Group {
-            ParentProfilePage(chores: [chore])
+            ParentProfilePage()
                 .preferredColorScheme(.light)
-            ParentProfilePage(chores: [chore])
+            ParentProfilePage()
                 .preferredColorScheme(.dark)
         }
     }
@@ -100,14 +96,24 @@ struct ParentProfilePage_Previews: PreviewProvider {
 struct AvatorBar: View {
     @Binding var numberOfChildren: String
     @Binding var numberOfRelatives: String
+    @EnvironmentObject var authViewModel: AuthViewModel
     
     var body: some View {
         HStack{
-            Image("parentImage")
-                .resizable()
-                .frame(width: 80, height: 80)
-                .padding(.horizontal, 7)
-                .clipShape(Circle())
+            if self.authViewModel.currentUser?.avatarPic != nil{
+                KFImage(URL(string: self.authViewModel.currentUser!.avatarPic!))
+                    .resizable()
+                    .frame(width: 80, height: 80)
+                    .padding(.horizontal, 7)
+                    .clipShape(Circle())
+            }
+            else{
+                Image("parentImage")
+                    .resizable()
+                    .frame(width: 80, height: 80)
+                    .padding(.horizontal, 7)
+                    .clipShape(Circle())
+            }
             Spacer()
             HStack {
                 HStack{

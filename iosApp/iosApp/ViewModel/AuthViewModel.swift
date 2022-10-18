@@ -36,10 +36,13 @@ class AuthViewModel: ObservableObject{
     
     @Published var loginFailed = false
     @Published var progressing = false
+    @Published var isEditSheetPresent = false
     
     @Published var logged = true
     @Published var email = ""
     @State var manager = LoginManager()
+    
+    
     
     var service = UserService()
     
@@ -320,7 +323,6 @@ class AuthViewModel: ObservableObject{
     func fetchUser(){
         guard let uid = Auth.auth().currentUser?.uid else { return}
         self.service.fetchUser(uid: uid) { user in
-            
             self.currentUser = user
         }
         
@@ -333,6 +335,30 @@ class AuthViewModel: ObservableObject{
             self.currentUser = user
             
             completion(self.currentUser != nil)
+        }
+    }
+    
+    func editParentInfo(newName: String, newDateOfBirth: Date?, newAvatarPic: UIImage?){
+        guard newName != "" else{return}
+        
+        guard let newDateOfBirth = newDateOfBirth else{return}
+        
+        if newAvatarPic == nil{
+            return
+        }
+        
+        guard let imageData = newAvatarPic!.jpegData(compressionQuality: 0.5) else{
+            print("DEBUG: failed to turn image to data")
+            return
+            
+        }
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/YYYY"
+        let birthday = dateFormatter.string(from: newDateOfBirth)
+        
+        service.updateUserInfo(currentParent: self.currentUser, newName: newName, newDateOfBirth: birthday, newAvatarPic: imageData) { parent in
+            self.currentUser = parent
         }
     }
 }

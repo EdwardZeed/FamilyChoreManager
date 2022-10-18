@@ -9,10 +9,10 @@
 import Foundation
 import Firebase
 import shared
+import SwiftUI
 
 struct ChildrenDashBoardService{
     
-
     
     func fetchChildren(currentUserID : String, compeltion: @escaping([Child]) -> Void) {
         var result = [Child]()
@@ -31,8 +31,9 @@ struct ChildrenDashBoardService{
                 let name = doc["name"] as? String ?? ""
                 let dateOfBirth = doc["dateOfBirth"] as? String ?? ""
                 let theme = Theme(name: doc["theme"] as? String ?? "")
+                let avatarPic = doc["avatarPic"] as? String? ?? nil
                 
-                let child = Child(userID: doc.documentID, name: name, dateOfBirth: dateOfBirth, chooseTheme: theme, avatarPic: "")
+                let child = Child(userID: doc.documentID, name: name, dateOfBirth: dateOfBirth, chooseTheme: theme, avatarPic: avatarPic)
                 result.append(child)
                 print("Number of children in this parent is " + String(result.count))
                 
@@ -59,6 +60,9 @@ struct ChildrenDashBoardService{
                     viewModel.fetchChildren()
                 }
                 if changes.type == .removed {
+                    viewModel.fetchChildren()
+                }
+                if changes.type == .modified{
                     viewModel.fetchChildren()
                 }
             }
