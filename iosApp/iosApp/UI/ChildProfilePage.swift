@@ -8,13 +8,15 @@
 
 import SwiftUI
 import shared
+import Kingfisher
+
 
 
 
 
 struct ChildProfilePage: View {
     
-
+    var currentChild: Child
 
     var currentParentid: String
     var contractViewModel: ContractViewModel
@@ -39,15 +41,13 @@ struct ChildProfilePage: View {
     @EnvironmentObject var childUserEditModel : editUserInfoModel
     @EnvironmentObject var childAuthViewModel: ChildAuthViewModel
     
+    @EnvironmentObject var assignFinishChoresModel : AssignChoreModel
+    
+
+    
     var body: some View {
-        
-        
-        
         ScrollView{
             VStack{
-                
-                
-                
                 
                 HStack(alignment: .center, spacing: 30){
                     Image("ChildIcon-ChildProfilePage")
@@ -57,7 +57,7 @@ struct ChildProfilePage: View {
                     Text("25").padding(.leading, -20)
                     Image("Goal-ChildProfilePage")
                     Text(String(result[result.count - 1])).padding(.leading, -20)
-                    Image("RewardIcon-ChildProfilePage")
+                    Image(" fIcon-ChildProfilePage")
                     Text("2/" + String(result.count)).padding(.leading, -20)
                 }
                 
@@ -124,12 +124,12 @@ struct ChildProfilePage: View {
                             }.underlinetextfield()
                             
                             Button(action: {
-                                childUserEditModel.editChildInfo(parentID: currentParentid, childID: self.childAuthViewModel.currentChild.userID, childName: newUserName, dateOfBirth: newDateOfBirth, theme: newTheme, imageData: userImage)
+                                childUserEditModel.editChildInfo(parentID: currentParentid, childID: self.currentChild.userID, childName: newUserName, dateOfBirth: newDateOfBirth, theme: newTheme, imageData: userImage)
                                 
-                                childUserEditModel.fetchChildren()
-                                
-                                
-                                childUserEditModel.getNewestChildInfo(childID: self.childAuthViewModel.currentChild.userID)
+//                                childUserEditModel.fetchChildren()
+//
+//
+//                                childUserEditModel.getNewestChildInfo(childID: self.childAuthViewModel.currentChild.userID)
                                 isPresentSheet.toggle()
                                
                                 
@@ -143,11 +143,7 @@ struct ChildProfilePage: View {
                         }.fullScreenCover(isPresented: $showingLocalImage, content: {
                             ImagePicker(image: $userImage)
                         })
-//                        .onReceive(addChoreViewModel.$addChoreImageSuccess) { success in
-//                            if success{
-//                                presentationMode.wrappedValue.dismiss()
-//                            }
-//                        }
+
                     }
                 
                 
@@ -181,9 +177,9 @@ struct ChildProfilePage: View {
                         
                     }.padding(.bottom, -1)
                     
- 
-                    ForEach(self.childAuthViewModel.currentChild.finishedChoreList,id:\.self){choretask in
-                        SingleFinishChore_ChildProfilePage(singlefinishchore : choretask)
+                    
+                    ForEach(self.assignFinishChoresModel.finishedChoreList,id:\.self){finishedChore in
+                        SingleFinishChore_ChildProfilePage(singlefinishchore : finishedChore)
                     }
                     
                 }
@@ -192,7 +188,7 @@ struct ChildProfilePage: View {
             }.frame(width: UIScreen.main.bounds.width, alignment: .center)
             
             
-        }.PopUpWindow(isPresented: $isAddDialogShow) { item in
+        }.PopUpWindow(currentChildID: currentChild.userID, isPresented: $isAddDialogShow) { item in
             if(!item.isEmpty) {
                 eventList.append(RandomItem(title: item))
             }
@@ -234,14 +230,17 @@ struct ChildProfilePage: View {
 }
 
 struct SingleFinishChore_ChildProfilePage : View {
-    var singlefinishchore: ChoreTask
+    var singlefinishchore: FinishedChore
     var body: some View{
         HStack{
             ZStack{
                 Image("SingleFinishChoreboard-ChildProfilePage")
                     .shadow(radius: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
                 HStack{
-                    Image(singlefinishchore.iconImage)
+                    KFImage(URL(string: singlefinishchore.choreImg))
+                                    .resizable()
+                                    .frame(width: 50, height: 50)
+                                    .padding(.horizontal, 10)
                     VStack(alignment: .leading){
                         VStack{
                             Text(singlefinishchore.name)
@@ -251,7 +250,7 @@ struct SingleFinishChore_ChildProfilePage : View {
                             Text("Your second free throw:")
                                 .font(.footnote)
                                 .fontWeight(.thin)
-                            Text(String(singlefinishchore.achievement.points))
+                            Text(String(singlefinishchore.point))
                                 .font(.footnote)
                                 .fontWeight(.thin)
                             Image("SmallCoinIcon-ChildProfilePage")
@@ -264,7 +263,7 @@ struct SingleFinishChore_ChildProfilePage : View {
                     VStack(alignment: .trailing){
                         //this is shit code, delete anytime
                         Text("").frame(height:40)
-                        Text("2001/07/09")
+                        Text(singlefinishchore.finishedDate)
                             .font(.footnote)
                             .fontWeight(.thin)
                             .frame(alignment: .trailing)

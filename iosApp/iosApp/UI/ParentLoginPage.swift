@@ -37,6 +37,8 @@ struct ParentLoginPage: View {
     @State var isPresentingScanner = false
     @State var scannedCode: String = "scan qr code"
     
+    @EnvironmentObject var assignFinishChoresModel : AssignChoreModel
+    
         
     var scannerSheet : some View {
         CodeScannerView(
@@ -50,6 +52,7 @@ struct ParentLoginPage: View {
 //                        childAuthViewModel.childSession = scannedCode
 //                        childAuthViewModel.fetchChildren()
                         self.childAuthViewModel.signIn(childSession: scannedCode)
+                        self.assignFinishChoresModel.fetchUserFinishedChoresInChildVer(currentChildID: String(self.childAuthViewModel.childSession.split(separator: " ")[0]), currentparentID: String(self.childAuthViewModel.childSession.split(separator: " ")[1]))
                         goToChildDashboard = true
                        
                     }

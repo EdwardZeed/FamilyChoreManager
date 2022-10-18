@@ -56,6 +56,8 @@
 		3702D4DD28EFCDBA00269906 /* ChildrenDashboardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3702D4DC28EFCDBA00269906 /* ChildrenDashboardService.swift */; };
 		37074EE928FA6CB1003675C4 /* editUserInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37074EE828FA6CB1003675C4 /* editUserInfoModel.swift */; };
 		37074EEB28FA6EBF003675C4 /* EditChildInfoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37074EEA28FA6EBF003675C4 /* EditChildInfoService.swift */; };
+		37074EED28FE7B30003675C4 /* AssignChoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37074EEC28FE7B30003675C4 /* AssignChoreModel.swift */; };
+		37074EEF28FE7B82003675C4 /* AssignChoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37074EEE28FE7B82003675C4 /* AssignChoreService.swift */; };
 		37183FDD28EC35A5000A574A /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 37183FDC28EC35A5000A574A /* CodeScanner */; };
 		3759E52B28B39C50000E0419 /* ChildLoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759E52A28B39C50000E0419 /* ChildLoginPage.swift */; };
 		3759E52F28B39CC6000E0419 /* ParentLoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3759E52E28B39CC6000E0419 /* ParentLoginPage.swift */; };
@@ -134,6 +136,8 @@
 		3702D4DC28EFCDBA00269906 /* ChildrenDashboardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildrenDashboardService.swift; sourceTree = "<group>"; };
 		37074EE828FA6CB1003675C4 /* editUserInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editUserInfoModel.swift; sourceTree = "<group>"; };
 		37074EEA28FA6EBF003675C4 /* EditChildInfoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditChildInfoService.swift; sourceTree = "<group>"; };
+		37074EEC28FE7B30003675C4 /* AssignChoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignChoreModel.swift; sourceTree = "<group>"; };
+		37074EEE28FE7B82003675C4 /* AssignChoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignChoreService.swift; sourceTree = "<group>"; };
 		3759E52A28B39C50000E0419 /* ChildLoginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildLoginPage.swift; sourceTree = "<group>"; };
 		3759E52E28B39CC6000E0419 /* ParentLoginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentLoginPage.swift; sourceTree = "<group>"; };
 		37613CFA28C6086000422234 /* ChildQRCodePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildQRCodePage.swift; sourceTree = "<group>"; };
@@ -251,6 +255,7 @@
 				3702D4DC28EFCDBA00269906 /* ChildrenDashboardService.swift */,
 				05386DAC28F45FCB00A28BF9 /* ChoreService.swift */,
 				37074EEA28FA6EBF003675C4 /* EditChildInfoService.swift */,
+				37074EEE28FE7B82003675C4 /* AssignChoreService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -264,6 +269,7 @@
 				37ACC16028EFDDEF003FE5E2 /* ChildAuthViewModel.swift */,
 				05386DAE28F464FA00A28BF9 /* ChoreViewModel.swift */,
 				37074EE828FA6CB1003675C4 /* editUserInfoModel.swift */,
+				37074EEC28FE7B30003675C4 /* AssignChoreModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -489,6 +495,7 @@
 				05386DAB28ED92FD00A28BF9 /* ContractViewModel.swift in Sources */,
 				3759E52F28B39CC6000E0419 /* ParentLoginPage.swift in Sources */,
 				37613D0128C61D2B00422234 /* ChildAccountPage.swift in Sources */,
+				37074EEF28FE7B82003675C4 /* AssignChoreService.swift in Sources */,
 				37613CFF28C61B1300422234 /* ChildNavigationBarView.swift in Sources */,
 				05D24AED28C489640097A7C2 /* Dashboard.swift in Sources */,
 				2B3B10A728B3BD1F003E24DE /* SignUpPage.swift in Sources */,
@@ -517,6 +524,7 @@
 				2B4536BE28CF902900678D0D /* AuthViewModel.swift in Sources */,
 				05386DA928ED578700A28BF9 /* CheckContract.swift in Sources */,
 				2B57828028E1A62B00EFBB1C /* SignInWithAppleDelegates.swift in Sources */,
+				37074EED28FE7B30003675C4 /* AssignChoreModel.swift in Sources */,
 				2B3B10AB28B7956A003E24DE /* DatePickerTextField.swift in Sources */,
 				37FD897E28C3C22E00B5ABFE /* PopUpWindowModifier.swift in Sources */,
 				2B57828728E57F3A00EFBB1C /* AddChildViewModel.swift in Sources */,

@@ -13,13 +13,14 @@ import SwiftUI
 struct PopUpWindowModifier : ViewModifier {
     
     @Binding var isPresented : Bool
+    var currentChildID: String
     var action: (_ :String)->Void
     
     func body(content: Content) -> some View {
         ZStack{
             content
             if(isPresented){
-                AssignChorePopUpWindow(isPresented: $isPresented, action: { item in
+                AssignChorePopUpWindow(isPresented: $isPresented, currentChildID: currentChildID, action: { item in
                     action(item)
                 }).zIndex(5000)
                 
@@ -31,7 +32,7 @@ struct PopUpWindowModifier : ViewModifier {
 
 
 extension View {
-    func PopUpWindow(isPresented: Binding<Bool>, action: @escaping (_ _input: String)-> Void) -> some View {
-        ModifiedContent(content: self, modifier: PopUpWindowModifier(isPresented: isPresented, action: action))
+    func PopUpWindow(currentChildID: String, isPresented: Binding<Bool>, action: @escaping (_ _input: String)-> Void) -> some View {
+        ModifiedContent(content: self, modifier: PopUpWindowModifier(isPresented: isPresented, currentChildID: currentChildID, action: action))
     }
 }

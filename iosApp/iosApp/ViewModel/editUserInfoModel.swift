@@ -30,7 +30,6 @@ class editUserInfoModel: ObservableObject {
         guard let childImageData = imageData!.jpegData(compressionQuality: 0.5) else{
             print("DEBUG: failed to turn image to data")
             return
-            
         }
         
         service.updateChildInfo(parentID: parentID, childID: childID, childName: childName, dateOfBirth: dateOfBirth, theme: theme, imageData: childImageData){ success, result in
@@ -57,7 +56,7 @@ class editUserInfoModel: ObservableObject {
                 }
             }
         }
-        
+
         DispatchQueue.main.asyncAfter(deadline: .now()+1){
             self.finishedObtainNewestChildInfo = true
         }

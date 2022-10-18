@@ -62,7 +62,7 @@ struct EditChildInfoService{
                                 }catch{
                                     print(error)
                                 }
-                                newChild = Child(userID: childID, name: childName, dateOfBirth: birthday, chooseTheme: Theme(name: theme), avatarPic: "")
+                                newChild = Child(userID: childID, name: childName, dateOfBirth: birthday, chooseTheme: Theme(name: theme), avatarPic: "aaa")
                                 
                             }
                             else{

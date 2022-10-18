@@ -36,8 +36,5 @@ class ChoreViewModel: ObservableObject{
             self.addChoreImageSuccess = success
         }
     }
-    
-    func fetchChores(){
-        
-    }
+
 }

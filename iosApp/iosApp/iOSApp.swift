@@ -39,6 +39,7 @@ struct iOSApp: App {
 
     @StateObject var userInfoEditModel = editUserInfoModel()
     @StateObject var contarctViewModel = ContractViewModel()
+    @StateObject var assignFinishChoresModel = AssignChoreModel()
 
     // register app delegate for Firebase setup
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
@@ -53,6 +54,7 @@ struct iOSApp: App {
 
                 .environmentObject(userInfoEditModel)
                 .environmentObject(contarctViewModel)
+                .environmentObject(assignFinishChoresModel)
 
             
             

@@ -8,6 +8,7 @@
 
 import SwiftUI
 import shared
+import Kingfisher
 
 struct ChildAccountPage: View {
     
@@ -17,14 +18,7 @@ struct ChildAccountPage: View {
 //    var contractViewModel: ContractViewModel
     var selectedChild: Child?
     var result: [Int]
-    
-    @State var isAddDialogShow = false
-    @State var isDeleteDialogShow = false
-    @State var eventList:[RandomItem] = [RandomItem(title: "test")]
-    @State var curDelItem: RandomItem = RandomItem(title: "")
-    @State var goToAddContract = false
-    @State var goToChildQRCodePage = false
-    
+
     @State var isPresentSheet: Bool = false
     @State var newDateOfBirth: Date?
     @State var newUserName: String = ""
@@ -34,6 +28,8 @@ struct ChildAccountPage: View {
     @State var showingLocalImage: Bool = false
     @EnvironmentObject var childUserEditModel : editUserInfoModel
     @EnvironmentObject var childAuthViewModel : ChildAuthViewModel
+    
+    @EnvironmentObject var assignFinishChoresModel : AssignChoreModel
     
 
     
@@ -122,10 +118,8 @@ struct ChildAccountPage: View {
                                         
                                         childUserEditModel.fetchChildren()
                                         
-                                        
                                         childUserEditModel.getNewestChildInfo(childID: self.selectedChild!.userID)
                                         isPresentSheet.toggle()
-                                        
                                         
                                     },
                                            label: {
@@ -144,57 +138,53 @@ struct ChildAccountPage: View {
                                 }
                                 
                                 
-                                VStack(alignment: .leading){
-                                    HStack{
-                                        Image("rewardIcon-ChildrenProfilePage")
-                                        Text("Reward List")
-                                    }.padding(.bottom, -1)
-                                    
-                                    
-                                    ZStack(alignment: .leading){
-                                        Image("RewardBackgroundBoard-ChildProfilePage")
-                                        
-                                        ScrollView(.horizontal){
-                                            HStack{
-                                                SingleReward_ChildProfilePage()
-                                                
-                                                
-                                                
-                                            }.padding(.horizontal, 7)
-                                        }
-                                        
-                                        
-                                        
-                                    }.shadow(radius: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
-                                        .frame(width: UIScreen.main.bounds.width*0.98, alignment: .center)
-                                }.padding(.bottom, UIScreen.main.bounds.height*0.01).shadow(radius: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
-                                
-                                
-                                VStack(alignment: .leading) {
-                                    HStack{
-                                        Image("ChoresIcon-ChildProfilePage")
-                                        Text("Finished Chores")
-                                        
-                                    }.padding(.bottom, -1)
-                                    
-                                    
-                                    ForEach(self.selectedChild!.finishedChoreList,id:\.self){choretask in
-                                        SingleFinishChore_ChildProfilePage(singlefinishchore : choretask)
-                                    }
-                                    
-                                }
-                                
-                                
                             }.frame(width: UIScreen.main.bounds.width, alignment: .center)
                         
+                        VStack(alignment: .leading){
+                            HStack{
+                                Image("rewardIcon-ChildrenProfilePage")
+                                Text("Reward List")
+                            }.padding(.bottom, -1)
+                            
+                            
+                            ZStack(alignment: .leading){
+                                Image("RewardBackgroundBoard-ChildProfilePage")
+                                
+                                ScrollView(.horizontal){
+                                    HStack{
+                                        SingleReward_ChildProfilePage()
+                                        
+                                        
+                                        
+                                    }.padding(.horizontal, 7)
+                                }
+                            }.shadow(radius: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
+                                .frame(width: UIScreen.main.bounds.width*0.98, alignment: .center)
+                        }.padding(.bottom, UIScreen.main.bounds.height*0.01).shadow(radius: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
+                        
+                        
+                        VStack(alignment: .leading) {
+                            HStack{
+                                Image("ChoresIcon-ChildProfilePage")
+                                Text("Finished Chores")
+                                
+                            }.padding(.bottom, -1)
+                            
+                            
+                            ForEach(self.assignFinishChoresModel.finishedChoreList,id:\.self){finishChore in
+                                SingleFinishChore_ChildProfilePage(singlefinishchore : finishChore)
+                            }
+                        }
                         
                     }.navigationTitle(self.selectedChild!.name)
+                      
                     
                 }
                 
             }
         }
         else{
+
             NavigationView {
                 ScrollView{
                     VStack{
@@ -279,7 +269,7 @@ struct ChildAccountPage: View {
                                         childUserEditModel.fetchChildren()
                                         
                                         
-                                        childUserEditModel.getNewestChildInfo(childID: self.childAuthViewModel.currentChild.userID)
+                                        //childUserEditModel.getNewestChildInfo(childID: self.childAuthViewModel.currentChild.userID)
                                         isPresentSheet.toggle()
                                         
                                         
@@ -300,51 +290,58 @@ struct ChildAccountPage: View {
                                 }
                                 
                                 
-                                VStack(alignment: .leading){
-                                    HStack{
-                                        Image("rewardIcon-ChildrenProfilePage")
-                                        Text("Reward List")
-                                    }.padding(.bottom, -1)
-                                    
-                                    
-                                    ZStack(alignment: .leading){
-                                        Image("RewardBackgroundBoard-ChildProfilePage")
-                                        
-                                        ScrollView(.horizontal){
-                                            HStack{
-                                                SingleReward_ChildProfilePage()
-                                                
-                                                
-                                                
-                                            }.padding(.horizontal, 7)
-                                        }
-                                        
-                                        
-                                        
-                                    }.shadow(radius: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
-                                        .frame(width: UIScreen.main.bounds.width*0.98, alignment: .center)
-                                }.padding(.bottom, UIScreen.main.bounds.height*0.01).shadow(radius: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
-                                
-                                
-                                VStack(alignment: .leading) {
-                                    HStack{
-                                        Image("ChoresIcon-ChildProfilePage")
-                                        Text("Finished Chores")
-                                        
-                                    }.padding(.bottom, -1)
-                                    
-                                    
-                                    ForEach(self.childAuthViewModel.currentChild.finishedChoreList,id:\.self){choretask in
-                                        SingleFinishChore_ChildProfilePage(singlefinishchore : choretask)
-                                    }
-                                    
-                                }
-                                
                                 
                             }.frame(width: UIScreen.main.bounds.width, alignment: .center)
                         
+                        VStack(alignment: .leading){
+                            HStack{
+                                Image("rewardIcon-ChildrenProfilePage")
+                                Text("Reward List")
+                            }.padding(.bottom, -1)
+                            
+                            
+                            ZStack(alignment: .leading){
+                                Image("RewardBackgroundBoard-ChildProfilePage")
+                                
+                                ScrollView(.horizontal){
+                                    HStack{
+                                        SingleReward_ChildProfilePage()
+                                        
+                                        
+                                        
+                                    }.padding(.horizontal, 7)
+                                }
+                                
+                                
+                                
+                            }.shadow(radius: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
+                                .frame(width: UIScreen.main.bounds.width*0.98, alignment: .center)
+                        }.padding(.bottom, UIScreen.main.bounds.height*0.01).shadow(radius: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
+                        
+                        
+                        VStack(alignment: .leading) {
+                            HStack{
+                                Image("ChoresIcon-ChildProfilePage")
+                                Text("Finished Chores")
+                                
+                            }.padding(.bottom, -1)
+                            
+                            
+                            ForEach(self.assignFinishChoresModel.userfinishedChoreList,id:\.self){finishChore in
+                                SingleFinishChore_ChildProfilePage(singlefinishchore : finishChore)
+                            }
+                            
+                        }
+                        
                         
                     }.navigationTitle(self.childAuthViewModel.currentChild.name)
+                        .toolbar{Menu {
+                            Button(action: {self.childAuthViewModel.signOut()
+                                self.assignFinishChoresModel.signOut()}, label: {
+                                Text("sign out")
+                            })} label: {
+                                Image("PlusIcon-ChildProfilePage")
+                            }}
                     
                 }
                 
