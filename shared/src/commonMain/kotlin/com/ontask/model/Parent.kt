@@ -15,6 +15,7 @@ class Parent(
     var userID: String,
     var name: String,
     var dateOfBirth: String,
+    var email: String?,
     var chooseTheme: Theme?,
     var avatarPic: String?){
     var qrCodes: ArrayList<QRcode> = ArrayList()

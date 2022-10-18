@@ -12,13 +12,13 @@ import Kingfisher
 
 struct ChildAccountPage: View {
     
-
-//    @State var currentChild : Child
-//    var currentParentid: String
-//    var contractViewModel: ContractViewModel
+    
+    //    @State var currentChild : Child
+    //    var currentParentid: String
+    //    var contractViewModel: ContractViewModel
     var selectedChild: Child?
     var result: [Int]
-
+    
     @State var isPresentSheet: Bool = false
     @State var newDateOfBirth: Date?
     @State var newUserName: String = ""
@@ -29,19 +29,26 @@ struct ChildAccountPage: View {
     @EnvironmentObject var childUserEditModel : editUserInfoModel
     @EnvironmentObject var childAuthViewModel : ChildAuthViewModel
     
+    
     @EnvironmentObject var assignFinishChoresModel : AssignChoreModel
     
-
     
     var body: some View {
         if selectedChild != nil{
             NavigationView {
                 ScrollView{
                     VStack{
-                        
-                        
                         HStack(alignment: .center, spacing: 30){
-                            Image("ChildIcon-ChildProfilePage")
+                            if selectedChild?.avatarPic != nil{
+                                KFImage(URL(string: self.selectedChild!.avatarPic!))
+                                    .resizable()
+                                    .frame(width: 80, height: 80, alignment: .center)
+                                    .clipShape(Circle())
+                                    .aspectRatio(contentMode: .fit)
+                            }
+                            else{
+                                Image("ChildIcon-ChildProfilePage")
+                            }
                             
                             
                             Image("Point-ChildProfilePage")
@@ -61,84 +68,6 @@ struct ChildAccountPage: View {
                                 .fontWeight(.thin)
                         }.padding(.bottom, UIScreen.main.bounds.height*0.02)
                         
-                        
-                        Button(action: {}, label: {
-                            Image("EditProfileBtn-ChildProfilePage")
-                            
-                        }).padding(.bottom, UIScreen.main.bounds.height*0.01).shadow(radius: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
-                            .frame(width: UIScreen.main.bounds.width*0.98, alignment: .center)
-                            .sheet(isPresented: $isPresentSheet){
-                                VStack{
-                                    Button(action: {
-                                        //                var createReward = RewardCreater()
-                                        //                rewardList.append(createReward)
-                                        showingLocalImage.toggle()
-                                        
-                                        
-                                    }, label: {
-                                        VStack{
-                                            if let image = self.userImage{
-                                                Image(uiImage: userImage!)
-                                                    .resizable()
-                                                    .frame(width: 200, height: 200)
-                                                    .scaledToFill()
-                                                    .cornerRadius(10)
-                                            }else{
-                                                Image("edituserphoto")
-                                                    .resizable()
-                                                    .frame(width: 200, height: 200)
-                                                    .scaledToFill()
-                                                
-                                            }
-                                        }
-                                    }).frame(width: 200, height: 200, alignment: .center)
-                                    
-                                    HStack{
-                                        Image("userIcon").resizable().frame(width: 32.0, height: 32.0)
-                                        TextField("Name", text: $newUserName)
-                                    }.underlinetextfield()
-                                    
-                                    HStack{
-                                        Image("dateIcon").resizable().frame(width: 32.0, height: 32.0)
-                                        DatePickerTextField(placeholder: "Date of Bitrh", date: $newDateOfBirth)
-                                    }  .padding(.vertical, 20)
-                                        .overlay(Rectangle().frame(width: 360, height: 2).padding(.top, 50))
-                                        .foregroundColor(Color.black)
-                                        .frame(width: UIScreen.main.bounds.width*0.95, height: textFieldHeight)
-                                        .padding(10)
-                                    
-                                    
-                                    HStack{
-                                        Image("brush").resizable().frame(width: 32.0, height: 32.0)
-                                        TextField("Theme", text: $newTheme)
-                                    }.underlinetextfield()
-                                    
-                                    Button(action: {
-                                        childUserEditModel.editChildInfo(parentID: String(self.childAuthViewModel.childSession.split(separator: " ")[0]), childID: self.selectedChild!.userID, childName: newUserName, dateOfBirth: newDateOfBirth, theme: newTheme, imageData: userImage)
-                                        
-                                        childUserEditModel.fetchChildren()
-                                        
-                                        childUserEditModel.getNewestChildInfo(childID: self.selectedChild!.userID)
-                                        isPresentSheet.toggle()
-                                        
-                                    },
-                                           label: {
-                                        Image("UpdateProfileBtn")
-                                    })
-                                    .padding(.bottom, UIScreen.main.bounds.height*0.03)
-                                    
-                                    
-                                }.fullScreenCover(isPresented: $showingLocalImage, content: {
-                                    ImagePicker(image: $userImage)
-                                }).onReceive(childUserEditModel.$finishedObtainNewestChildInfo) { success in
-                                    if success{
-                                        self.childAuthViewModel.currentChild = childUserEditModel.currentChild
-                                        print(self.childAuthViewModel.currentChild.name + "is the current child name")
-                                    }
-                                }
-                                
-                                
-                            }.frame(width: UIScreen.main.bounds.width, alignment: .center)
                         
                         VStack(alignment: .leading){
                             HStack{
@@ -176,22 +105,29 @@ struct ChildAccountPage: View {
                             }
                         }
                         
-                    }.navigationTitle(self.selectedChild!.name)
-                      
+                        
+                    }
                     
                 }
                 
             }
+            .navigationBarTitle(self.selectedChild!.name, displayMode: .inline)
         }
         else{
-
             NavigationView {
                 ScrollView{
                     VStack{
-                        
-                        
                         HStack(alignment: .center, spacing: 30){
-                            Image("ChildIcon-ChildProfilePage")
+                            if self.childAuthViewModel.currentChild.avatarPic != nil{
+                                KFImage(URL(string: self.childAuthViewModel.currentChild.avatarPic!))
+                                    .resizable()
+                                    .frame(width: 80, height: 80)
+                                    .padding(.horizontal, 7)
+                                    .clipShape(Circle())
+                            }
+                            else{
+                                Image("ChildIcon-ChildProfilePage")
+                            }
                             
                             
                             Image("Point-ChildProfilePage")
@@ -212,19 +148,16 @@ struct ChildAccountPage: View {
                         }.padding(.bottom, UIScreen.main.bounds.height*0.02)
                         
                         
-                        Button(action: {}, label: {
+                        Button(action: {self.childUserEditModel.isEditSheetPresent.toggle()}, label: {
                             Image("EditProfileBtn-ChildProfilePage")
                             
                         }).padding(.bottom, UIScreen.main.bounds.height*0.01).shadow(radius: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
                             .frame(width: UIScreen.main.bounds.width*0.98, alignment: .center)
-                            .sheet(isPresented: $isPresentSheet){
+                            .sheet(isPresented: self.$childUserEditModel.isEditSheetPresent){
                                 VStack{
                                     Button(action: {
-                                        //                var createReward = RewardCreater()
-                                        //                rewardList.append(createReward)
+                                        
                                         showingLocalImage.toggle()
-                                        
-                                        
                                     }, label: {
                                         VStack{
                                             if let image = self.userImage{
@@ -266,11 +199,11 @@ struct ChildAccountPage: View {
                                     Button(action: {
                                         childUserEditModel.editChildInfo(parentID: String(self.childAuthViewModel.childSession.split(separator: " ")[0]), childID: self.childAuthViewModel.currentChild.userID, childName: newUserName, dateOfBirth: newDateOfBirth, theme: newTheme, imageData: userImage)
                                         
-                                        childUserEditModel.fetchChildren()
-                                        
-                                        
-                                        //childUserEditModel.getNewestChildInfo(childID: self.childAuthViewModel.currentChild.userID)
-                                        isPresentSheet.toggle()
+                                        //                                        childUserEditModel.fetchChildren()
+                                        //
+                                        //
+                                        //                                        childUserEditModel.getNewestChildInfo(childID: self.childAuthViewModel.currentChild.userID)
+                                        self.childUserEditModel.isEditSheetPresent.toggle()
                                         
                                         
                                     },
@@ -290,8 +223,23 @@ struct ChildAccountPage: View {
                                 }
                                 
                                 
-                                
                             }.frame(width: UIScreen.main.bounds.width, alignment: .center)
+                        
+                        
+                        
+                        VStack(alignment: .leading) {
+                            HStack{
+                                Image("ChoresIcon-ChildProfilePage")
+                                Text("Finished Chores")
+                                
+                            }.padding(.bottom, -1)
+                            
+                            
+                            ForEach(self.assignFinishChoresModel.userfinishedChoreList,id:\.self){choretask in
+                                SingleFinishChore_ChildProfilePage(singlefinishchore : choretask)
+                            }
+                            
+                        }
                         
                         VStack(alignment: .leading){
                             HStack{
@@ -338,10 +286,10 @@ struct ChildAccountPage: View {
                         .toolbar{Menu {
                             Button(action: {self.childAuthViewModel.signOut()
                                 self.assignFinishChoresModel.signOut()}, label: {
-                                Text("sign out")
-                            })} label: {
-                                Image("PlusIcon-ChildProfilePage")
-                            }}
+                                    Text("sign out")
+                                })} label: {
+                                    Image("PlusIcon-ChildProfilePage")
+                                }}
                     
                 }
                 

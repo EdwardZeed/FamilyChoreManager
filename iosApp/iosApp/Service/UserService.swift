@@ -10,6 +10,7 @@ import Foundation
 import Firebase
 import FirebaseFirestoreSwift
 import shared
+import FirebaseStorage
 
 class UserService: ObservableObject{
     
@@ -29,10 +30,48 @@ class UserService: ObservableObject{
                 let userId: String = data["userId"] as! String
                 let name: String = data["name"] as! String
                 let dateOfBirth: String = data["dateOfBirth"] as? String ?? "no date of birth recorded"
-                let currentUser = Parent(userID: userId, name: name, dateOfBirth: dateOfBirth, chooseTheme: nil, avatarPic: nil)
+                let email = data["email"] as? String? ?? nil
+                let avatarPic = data["avatarPic"] as? String? ?? nil
+                let currentUser = Parent(userID: userId, name: name, dateOfBirth: dateOfBirth, email: email, chooseTheme: nil, avatarPic: avatarPic)
                 
                 completion(currentUser)
             }
+    }
+    
+    func updateUserInfo(currentParent: Parent?,newName: String, newDateOfBirth: String, newAvatarPic: Data, completion: @escaping (Parent) -> Void){
+        guard let currentParent = currentParent else {return}
+        
+        guard let uid = Auth.auth().currentUser?.uid else{
+            print("DEBUG: upload user info failed, no user logged in.")
+            return}
+        
+        let email = currentParent.email
+        
+        
+        let fileName = UUID().uuidString
+        let path = "parentAvatarPic/\(fileName).jpg"
+        let ref = Storage.storage().reference().child(path)
+        
+        ref.putData(newAvatarPic,metadata: nil) { _, error in
+            if let error = error{
+                print("DEBUG: failed to store chore image in firebase storage \(error.localizedDescription)")
+                return
+            }
+            else{
+                ref.downloadURL { url, error in
+                    if error == nil && url != nil {
+                        let urlString = url!.absoluteString
+                        let data = ["name": newName, "dateOfBirth": newDateOfBirth, "avatarPic": urlString, "email": email]
+                        Firestore.firestore().collection("users").document(uid).setData(data, merge: true)
+                        self.fetchUser(uid: uid) { parent in
+                            guard let parent = parent else{return}
+                            completion(parent)
+                        }
+                        
+                    }
+                }
+            }
+        }
     }
 }
 

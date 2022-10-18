@@ -19,10 +19,6 @@ class ContractViewModel: ObservableObject{
     @Published var parentID: String = ""
     @Published var contractResultDic: [String: Array<Int>] = [:]
     
-    init(){
-        
-    }
-    
 
     
     func getContractDetail(parentID: String){
@@ -48,10 +44,7 @@ class ContractViewModel: ObservableObject{
                     }
     }
     
-    func getResult(completion: @escaping (Bool) -> Void){
-//
 
-    }
     
     func setParentID(parentID: String){
         self.parentID = parentID

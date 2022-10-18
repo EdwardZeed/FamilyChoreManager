@@ -20,6 +20,7 @@ class editUserInfoModel: ObservableObject {
     @Published var children  = [Child]()
     
     @Published var finishedObtainNewestChildInfo : Bool = false
+    @Published var isEditSheetPresent = false
     
     let thread1 = DispatchQueue(label: "queue1 for fetching update child info")
     let thread2 = DispatchQueue(label: "queue3 for telling update child info complete")
@@ -35,9 +36,11 @@ class editUserInfoModel: ObservableObject {
         service.updateChildInfo(parentID: parentID, childID: childID, childName: childName, dateOfBirth: dateOfBirth, theme: theme, imageData: childImageData){ success, result in
             self.success = success
             if success {
-               print("successfully update")
+                print("DEBUG: successfully update")
+                return
             }else{
                 print("DEBUG: error when edit child information")
+                return 
             }
         }
     }

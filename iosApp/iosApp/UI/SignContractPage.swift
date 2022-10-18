@@ -11,16 +11,7 @@ import SwiftUI
 import shared
 import Combine
 
-struct Preview_AddContractPage: PreviewProvider {
-    
-    
-    static var previews: some View {
-        var theme: Theme = Theme(name: "udsf")
-        var parent_user: Parent = Parent(userID: "1", name: "TestParent", dateOfBirth: "IDK", chooseTheme: nil, avatarPic: nil)
-        var child: Child = Child(userID: "1", name: "asd", dateOfBirth: "dsf", chooseTheme: theme, avatarPic: "asd")
-        SignContractPage( child:child)
-    }
-}
+
 
 
 struct SignContractPage: View {

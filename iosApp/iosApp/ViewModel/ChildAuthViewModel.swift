@@ -14,24 +14,30 @@ import SwiftUI
 class ChildAuthViewModel: ObservableObject{
     @Published var children = [Child]()
     @Published var success = false
-    @Published var currentChild: Child = Child(userID: "", name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: "")
+    @Published var currentChild: Child = Child(userID: "", name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: nil)
     
-    @Published var childSession : String
+//    @Published var childSession : String
+    
+    @AppStorage("childSession") var childSession = ""
     
     let service = ChildrenDashBoardService()
     
     init() {
-        self.childSession = "nil nil"
+//        self.childSession = "nil nil"
         print("DEBUG: dashboard view model initializing")
         self.fetchChildren()
-
+        self.fetchChild()
         //add listener to children collection
         self.service.listenChildren(viewModel: self, currentUserID: childSession)
+        
     }
     
     func fetchChildren(){
-        let parentID : String = String(childSession.split(separator: " ")[0])
-        print(parentID)
+//        guard let parentID : String = String(childSession.split(separator: " ")[0]) else{return}
+//        print(parentID)
+        if childSession == ""{
+            return
+        }
         service.fetchChildren(currentUserID: childSession) { result in
             self.children = result
             print("now there is " + String(self.children.count) + " in this user")
@@ -52,11 +58,13 @@ class ChildAuthViewModel: ObservableObject{
         self.childSession = childSession
         self.fetchChildren()
 //        self.fetchChild()
+        UserDefaults.standard.set(childSession, forKey: "childSession")
         
     }
     
     func signOut(){
-        self.childSession = "nil nil"
+        self.childSession = ""
         print("DEBUG: \(childSession)")
+        UserDefaults.standard.set("", forKey: "childSession")
     }
 }

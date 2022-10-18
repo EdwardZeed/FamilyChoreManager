@@ -57,12 +57,12 @@ struct DashBoardService{
             }
             print("DEBUG: fetching children")
             snapshot?.documents.forEach({ doc in
-                let parentId = doc["parentId"] as? String ?? ""
                 let name = doc["name"] as? String ?? ""
                 let dateOfBirth = doc["dateOfBirth"] as? String ?? ""
                 let theme = Theme(name: doc["theme"] as? String ?? "")
+                let avatarPic = doc["avatarPic"] as? String? ?? nil
                 
-                let child = Child(userID: doc.documentID, name: name, dateOfBirth: dateOfBirth, chooseTheme: theme, avatarPic: "")
+                let child = Child(userID: doc.documentID, name: name, dateOfBirth: dateOfBirth, chooseTheme: theme, avatarPic: avatarPic)
 
 
                 result.append(child)
@@ -91,7 +91,6 @@ struct DashBoardService{
                 if changes.type == .removed {
                     viewModel.fetchChildren()
                 }
-                
                 if changes.type == .modified{
                     viewModel.fetchChildren()
                 }

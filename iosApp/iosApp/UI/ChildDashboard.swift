@@ -9,19 +9,7 @@
 import Foundation
 import SwiftUI
 import shared
-
-struct Preview_ChildDashBoardPage: PreviewProvider {
-
-    static var previews: some View {
-
-        var currentParent = Parent(userID: "0", name: "Chris", dateOfBirth: "2002/02/14", chooseTheme: Theme(name: "The Boys"), avatarPic: "Dragon")
-
-
-//        var childList = [child3,child2,child1]
-        var parentList = [currentParent]
-        //ChildDashBoardPage(username: "Chris",children: childList, parents:  parentList)
-    }
-}
+import Kingfisher
 
 
 struct ChildDashBoardPage: View {
@@ -47,12 +35,20 @@ struct ChildDashBoardPage: View {
                 
                 ScrollView{
                     VStack{
-                        
                         HStack{
-                            
                             HStack{
-                                UserPhoto()
-                                Message_And_Name(username: String(childAuthViewModel.childSession.split(separator: " ")[0]))
+                                if self.childAuthViewModel.currentChild.avatarPic != nil{
+                                    KFImage(URL(string: self.childAuthViewModel.currentChild.avatarPic!))
+                                        .resizable()
+                                        .frame(width: 80, height: 80)
+                                        .padding(.horizontal, 7)
+                                        .clipShape(Circle())
+                                    
+                                }
+                                else{
+                                    UserPhoto()
+                                }
+                                Message_And_Name(username: self.childAuthViewModel.currentChild.name)
                                 
                             }.frame(width: UIScreen.main.bounds.width*0.85, alignment: .leading)
                                 .padding(.top, 3)
@@ -124,7 +120,6 @@ struct ChildDashBoardPage: View {
                 
                 
                 NavigationLink(destination: ChildAccountPage(selectedChild: child, result: removeZero(pointArray: result)), isActive: $goToChildProfilePage){
-                    
                     EmptyView()
                 }
                 
