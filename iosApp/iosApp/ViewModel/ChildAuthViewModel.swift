@@ -33,8 +33,11 @@ class ChildAuthViewModel: ObservableObject{
     }
     
     func fetchChildren(){
-        let parentID : String = String(childSession.split(separator: " ")[0])
-        print(parentID)
+//        guard let parentID : String = String(childSession.split(separator: " ")[0]) else{return}
+//        print(parentID)
+        if childSession == ""{
+            return
+        }
         service.fetchChildren(currentUserID: childSession) { result in
             self.children = result
             print("now there is " + String(self.children.count) + " in this user")
@@ -60,7 +63,8 @@ class ChildAuthViewModel: ObservableObject{
     }
     
     func signOut(){
-        self.childSession = "nil nil"
+        self.childSession = ""
         print("DEBUG: \(childSession)")
+        UserDefaults.standard.set("", forKey: "childSession")
     }
 }

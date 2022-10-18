@@ -19,7 +19,6 @@ struct ContentView: View{
     var body: some View{
         if authViewModel.userSession == nil{
             if self.childSession != ""{
-
                 ChildNavigationBarView()
             }else{
                 ParentLoginPage()

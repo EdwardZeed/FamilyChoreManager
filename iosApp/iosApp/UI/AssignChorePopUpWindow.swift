@@ -9,6 +9,7 @@
 import SwiftUI
 import UIKit
 import shared
+import Kingfisher
 
 
 let achievement1 = Achievement(points: 1, message: "weel done")
@@ -24,9 +25,14 @@ struct AssignChorePopUpWindow: View {
     
     @State var fadeIn: Bool = false
     @Binding var isPresented: Bool
+    
+    @EnvironmentObject var choreViewModel : ChoreViewModel
+    @EnvironmentObject var assignFinishChoresModel : AssignChoreModel
+    var currentChildID: String
+    
     var action: (_:String)->Void
     
-    var assignChoreArray = [singleChore4, singleChore5, singleChore6]
+
     
     var body: some View {
         ZStack{
@@ -37,13 +43,11 @@ struct AssignChorePopUpWindow: View {
                 ScrollView{
                 VStack{
 
-                    let list = [singleChore4, singleChore5, singleChore6]
-                
-
-
-                    ForEach(list,id:\.self){task in
-                        SingleAssignChore_ChildProfilePage(singleChore: task)
+                    
+                    ForEach(self.choreViewModel.chores ,id:\.self){chore in
+                        SingleAssignChore_ChildProfilePage(singleChore: chore)
                     }
+                     
                      
                     
                     HStack(alignment: .bottom){
@@ -62,8 +66,14 @@ struct AssignChorePopUpWindow: View {
                         }
                         
                         Button(action: {
-                            for i in list{
+                            for i in self.choreViewModel.chores{
                                 print(i.name + " " + String(i.achievement.points))
+                                if(i.achievement.points > 0){
+                                    self.assignFinishChoresModel.assigneFinishdChore(currentChildID: currentChildID, choreName: i.name , StringImageData: i.iconImage , selectPoint: Int(i.achievement.points))
+                                }
+                            }
+                            withAnimation(.spring()){
+                                isPresented.toggle()
                             }
                             
                         }, label: {
@@ -89,18 +99,15 @@ struct AssignChorePopUpWindow: View {
                 }
             }
     }
-    func getAssignChoreArray() -> Array<ChoreTask> {
-        return assignChoreArray
-    }
 }
 
-struct AssignChorePopUpWindow_Previews: PreviewProvider {
-    static var previews: some View {
-        AssignChorePopUpWindow(fadeIn: false, isPresented: Binding.constant(true)) { item in
-            print(item)
-        }
-    }
-}
+//struct AssignChorePopUpWindow_Previews: PreviewProvider {
+//    static var previews: some View {
+//        AssignChorePopUpWindow(currentChildID: "",fadeIn: false, isPresented: Binding.constant(true)) { item in
+//            print(item)
+//        }
+//    }
+//}
 
 
 struct SingleAssignChore_ChildProfilePage : View {
@@ -119,7 +126,10 @@ struct SingleAssignChore_ChildProfilePage : View {
             Image("singleAssignChoreBoard-ChildProfilepage")
             VStack{
                 HStack{
-                    Image(singleChore.iconImage).resizable().frame(width: 40, height: 40)
+                    KFImage(URL(string: singleChore.iconImage))
+                                    .resizable()
+                                    .frame(width: 40, height: 40)
+                                    .padding(.horizontal, -1)
                     Text(singleChore.name)
                 }.frame(width: 300, alignment: .leading)
                     

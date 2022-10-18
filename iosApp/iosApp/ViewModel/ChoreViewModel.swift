@@ -19,6 +19,7 @@ class ChoreViewModel: ObservableObject{
     
     init(){
         service.listenChores(viewModel: self)
+        print("DEBUG: in chore view model \(chores)")
     }
     
     func addChore(choreName: String, choreImage: UIImage?){
@@ -36,8 +37,5 @@ class ChoreViewModel: ObservableObject{
             self.addChoreImageSuccess = success
         }
     }
-    
-    func fetchChores(){
-        
-    }
+
 }

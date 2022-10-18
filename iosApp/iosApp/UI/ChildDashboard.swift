@@ -90,7 +90,11 @@ struct ChildDashBoardPage: View {
         var result: [Int] = []
         @State var goToChildProfilePage = false
         
+        
         @EnvironmentObject var authViewModel: AuthViewModel
+        @EnvironmentObject var assignFinishChoresModel : AssignChoreModel
+        @EnvironmentObject var childAuthViewModel: ChildAuthViewModel
+        
         
         init(child: Child, currentContract: ContractViewModel){
             self.child = child
@@ -103,6 +107,8 @@ struct ChildDashBoardPage: View {
         var body: some View{
             HStack{
                 Button(action: {
+                    print("current select child ID: " + child.userID)
+                    self.assignFinishChoresModel.fetFinishedChoresInChildVer(currentChildID: child.userID, currentparentID: String(self.childAuthViewModel.childSession.split(separator: " ")[1]))
                     goToChildProfilePage = true
                     
                 }, label: {

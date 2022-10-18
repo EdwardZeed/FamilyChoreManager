@@ -46,6 +46,9 @@ struct ChildrenDashBoardService{
     
     func listenChildren(viewModel: ChildAuthViewModel, currentUserID : String){
         //var childID : String = String(currentUserID.split(separator: " ")[0])
+        if currentUserID == ""{
+            return
+        }
         let parentID : String = String(currentUserID.split(separator: " ")[1])
         print("Current children parent id is " + parentID)
         

@@ -177,6 +177,7 @@ struct childCard: View{
     @State var goToChildProfilePage = false
     
     @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var assignFinishChoresModel : AssignChoreModel
     
     
     init(child: Child, currentContract: ContractViewModel){
@@ -190,6 +191,7 @@ struct childCard: View{
     var body: some View{
         HStack{
             Button(action: {
+                self.assignFinishChoresModel.fetchFinishedChores(currentChildID: child.userID)
                 goToChildProfilePage = true
              
             }, label: {
@@ -201,6 +203,7 @@ struct childCard: View{
             
 
             NavigationLink(destination: ChildProfilePage(currentChild: child, currentParentid: self.authViewModel.currentUser?.userID ?? "", contractViewModel: currentContract, result: removeZero(pointArray: result)), isActive: $goToChildProfilePage){
+
 
                 EmptyView()
             }

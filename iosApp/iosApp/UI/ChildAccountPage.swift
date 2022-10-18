@@ -19,13 +19,6 @@ struct ChildAccountPage: View {
     var selectedChild: Child?
     var result: [Int]
     
-    @State var isAddDialogShow = false
-    @State var isDeleteDialogShow = false
-    @State var eventList:[RandomItem] = [RandomItem(title: "test")]
-    @State var curDelItem: RandomItem = RandomItem(title: "")
-    @State var goToAddContract = false
-    @State var goToChildQRCodePage = false
-    
     @State var isPresentSheet: Bool = false
     @State var newDateOfBirth: Date?
     @State var newUserName: String = ""
@@ -36,6 +29,8 @@ struct ChildAccountPage: View {
     @EnvironmentObject var childUserEditModel : editUserInfoModel
     @EnvironmentObject var childAuthViewModel : ChildAuthViewModel
     
+    
+    @EnvironmentObject var assignFinishChoresModel : AssignChoreModel
     
     
     var body: some View {
@@ -92,9 +87,6 @@ struct ChildAccountPage: View {
                                         
                                     }.padding(.horizontal, 7)
                                 }
-                                
-                                
-                                
                             }.shadow(radius: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
                                 .frame(width: UIScreen.main.bounds.width*0.98, alignment: .center)
                         }.padding(.bottom, UIScreen.main.bounds.height*0.01).shadow(radius: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
@@ -108,15 +100,13 @@ struct ChildAccountPage: View {
                             }.padding(.bottom, -1)
                             
                             
-                            ForEach(self.selectedChild!.finishedChoreList,id:\.self){choretask in
-                                SingleFinishChore_ChildProfilePage(singlefinishchore : choretask)
+                            ForEach(self.assignFinishChoresModel.finishedChoreList,id:\.self){finishChore in
+                                SingleFinishChore_ChildProfilePage(singlefinishchore : finishChore)
                             }
-                            
                         }
                         
                         
                     }
-                    //                    .navigationBarTitle(self.selectedChild!.name, displayMode: .inline)
                     
                 }
                 
@@ -166,8 +156,7 @@ struct ChildAccountPage: View {
                             .sheet(isPresented: self.$childUserEditModel.isEditSheetPresent){
                                 VStack{
                                     Button(action: {
-                                        //                var createReward = RewardCreater()
-                                        //                rewardList.append(createReward)
+                                        
                                         showingLocalImage.toggle()
                                     }, label: {
                                         VStack{
@@ -210,10 +199,10 @@ struct ChildAccountPage: View {
                                     Button(action: {
                                         childUserEditModel.editChildInfo(parentID: String(self.childAuthViewModel.childSession.split(separator: " ")[0]), childID: self.childAuthViewModel.currentChild.userID, childName: newUserName, dateOfBirth: newDateOfBirth, theme: newTheme, imageData: userImage)
                                         
-//                                        childUserEditModel.fetchChildren()
-//                                        
-//                                        
-//                                        childUserEditModel.getNewestChildInfo(childID: self.childAuthViewModel.currentChild.userID)
+                                        //                                        childUserEditModel.fetchChildren()
+                                        //
+                                        //
+                                        //                                        childUserEditModel.getNewestChildInfo(childID: self.childAuthViewModel.currentChild.userID)
                                         self.childUserEditModel.isEditSheetPresent.toggle()
                                         
                                         
@@ -234,8 +223,23 @@ struct ChildAccountPage: View {
                                 }
                                 
                                 
-                                
                             }.frame(width: UIScreen.main.bounds.width, alignment: .center)
+                        
+                        
+                        
+                        VStack(alignment: .leading) {
+                            HStack{
+                                Image("ChoresIcon-ChildProfilePage")
+                                Text("Finished Chores")
+                                
+                            }.padding(.bottom, -1)
+                            
+                            
+                            ForEach(self.assignFinishChoresModel.userfinishedChoreList,id:\.self){choretask in
+                                SingleFinishChore_ChildProfilePage(singlefinishchore : choretask)
+                            }
+                            
+                        }
                         
                         VStack(alignment: .leading){
                             HStack{
@@ -271,14 +275,21 @@ struct ChildAccountPage: View {
                             }.padding(.bottom, -1)
                             
                             
-                            ForEach(self.childAuthViewModel.currentChild.finishedChoreList,id:\.self){choretask in
-                                SingleFinishChore_ChildProfilePage(singlefinishchore : choretask)
+                            ForEach(self.assignFinishChoresModel.userfinishedChoreList,id:\.self){finishChore in
+                                SingleFinishChore_ChildProfilePage(singlefinishchore : finishChore)
                             }
                             
                         }
                         
                         
                     }.navigationTitle(self.childAuthViewModel.currentChild.name)
+                        .toolbar{Menu {
+                            Button(action: {self.childAuthViewModel.signOut()
+                                self.assignFinishChoresModel.signOut()}, label: {
+                                    Text("sign out")
+                                })} label: {
+                                    Image("PlusIcon-ChildProfilePage")
+                                }}
                     
                 }
                 

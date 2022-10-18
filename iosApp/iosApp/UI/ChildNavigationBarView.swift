@@ -20,7 +20,6 @@ struct ChildNavigationBarView: View {
     @EnvironmentObject var childAuthViewModel: ChildAuthViewModel
     @EnvironmentObject var contractViewModel: ContractViewModel
     
-    
 
     @State private var selection: Tab = .exclusion
 
@@ -32,25 +31,6 @@ struct ChildNavigationBarView: View {
 
         }
     
-//    init(childList: [Child], currentChildID: String){
-//
-//        self.childrenlist = childList
-//        print(self.childrenlist.count)
-//        //self.currentChild = Child(userID: "", name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: "")
-//
-//
-//        for child in self.childrenlist{
-//            print("in")
-//            if child.userID == String(currentChildID){
-//                print("find the target")
-//                self.result = contractResultDic[child.userID] ?? [0]
-//                self.currentChild = Child(userID: child.userID, name: child.name, dateOfBirth: child.dateOfBirth, chooseTheme: child.chooseTheme, avatarPic: "")
-//                break;
-//            }
-//        }
-//
-//    }
-    
     var body: some View {
             NavigationView { //整体设置，下级页面不会在出现底部tabbar
                 TabView(selection: $selection) {
@@ -61,8 +41,8 @@ struct ChildNavigationBarView: View {
                             }
                             .tag(Tab.dashboard)
                     
-                        
-                    ChildAccountPage(result: removeZero(pointArray: result))
+
+                        ChildAccountPage(result: removeZero(pointArray: result))
                             .tabItem{//使用label 创建tabitem图文
                                 Label("Account", systemImage: "person")
                             }
