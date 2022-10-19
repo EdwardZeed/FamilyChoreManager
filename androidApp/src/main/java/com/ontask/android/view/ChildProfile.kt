@@ -1,4 +1,4 @@
-package com.ontask.android
+package com.ontask.android.view
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
