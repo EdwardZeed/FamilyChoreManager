@@ -1,7 +1,9 @@
 package com.ontask.android
 
 import android.app.DatePickerDialog
+import android.os.Bundle
 import android.widget.DatePicker
+import android.widget.Toast
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
@@ -35,18 +37,28 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.google.firebase.auth.FirebaseAuth
+import com.ontask.module.LoginModule
+import com.ontask.module.RegisterModule
 import java.util.*
 
+
 @Composable
-fun Register(navController: NavHostController) {
+fun Register(navController: NavHostController,auth: FirebaseAuth) {
+    var signup_email: String by remember { mutableStateOf("") }
+    var signup_password: String by remember { mutableStateOf("") }
+    var signup_username: String by remember { mutableStateOf("") }
+    var signup_birth: String by remember { mutableStateOf("") }
     var paddingState by remember { mutableStateOf(16.dp) }
     val padding by animateDpAsState(
         targetValue = paddingState,
         tween(durationMillis = 1000)
     )
+
     val context = LocalContext.current
 
     Box(modifier = Modifier
@@ -58,6 +70,7 @@ fun Register(navController: NavHostController) {
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxSize()
         ) {
+
             Text(
                 text = "Let's get started",
                 textAlign = TextAlign.Center,
@@ -83,10 +96,10 @@ fun Register(navController: NavHostController) {
             Modifier.padding(3.dp)
                 .fillMaxWidth(0.72f)
                 .apply {
-                    usernameInput(this, localFocusManager)
-                    registerEmailInput(this, localFocusManager)
-                    registerPasswordInput(this, localFocusManager)
-                    dateOfBirth(this, localFocusManager)
+                    signup_username = usernameInput(this, localFocusManager)
+                    signup_email = registerEmailInput(this, localFocusManager)
+                    signup_password = registerPasswordInput(this, localFocusManager)
+                    signup_birth = dateOfBirth(this, localFocusManager)
                 }
 
             Row(){
@@ -110,10 +123,37 @@ fun Register(navController: NavHostController) {
                 )
             }
 
-            // TODO: https://developer.android.com/jetpack/compose/layouts/material -- add shadow on the button?
+// TODO: https://developer.android.com/jetpack/compose/layouts/material -- add shadow on the button?
             Button(
                 onClick = {
-                    navController.navigate("dashboard_screen")
+                    val log = RegisterModule()
+                    var signup_boolean: Boolean? = null
+
+                    signup_boolean = log.final_check(signup_email,signup_password)
+                    if(signup_boolean == true){
+                        Toast.makeText(context, "Entering!", Toast.LENGTH_SHORT).show()
+                        auth.createUserWithEmailAndPassword(signup_email,signup_password).addOnCompleteListener { task->
+                            if(task.isSuccessful){
+                                Toast.makeText(context, "signup valid and correct!", Toast.LENGTH_SHORT).show()
+                                val user = auth.currentUser
+                                // Then move to the dashboard.
+                                navController.navigate("dashboard_screen")
+                            }
+                            else{
+                                Toast.makeText(context, "signup valid but failed!", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                    else if(log.authenticate_1(signup_email) == false && log.checkPassword(signup_password) == true){
+                        Toast.makeText(context, "signup email invalid!", Toast.LENGTH_SHORT).show()
+                    }
+                    else if(log.authenticate_1(signup_email) == true && log.checkPassword(signup_password) == false){
+                        Toast.makeText(context, "signup password invalid!", Toast.LENGTH_SHORT).show()
+                    }
+                    else if(log.authenticate_1(signup_email) == false && log.checkPassword(signup_password) == false){
+                        Toast.makeText(context, "signup email and password invalid!", Toast.LENGTH_SHORT).show()
+                    }
+
                 }, modifier = Modifier
                     .fillMaxWidth(0.3f)
                     .height(50.dp),
@@ -208,6 +248,7 @@ fun usernameInput(modifier: Modifier = Modifier, localFocusManager: FocusManager
     )
 
     return username
+
 }
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -246,6 +287,7 @@ fun registerEmailInput(modifier: Modifier = Modifier, localFocusManager: FocusMa
     )
 
     return email
+
 }
 
 @Composable
@@ -267,13 +309,11 @@ fun registerPasswordInput(modifier: Modifier, localFocusManager: FocusManager): 
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Done),
         keyboardActions = KeyboardActions(onDone = {localFocusManager.clearFocus()}),
         modifier = modifier,
-        leadingIcon = {
-            Icon(
-                imageVector = Icons.Filled.Lock,
-                contentDescription = "password leading icon",
-                tint = Color(0xff656565)
-            )
-        },
+        leadingIcon = { Icon(
+            imageVector = Icons.Filled.Lock,
+            contentDescription = "password leading icon",
+            tint = Color(0xff656565)
+        ) },
         trailingIcon = {
             IconButton(onClick = { passwordHidden = !passwordHidden }) {
                 val visibilityIcon = if (passwordHidden) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
@@ -362,3 +402,4 @@ fun dateOfBirth(modifier: Modifier, localFocusManager: FocusManager): String {
 
     return mDate.value
 }
+

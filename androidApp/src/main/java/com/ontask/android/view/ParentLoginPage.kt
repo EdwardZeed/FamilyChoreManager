@@ -1,5 +1,7 @@
 package com.ontask.android
 
+import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
@@ -36,18 +38,72 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.core.*
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.*
+import androidx.compose.foundation.text.ClickableText
+import androidx.compose.material.*
+import androidx.compose.material.icons.*
+import androidx.compose.material.icons.filled.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.draw.*
+import androidx.compose.ui.focus.*
+import androidx.compose.ui.graphics.*
+import androidx.compose.ui.graphics.painter.*
+import androidx.compose.ui.platform.*
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.*
+import androidx.constraintlayout.compose.*
 import androidx.navigation.NavHostController
 
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.rememberNavController
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
+import com.ontask.module.LoginModule
+
+
 @Composable
-fun parentLoginPage(navController: NavHostController) {
+fun parentLoginPage(navController: NavHostController,viewModel: LoginScreenViewModel = viewModel(), auth: FirebaseAuth) {
+
+    val context = LocalContext.current
+    val token = stringResource(R.string.web_client_id)
+
+
+    val launcher = rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) {
+        val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
+        try {
+            val account = task.getResult(ApiException::class.java)!!
+            val credential = GoogleAuthProvider.getCredential(account.idToken!!, null)
+            viewModel.signWithGoogleCredential(credential,navController)
+        } catch (e: ApiException) {
+            Log.w("TAG", "Google sign in failed", e)
+        }
+    }
+
+
+    var login_username: String by remember { mutableStateOf("") }
+    var login_password: String by remember { mutableStateOf("") }
     var paddingState by remember { mutableStateOf(16.dp) }
     val padding by animateDpAsState(
         targetValue = paddingState,
         tween(durationMillis = 1000)
     )
-    val context = LocalContext.current
+
 
     Box(modifier = Modifier
         .fillMaxSize()
@@ -119,8 +175,8 @@ fun parentLoginPage(navController: NavHostController) {
                     }
                 }
                 .apply {
-                    emailInput(this, localFocusManager)
-                    passwordInput(this, localFocusManager)
+                    login_username = emailInput(this, localFocusManager)
+                    login_password = passwordInput(this, localFocusManager)
                 }
 
             ClickableText(
@@ -137,7 +193,35 @@ fun parentLoginPage(navController: NavHostController) {
 
             Button(
                 onClick = {
-                    navController.navigate("dashboard_screen")
+                    val log = LoginModule()
+                    var login_boolean: Boolean? = null
+                    login_boolean = log.final_check(login_username,login_password)
+
+                    if(login_boolean == true){
+                        auth.signInWithEmailAndPassword(login_username,login_password).addOnCompleteListener { task->
+                            if(task.isSuccessful){
+                                Toast.makeText(context, "login valid and correct!", Toast.LENGTH_SHORT).show()
+                                val user = auth.currentUser
+                                // Then move to the dashboard.
+                                navController.navigate("dashboard_screen")
+                            }
+                            else{
+                                Toast.makeText(context, "login valid but failed!", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+
+                    }
+                    else if(log.authenticate_1(login_username) == true && log.checkPassword(login_password)==false){
+                        Toast.makeText(context, "login password invalid!", Toast.LENGTH_SHORT).show()
+                    }
+                    else if(log.authenticate_1(login_username) == false && log.checkPassword(login_password)==true){
+                        Toast.makeText(context, "login username invalid!", Toast.LENGTH_SHORT).show()
+                    }
+                    else if(log.authenticate_1(login_username) == false && log.checkPassword(login_password)==false){
+                        Toast.makeText(context, "login both invalid!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "password length: " + login_password.length, Toast.LENGTH_SHORT).show()
+                    }
+
                 },
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = Color(0.41f, 0.62f, 0.93f),
@@ -166,6 +250,13 @@ fun parentLoginPage(navController: NavHostController) {
                     elevation = null,
                     onClick = {
                         Toast.makeText(context, "This button should redirect the user to a Google login page", Toast.LENGTH_SHORT).show()
+                        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                            .requestIdToken(token)
+                            .requestEmail()
+                            .build()
+
+                        val googleSignInClient = GoogleSignIn.getClient(context, gso)
+                        launcher.launch(googleSignInClient.signInIntent)
                     }
                 ) {
                     Image(
@@ -216,6 +307,7 @@ fun emailInput(modifier: Modifier = Modifier, localFocusManager: FocusManager): 
             focusedBorderColor = Color(0xff656565),
             unfocusedBorderColor = Color(0xff989898)
         )
+
     )
 
     return email
@@ -226,8 +318,7 @@ fun passwordInput(modifier: Modifier, loaclFoucsManager: FocusManager): String{
     var password by remember { mutableStateOf("") }
     var passwordHidden by remember { mutableStateOf(true) }
 
-    OutlinedTextField(
-        value = password,
+    OutlinedTextField(value = password,
         onValueChange = { password = it },
         label = { Text(text = "Password") },
         visualTransformation = if (passwordHidden) PasswordVisualTransformation() else VisualTransformation.None,
@@ -239,8 +330,7 @@ fun passwordInput(modifier: Modifier, loaclFoucsManager: FocusManager): String{
                 imageVector = Icons.Filled.Lock,
                 contentDescription = "password leading icon",
                 tint = Color(0xff656565)
-            )
-        },
+            ) },
         trailingIcon = {
             IconButton(onClick = { passwordHidden = !passwordHidden }) {
                 val visibilityIcon =
@@ -254,6 +344,7 @@ fun passwordInput(modifier: Modifier, loaclFoucsManager: FocusManager): String{
             focusedBorderColor = Color(0xff656565),
             unfocusedBorderColor = Color(0xff989898)
         )
+
     )
 
     return password
