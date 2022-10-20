@@ -2,7 +2,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     id ("kotlin-android-extensions")
-
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -48,6 +48,9 @@ dependencies {
     implementation("com.google.firebase:firebase-auth-ktx:21.0.8")
     implementation("com.google.android.gms:play-services-auth:20.3.0")
 
+    implementation(platform("com.google.firebase:firebase-bom:31.0.0"))
+    implementation("com.google.firebase:firebase-firestore-ktx:24.4.0")
+    implementation("com.google.firebase:firebase-analytics-ktx")
 
     debugImplementation("androidx.compose.ui:ui-tooling:1.2.1")
     debugImplementation("androidx.compose.ui:ui-test-manifest:1.1.0-beta01")

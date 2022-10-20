@@ -1,6 +1,8 @@
 package com.ontask.android
 
 import android.app.DatePickerDialog
+import android.content.ContentValues.TAG
+import android.util.Log
 import android.widget.DatePicker
 import android.widget.Toast
 import androidx.compose.animation.core.animateDpAsState
@@ -40,6 +42,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.ontask.module.RegisterModule
 import java.util.*
 
@@ -132,7 +136,24 @@ fun Register(navController: NavHostController,auth: FirebaseAuth) {
                         auth.createUserWithEmailAndPassword(signup_email,signup_password).addOnCompleteListener { task->
                             if(task.isSuccessful){
                                 Toast.makeText(context, "signup valid and correct!", Toast.LENGTH_SHORT).show()
-                                val user = auth.currentUser
+                                val user = auth.currentUser // get current user
+                                // add user to firestore database
+
+                                val userInfo = hashMapOf(
+                                    "email" to signup_email,
+                                    "name" to signup_username,
+                                    "userID" to user,
+                                    "dateOfBirth" to signup_birth
+                                )
+
+                                // TODO: this crashes the application but idk why
+                                val db = Firebase.firestore
+                                db.collection("users")
+                                    .add(userInfo)
+                                    .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }
+                                    .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
+                                Toast.makeText(context, "signup valid and correct! database updated", Toast.LENGTH_SHORT).show()
+
                                 // Then move to the dashboard.
                                 navController.navigate("dashboard_screen")
                             }
