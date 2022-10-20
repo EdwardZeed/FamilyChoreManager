@@ -1,7 +1,6 @@
 package com.ontask.android
 
 import android.app.DatePickerDialog
-import android.os.Bundle
 import android.widget.DatePicker
 import android.widget.Toast
 import androidx.compose.animation.core.animateDpAsState
@@ -37,12 +36,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.google.firebase.auth.FirebaseAuth
-import com.ontask.module.LoginModule
 import com.ontask.module.RegisterModule
 import java.util.*
 
@@ -230,7 +227,7 @@ fun usernameInput(modifier: Modifier = Modifier, localFocusManager: FocusManager
             )
         },
         singleLine = true,
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone, imeAction = ImeAction.Next),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
         keyboardActions = KeyboardActions(onNext = { localFocusManager.moveFocus(FocusDirection.Down) }),
         modifier = modifier,
         leadingIcon = {
@@ -269,7 +266,7 @@ fun registerEmailInput(modifier: Modifier = Modifier, localFocusManager: FocusMa
             )
         },
         singleLine = true,
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone, imeAction = ImeAction.Next),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
         keyboardActions = KeyboardActions(onNext = { localFocusManager.moveFocus(FocusDirection.Down) }),
         modifier = modifier,
         leadingIcon = {
