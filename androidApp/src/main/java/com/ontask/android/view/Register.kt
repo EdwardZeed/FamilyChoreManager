@@ -142,14 +142,14 @@ fun Register(navController: NavHostController,auth: FirebaseAuth) {
                                 val userInfo = hashMapOf(
                                     "email" to signup_email,
                                     "name" to signup_username,
-                                    "userID" to user,
+                                    "userID" to (user?.getUid() ?: ""),
                                     "dateOfBirth" to signup_birth
                                 )
 
-                                // TODO: this crashes the application but idk why
                                 val db = Firebase.firestore
                                 db.collection("users")
-                                    .add(userInfo)
+                                    .document((user?.getUid() ?: "").toString())
+                                    .set(userInfo)
                                     .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }
                                     .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
                                 Toast.makeText(context, "signup valid and correct! database updated", Toast.LENGTH_SHORT).show()
