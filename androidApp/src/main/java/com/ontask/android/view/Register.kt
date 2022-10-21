@@ -49,7 +49,7 @@ import java.util.*
 
 
 @Composable
-fun Register(navController: NavHostController,auth: FirebaseAuth) {
+fun Register(navController: NavHostController, auth: FirebaseAuth) {
     var signup_email: String by remember { mutableStateOf("") }
     var signup_password: String by remember { mutableStateOf("") }
     var signup_username: String by remember { mutableStateOf("") }
