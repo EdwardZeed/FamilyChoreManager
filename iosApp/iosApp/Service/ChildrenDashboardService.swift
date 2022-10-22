@@ -7,7 +7,8 @@
 //
 
 import Foundation
-import Firebase
+import FirebaseAuth
+import FirebaseFirestore
 import shared
 import SwiftUI
 
@@ -46,7 +47,7 @@ struct ChildrenDashBoardService{
     
     func listenChildren(viewModel: ChildAuthViewModel, currentUserID : String){
         //var childID : String = String(currentUserID.split(separator: " ")[0])
-        if currentUserID == ""{
+        if currentUserID == "nil nil"{
             return
         }
         let parentID : String = String(currentUserID.split(separator: " ")[1])

@@ -8,7 +8,9 @@
 
 import Foundation
 import SwiftUI
-import Firebase
+import FirebaseAuth
+import FirebaseCore
+import FirebaseFirestore
 import GoogleSignIn
 import shared
 import CryptoKit
@@ -41,6 +43,7 @@ class AuthViewModel: ObservableObject{
     @Published var logged = true
     @Published var email = ""
     @State var manager = LoginManager()
+    @AppStorage("childSession") var childSession = ""
     
     
     
@@ -68,7 +71,9 @@ class AuthViewModel: ObservableObject{
                 self.reload { success in
                     if !success{
                         print("DEBUG: login failed")
+                        
                     }
+                    self.childSession = "nil nil"
                 }
                 
                
@@ -116,7 +121,9 @@ class AuthViewModel: ObservableObject{
                         print("DEBUG: registring for third party google")
                         self.registerForThirdparty(email: user.email ?? "", name: user.displayName ?? "", userId: user.uid)
                         self.fetchUser()
+                        
                     }
+                    self.childSession = "nil nil"
                 }
             }
             
@@ -167,7 +174,9 @@ class AuthViewModel: ObservableObject{
                                     print("DEBUG: registring for third party google")
                                     self.registerForThirdparty(email: user.email ?? "", name: user.displayName ?? "", userId: user.uid)
                                     self.fetchUser()
+                                    
                                 }
+                                self.childSession = "nil nil"
                             }
                         }
                         
@@ -213,7 +222,9 @@ class AuthViewModel: ObservableObject{
                     let email: String = credential.email ?? ""
                     self.registerForThirdparty(email: email, name: fullname, userId: user.uid)
                     self.fetchUser()
+                  
                 }
+                self.childSession = "nil nil"
             }
         }
     }

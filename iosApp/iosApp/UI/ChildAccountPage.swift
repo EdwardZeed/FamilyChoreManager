@@ -109,9 +109,10 @@ struct ChildAccountPage: View {
                     }
                     
                 }
-                
+                .background(Image("Background").ignoresSafeArea().opacity(0.2))
             }
             .navigationBarTitle(self.selectedChild!.name, displayMode: .inline)
+            
         }
         else{
             NavigationView {
@@ -227,19 +228,7 @@ struct ChildAccountPage: View {
                         
                         
                         
-                        VStack(alignment: .leading) {
-                            HStack{
-                                Image("ChoresIcon-ChildProfilePage")
-                                Text("Finished Chores")
-                                
-                            }.padding(.bottom, -1)
-                            
-                            
-                            ForEach(self.assignFinishChoresModel.userfinishedChoreList,id:\.self){choretask in
-                                SingleFinishChore_ChildProfilePage(singlefinishchore : choretask)
-                            }
-                            
-                        }
+                        
                         
                         VStack(alignment: .leading){
                             HStack{
@@ -292,8 +281,9 @@ struct ChildAccountPage: View {
                                 }}
                     
                 }
-                
+                .background(Image("Background").ignoresSafeArea().opacity(0.2))
             }
+            
         }
         
     }

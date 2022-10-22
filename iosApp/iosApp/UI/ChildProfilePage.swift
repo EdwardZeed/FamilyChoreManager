@@ -128,7 +128,9 @@ struct ChildProfilePage: View {
             }.frame(width: UIScreen.main.bounds.width, alignment: .center)
             
             
-        }.PopUpWindow(currentChildID: currentChild.userID, isPresented: $isAddDialogShow) { item in
+        }
+        .background(Image("Background").ignoresSafeArea().opacity(0.2))
+        .PopUpWindow(currentChildID: currentChild.userID, isPresented: $isAddDialogShow) { item in
             if(!item.isEmpty) {
                 eventList.append(RandomItem(title: item))
             }
@@ -154,13 +156,13 @@ struct ChildProfilePage: View {
                 
             }
             NavigationLink(isActive: $goToChildQRCodePage) {
-                ChildQRCodePage(child: self.childAuthViewModel.currentChild)
+                ChildQRCodePage(child: self.currentChild)
             } label: {
                 EmptyView()
             }
         
             NavigationLink(isActive: $goToAddContract) {
-                SignContractPage(child: self.childAuthViewModel.currentChild)
+                SignContractPage(child: self.currentChild)
             } label: {
                 EmptyView()
             }

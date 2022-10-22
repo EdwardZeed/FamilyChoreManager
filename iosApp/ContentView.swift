@@ -14,11 +14,11 @@ import AuthenticationServices
 struct ContentView: View{
     @EnvironmentObject var authViewModel: AuthViewModel
     @EnvironmentObject var childAuthViewModel: ChildAuthViewModel
-    @AppStorage("childSession") var childSession = ""
+    @AppStorage("childSession") var childSession = " "
     
     var body: some View{
         if authViewModel.userSession == nil{
-            if self.childSession != ""{
+            if self.childSession != "nil nil"{
                 ChildNavigationBarView()
             }else{
                 ParentLoginPage()

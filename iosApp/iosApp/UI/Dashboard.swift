@@ -38,7 +38,16 @@ struct DashBoardPage: View {
                         HStack{
                             
                             HStack{
-                                UserPhoto()
+                                if self.authViewModel.currentUser?.avatarPic != nil{
+                                    KFImage(URL(string: self.authViewModel.currentUser!.avatarPic!))
+                                        .resizable()
+                                        .frame(width: 80, height: 80, alignment: .center)
+                                        .clipShape(Circle())
+                                        .aspectRatio(contentMode: .fit)
+                                }
+                                else{
+                                    UserPhoto()
+                                }
                                 Message_And_Name(username: authViewModel.currentUser?.name ?? "")
                                 
                             }.frame(width: UIScreen.main.bounds.width*0.85, alignment: .leading)
@@ -229,7 +238,7 @@ struct Title_and_home_Page: View{
 
 
 struct Button_Label: View{
-    var currentChild : Child
+    @State var currentChild : Child
     var contractResultDic: [String: Array<Int>] = [:]
     var result: [Int] = []
     init(currentChild: Child, contractResultDic: [String: Array<Int>]) {
@@ -248,8 +257,6 @@ struct Button_Label: View{
                     .frame(width: 80, height: 80, alignment: .center)
                     .clipShape(Circle())
                     .aspectRatio(contentMode: .fit)
-                    
-                    
             }
             else{
                 ZStack{

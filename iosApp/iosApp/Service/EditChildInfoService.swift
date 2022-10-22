@@ -66,7 +66,7 @@ struct EditChildInfoService{
                                     print(uid)
                                     print(childID)
                                     print(newData)
-                                    try db.collection("users").document(uid!).collection("children").document(childID).setData(from: newData, merge: true)
+                                    try db.collection("users").document(uid!).collection("children").document(childID).setData(newData, merge: true)
                                     
                                     
                                 }catch{

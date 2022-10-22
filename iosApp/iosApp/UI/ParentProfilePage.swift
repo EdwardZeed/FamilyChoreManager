@@ -39,7 +39,7 @@ struct ParentProfilePage: View {
                         .padding(.top, 4)
                         
                         Button(action: {self.authViewModel.isEditSheetPresent.toggle()
-
+                            
                         }, label: {
                             Text("Edit profile").foregroundColor(Color("AdaptiveColorForText"))
                                 .frame(width: UIScreen.main.bounds.width*0.9, height: 27)
@@ -55,7 +55,7 @@ struct ParentProfilePage: View {
                         //                display all chores
                         LazyVStack {
                             ForEach(choreViewModel.chores, id: \.self){chore in
-
+                                
                                 ChoreCard(chore: chore)
                                     .frame(width: UIScreen.main.bounds.width*0.95, height: UIScreen.main.bounds.width*0.3)
                                     .background(Color("AdaptiveColorForBackground"))
@@ -66,7 +66,10 @@ struct ParentProfilePage: View {
                             }
                         }
                     }
-                }.navigationTitle(authViewModel.currentUser?.name ?? "")
+
+                }
+                .background(Image("Background").ignoresSafeArea().opacity(0.2))
+                .navigationTitle(authViewModel.currentUser?.name ?? "")
                     .toolbar{Menu {
                         Button(action: { authViewModel.signOut()}, label: {
                             Text("sign out")
