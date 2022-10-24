@@ -21,11 +21,15 @@ struct AssignChoreService{
         //        let path = "choreImages/\(fileName).jpg"
         //        let ref = Storage.storage().reference().child(path)
         let uid = Auth.auth().currentUser?.uid
-        let dummyDate = "fake date"
+//        let dummyDate = "fake date"
+        let date = Date.now
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/YYYY"
+        let now = dateFormatter.string(from: date)
         
         let assignChoreDocument = Firestore.firestore().collection("users").document(uid!).collection("children").document(currentChildID).collection("finishedChore")
         
-        let newAssignedChoreData = ["name": choreName, "childID": currentChildID, "choreImg": imageStringData, "point":point, "finishedDate": dummyDate] as [String : Any]
+        let newAssignedChoreData = ["name": choreName, "childID": currentChildID, "choreImg": imageStringData, "point":point, "finishedDate": now] as [String : Any]
         
         Firestore.firestore().collection("users").document(uid!).collection("children").document(currentChildID).collection("finishedChore").addDocument(data: newAssignedChoreData){ error in
             if let error = error {
@@ -64,8 +68,9 @@ struct AssignChoreService{
                 let childId = doc["childID"] as? String ?? ""
                 let point = doc["point"] as? Int ?? 0
                 let choreImgString = doc["choreImg"] as? String ?? ""
+                let date = doc["finishedDate"] as? String ?? ""
                 
-                let singleFinishChore = FinishedChore(choreID: doc.documentID , name: choreName, finishedDate: "fake date", point: Int32(point), choreImg: choreImgString)
+                let singleFinishChore = FinishedChore(choreID: doc.documentID , name: choreName, finishedDate: date, point: Int32(point), choreImg: choreImgString)
 
                 finishedChoreResult.append(singleFinishChore)
             })
