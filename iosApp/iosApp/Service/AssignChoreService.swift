@@ -14,6 +14,13 @@ import shared
 import Kingfisher
 
 struct AssignChoreService{
+    func currentTime() -> String {
+            let date = Date()
+            let timeFormatter = DateFormatter()
+            timeFormatter.dateFormat = "yyyy-MM-dd"
+            return timeFormatter.string(from: date)
+        }
+
     
     func AssignChore(currentChildID: String, choreName: String, imageStringData: String , point: Int, completion: @escaping (Bool, [FinishedChore]) -> Void){
         
@@ -25,7 +32,7 @@ struct AssignChoreService{
         let date = Date.now
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/YYYY"
-        let now = dateFormatter.string(from: date)
+        let now = currentTime()
         
         let assignChoreDocument = Firestore.firestore().collection("users").document(uid!).collection("children").document(currentChildID).collection("finishedChore")
         
@@ -93,8 +100,9 @@ struct AssignChoreService{
                 let childId = doc["childID"] as? String ?? ""
                 let point = doc["point"] as? Int ?? 0
                 let choreImgString = doc["choreImg"] as? String ?? ""
+                let date = doc["finishedDate"] as? String ?? ""
                 
-                let singleFinishChore = FinishedChore(choreID: doc.documentID , name: choreName, finishedDate: "fake date", point: Int32(point), choreImg: choreImgString)
+                let singleFinishChore = FinishedChore(choreID: doc.documentID , name: choreName, finishedDate: date, point: Int32(point), choreImg: choreImgString)
 
                 finishedChoreResult.append(singleFinishChore)
             })

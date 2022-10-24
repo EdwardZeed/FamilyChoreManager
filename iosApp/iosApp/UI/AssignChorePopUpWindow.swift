@@ -71,6 +71,7 @@ struct AssignChorePopUpWindow: View {
                                 if(i.achievement.points > 0){
                                     self.assignFinishChoresModel.assigneFinishdChore(currentChildID: currentChildID, choreName: i.name , StringImageData: i.iconImage , selectPoint: Int(i.achievement.points))
                                 }
+                                i.achievement.points = 0
                             }
                             withAnimation(.spring()){
                                 isPresented.toggle()
