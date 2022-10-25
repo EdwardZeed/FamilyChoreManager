@@ -48,7 +48,7 @@ struct AssignChoreService{
                 return
             }
             else{
-                print("successfully assign finished chore tp this child")
+                print("DEBUG: successfully assign finished chore tp this child")
                 self.fetchAssignedChores(currentChildID: currentChildID) { result in
                     completion(true, result)
                 }
@@ -56,6 +56,18 @@ struct AssignChoreService{
             }
             
         }
+        
+        Firestore.firestore().collection("users").document(uid!).collection("children").document(currentChildID).getDocument { snapshot, error in
+            if let error = error{
+                return
+            }
+            else{
+                guard let data = snapshot?.data() else{return}
+                var points = data["points"] as? Int ?? 0
+                Firestore.firestore().collection("users").document(uid!).collection("children").document(currentChildID).setData(["points": points+point], merge: true)
+            }
+        }
+        
     }
     
     
@@ -112,5 +124,7 @@ struct AssignChoreService{
         
         
     }
+    
+    
     
 }

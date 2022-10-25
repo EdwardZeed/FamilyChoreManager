@@ -19,10 +19,11 @@ struct DashBoardPage: View {
     @State var goToParentProfilePage = false
     @EnvironmentObject var contractViewModel:ContractViewModel
     @EnvironmentObject var authViewModel: AuthViewModel
-    @State var currentSelectChild: Child = Child(userID: "1", name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: "")
+    @EnvironmentObject var choreViewModel: ChoreViewModel
+    @EnvironmentObject var addChildViewModel: AddChildViewModel
+    @State var currentSelectChild: Child = Child(userID: "1", name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: "", points: 0)
     @State var currentParent: Parent = Parent(userID: "", name: "", dateOfBirth: "", email: nil, chooseTheme: nil, avatarPic: nil)
     
-    @StateObject var addChildViewModel: AddChildViewModel = AddChildViewModel()
 
     
     var body: some View {
@@ -93,12 +94,16 @@ struct DashBoardPage: View {
                
             }.navigationBarHidden(true)
 
-        }.navigationBarBackButtonHidden(true)
+        }
+            .navigationBarBackButtonHidden(true)
             .navigationBarHidden(true)
             .environmentObject(addChildViewModel)
             .onAppear {
                 contractViewModel.setParentID(parentID: authViewModel.userSession?.uid ?? "Empty")
                 contractViewModel.getContractDetail(parentID: authViewModel.userSession?.uid ?? "Empty")
+                choreViewModel.relogin()
+                addChildViewModel.relogin()
+                
             }
          
        
@@ -180,18 +185,20 @@ struct Plus_button_in_DashBoard: View{
 
 struct childCard: View{
     var child: Child
-    var currentContract: ContractViewModel
+//    var currentContract: ContractViewModel
     var contractResultDic: [String: Array<Int>] = [:]
     var result: [Int] = []
     @State var goToChildProfilePage = false
     
     @EnvironmentObject var authViewModel: AuthViewModel
     @EnvironmentObject var assignFinishChoresModel : AssignChoreModel
+    @EnvironmentObject var contractViewModel: ContractViewModel
     
     
     init(child: Child, currentContract: ContractViewModel){
         self.child = child
-        self.currentContract = currentContract
+//        self.currentContract = currentContract
+        
         self.contractResultDic = currentContract.contractResultDic
         self.result = contractResultDic[child.userID] ?? [0]
     }
@@ -211,7 +218,7 @@ struct childCard: View{
                 .shadow(color: Color.gray, radius: 10)
             
 
-            NavigationLink(destination: ChildProfilePage(currentChild: child, currentParentid: self.authViewModel.currentUser?.userID ?? "", contractViewModel: currentContract, result: removeZero(pointArray: result)), isActive: $goToChildProfilePage){
+            NavigationLink(destination: ChildProfilePage(currentChild: child, currentParentid: self.authViewModel.currentUser?.userID ?? "", contractViewModel: self.contractViewModel,  result: removeZero(pointArray: result)), isActive: $goToChildProfilePage){
 
 
                 EmptyView()
@@ -238,13 +245,16 @@ struct Title_and_home_Page: View{
 
 
 struct Button_Label: View{
+    @EnvironmentObject var contractViewModel: ContractViewModel
+    
     @State var currentChild : Child
     var contractResultDic: [String: Array<Int>] = [:]
     var result: [Int] = []
     init(currentChild: Child, contractResultDic: [String: Array<Int>]) {
         self.currentChild = currentChild
-        self.contractResultDic = contractResultDic
-        self.result = contractResultDic[currentChild.userID] ?? [0]
+//        self.contractResultDic = contractResultDic
+//        self.result = contractResultDic[currentChild.userID] ?? [0]
+//        self.result = self.contractViewModel.contractResultDic[currentChild.userID] ?? [0]
 
         
     }
@@ -283,7 +293,7 @@ struct Button_Label: View{
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 20, height: 20, alignment: .leading)
-                    Text("20")
+                    Text(String(self.currentChild.points))
                     Image("goal_Dashboard")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
@@ -293,7 +303,7 @@ struct Button_Label: View{
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 20, height: 20, alignment: .leading)
-                    Text("2/" + String(removeZero(pointArray: result).count))
+                    Text("2/" + String(removeZero(pointArray: self.contractViewModel.contractResultDic[self.currentChild.userID] ?? []).count))
                 }
             }
         }.frame( width: 300)

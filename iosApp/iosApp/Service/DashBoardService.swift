@@ -21,7 +21,7 @@ struct DashBoardService{
         dateFormatter.dateFormat = "dd/MM/YYYY"
         let birthday = dateFormatter.string(from: dateOfBirth!)
         
-        let data = ["name": name, "dateOfBirth": birthday, "theme": theme, "parentId": uid]
+        let data = ["name": name, "dateOfBirth": birthday, "theme": theme, "parentId": uid, "points": 0] as [String : Any]
         
         
         Firestore.firestore().collection("users").document(uid!).collection("children").addDocument(data: data as [String : Any]){ error in
@@ -49,9 +49,9 @@ struct DashBoardService{
     func fetchChildren(compeltion: @escaping([Child]) -> Void) {
         var result = [Child]()
         
-        let uid = Auth.auth().currentUser?.uid
+        guard let uid = Auth.auth().currentUser?.uid else{return}
         
-        Firestore.firestore().collection("users").document(uid!).collection("children").getDocuments { snapshot, error in
+        Firestore.firestore().collection("users").document(uid).collection("children").getDocuments { snapshot, error in
             if let error = error{
                 print("DEBUG: failed to fetch children. \(error.localizedDescription)")
                 return
@@ -62,8 +62,9 @@ struct DashBoardService{
                 let dateOfBirth = doc["dateOfBirth"] as? String ?? ""
                 let theme = Theme(name: doc["theme"] as? String ?? "")
                 let avatarPic = doc["avatarPic"] as? String? ?? nil
+                let points = doc["points"] as? Int32 ?? 0
                 
-                let child = Child(userID: doc.documentID, name: name, dateOfBirth: dateOfBirth, chooseTheme: theme, avatarPic: avatarPic)
+                let child = Child(userID: doc.documentID, name: name, dateOfBirth: dateOfBirth, chooseTheme: theme, avatarPic: avatarPic, points: points)
 
 
                 result.append(child)
@@ -76,9 +77,9 @@ struct DashBoardService{
     }
     
     func listenChildren(viewModel: AddChildViewModel){
-        let uid = Auth.auth().currentUser?.uid
+        guard let uid = Auth.auth().currentUser?.uid else {return}
         
-        Firestore.firestore().collection("users").document(uid!).collection("children").addSnapshotListener { snapshot, error in
+        Firestore.firestore().collection("users").document(uid).collection("children").addSnapshotListener { snapshot, error in
             guard let snapshot = snapshot else {return}
             if let error = error {
                 print("DEBUG: failed to fetch children. \(error.localizedDescription)")

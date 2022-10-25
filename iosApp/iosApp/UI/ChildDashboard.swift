@@ -19,7 +19,7 @@ struct ChildDashBoardPage: View {
     
     @State var goToChildProfilePage = false
     
-    @State var currentSelectChild: Child = Child(userID: "-1", name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: "")
+    @State var currentSelectChild: Child = Child(userID: "-1", name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: "", points: 0)
     @EnvironmentObject var childAuthViewModel: ChildAuthViewModel
     @EnvironmentObject var contractViewModel: ContractViewModel
 

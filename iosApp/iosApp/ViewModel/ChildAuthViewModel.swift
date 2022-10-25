@@ -15,7 +15,7 @@ import SwiftUI
 class ChildAuthViewModel: ObservableObject{
     @Published var children = [Child]()
     @Published var success = false
-    @Published var currentChild: Child = Child(userID: "", name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: nil)
+    @Published var currentChild: Child = Child(userID: "", name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: nil, points: 0)
     
 //    @Published var childSession : String
     

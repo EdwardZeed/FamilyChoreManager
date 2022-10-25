@@ -60,11 +60,11 @@ struct ChildProfilePage: View {
                     
                     
                     Image("Point-ChildProfilePage")
-                    Text("25").padding(.leading, -20)
+                    Text(String(self.currentChild.points)).padding(.leading, -20)
                     Image("Goal-ChildProfilePage")
                     Text(String(result[result.count - 1])).padding(.leading, -20)
-                    Image(" fIcon-ChildProfilePage")
-                    Text("2/" + String(result.count)).padding(.leading, -20)
+                    Image("RewardIcon-ChildProfilePage")
+                    Text("2/" + String(removeZero(pointArray: self.contractViewModel.contractResultDic[self.currentChild.userID] ?? []).count)).padding(.leading, -20)
                 }
                 
                 VStack(alignment: .leading){

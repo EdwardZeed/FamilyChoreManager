@@ -34,7 +34,7 @@ struct ChildrenDashBoardService{
                 let theme = Theme(name: doc["theme"] as? String ?? "")
                 let avatarPic = doc["avatarPic"] as? String? ?? nil
                 
-                let child = Child(userID: doc.documentID, name: name, dateOfBirth: dateOfBirth, chooseTheme: theme, avatarPic: avatarPic)
+                let child = Child(userID: doc.documentID, name: name, dateOfBirth: dateOfBirth, chooseTheme: theme, avatarPic: avatarPic, points: 0)
                 result.append(child)
                 print("Number of children in this parent is " + String(result.count))
                 
@@ -67,6 +67,7 @@ struct ChildrenDashBoardService{
                     viewModel.fetchChildren()
                 }
                 if changes.type == .modified{
+                    print("DEBUG: hey")
                     viewModel.fetchChildren()
                 }
             }

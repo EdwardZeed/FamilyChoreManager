@@ -11,12 +11,16 @@ class SignInWithAppleDelegates: NSObject {
     private weak var window: UIWindow!
     var currentNonce = ""
     var authViewModel: AuthViewModel
+    var choreViewModel: ChoreViewModel
+    var addChildViewModel: AddChildViewModel
     
-    init(window: UIWindow?, _ currentNonce: String, authViewModel: AuthViewModel,onSignedIn: @escaping (Result<String, Error>) -> ()) {
+    init(window: UIWindow?, _ currentNonce: String, authViewModel: AuthViewModel,choreViewModel: ChoreViewModel, addChildViewModel: AddChildViewModel,onSignedIn: @escaping (Result<String, Error>) -> ()) {
         self.window = window
         self.signInSucceeded = onSignedIn
         self.currentNonce = currentNonce
         self.authViewModel = authViewModel
+        self.choreViewModel = choreViewModel
+        self.addChildViewModel = addChildViewModel
     }
 }
 
@@ -40,7 +44,7 @@ extension SignInWithAppleDelegates: ASAuthorizationControllerDelegate {
         
         if let credential = authorization.credential as? ASAuthorizationAppleIDCredential{
                 
-            authViewModel.authenticateWithApple(credential: credential, currentNonce: currentNonce)
+            authViewModel.authenticateWithApple(credential: credential, currentNonce: currentNonce) 
         }
     }
     

@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftUI
+import Firebase
 import FirebaseAuth
 import FirebaseCore
 import FirebaseFirestore
@@ -86,6 +87,7 @@ class AuthViewModel: ObservableObject{
 
         // Create Google Sign In configuration object.
         let config = GIDConfiguration(clientID: clientID)
+        self.progressing = true
         
         GIDSignIn.sharedInstance.signIn(with: config, presenting: ApplicationUtil.rootViewController){user, error in
             if let error = error{
@@ -114,16 +116,18 @@ class AuthViewModel: ObservableObject{
                 print("DEBUG: login with google \(user.uid)")
                 
                 self.userSession = user
-                self.currentUser == nil
+                self.currentUser = nil
                 
                 self.reload { success in
                     if !success {
                         print("DEBUG: registring for third party google")
                         self.registerForThirdparty(email: user.email ?? "", name: user.displayName ?? "", userId: user.uid)
                         self.fetchUser()
-                        
+                        self.progressing = false
                     }
                     self.childSession = "nil nil"
+                    self.progressing = false
+                    
                 }
             }
             
@@ -131,8 +135,6 @@ class AuthViewModel: ObservableObject{
     }
     
     func loginWithFacebook() {
-
-        
         if logged{
             manager.logOut()
             self.email = ""
@@ -148,6 +150,8 @@ class AuthViewModel: ObservableObject{
                 if !result!.isCancelled{
                     self.logged = true
                     let request = GraphRequest(graphPath: "me", parameters: ["fields":"email"])
+                    self.progressing = true
+                    
                     request.start{(_, res, _) in
                         //it will return as dictionary
                         guard let profileData = res as? [String : Any] else {return}
@@ -177,6 +181,7 @@ class AuthViewModel: ObservableObject{
                                     
                                 }
                                 self.childSession = "nil nil"
+                                self.progressing = false
                             }
                         }
                         
@@ -201,6 +206,7 @@ class AuthViewModel: ObservableObject{
         }
         
         let firebaseCredential = OAuthProvider.credential(withProviderID: "apple.com", idToken: tokenString, rawNonce: currentNonce)
+        self.progressing = true
         
         Auth.auth().signIn(with: firebaseCredential){
             result, error in
@@ -222,9 +228,11 @@ class AuthViewModel: ObservableObject{
                     let email: String = credential.email ?? ""
                     self.registerForThirdparty(email: email, name: fullname, userId: user.uid)
                     self.fetchUser()
-                  
+                    
                 }
                 self.childSession = "nil nil"
+                self.progressing = false
+                
             }
         }
     }
@@ -349,7 +357,7 @@ class AuthViewModel: ObservableObject{
         }
     }
     
-    func editParentInfo(newName: String, newDateOfBirth: Date?, newAvatarPic: UIImage?){
+    func editParentInfo(newName: String, newDateOfBirth: Date?, newTheme: String,newAvatarPic: UIImage?){
         guard newName != "" else{return}
         
         guard let newDateOfBirth = newDateOfBirth else{return}
@@ -368,7 +376,7 @@ class AuthViewModel: ObservableObject{
         dateFormatter.dateFormat = "dd/MM/YYYY"
         let birthday = dateFormatter.string(from: newDateOfBirth)
         
-        service.updateUserInfo(currentParent: self.currentUser, newName: newName, newDateOfBirth: birthday, newAvatarPic: imageData) { parent in
+        service.updateUserInfo(currentParent: self.currentUser, newName: newName, newDateOfBirth: birthday, newTheme: newTheme, newAvatarPic: imageData) { parent in
             self.currentUser = parent
         }
     }

@@ -30,9 +30,9 @@ struct ParentProfilePage: View {
                         VStack {
                             
                             AvatorBar(numberOfChildren: $numberOfChildren, numberOfRelatives: $numberOfRelatives)
-                            Text("Date of Birth: 2002/07/05")
+                            Text("Date of Birth: \(self.authViewModel.currentUser?.dateOfBirth ?? "")")
                                 .frame(width: UIScreen.main.bounds.width*0.9, alignment: .leading)
-                            Text("Choosen theme: Marvel")
+                            Text("Choosen theme: \(self.authViewModel.currentUser?.chooseTheme?.name ?? "")")
                                 .frame(width: UIScreen.main.bounds.width*0.9, alignment: .leading)
                             
                         }
@@ -100,6 +100,7 @@ struct AvatorBar: View {
     @Binding var numberOfChildren: String
     @Binding var numberOfRelatives: String
     @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var addChildViewModel: AddChildViewModel
     
     var body: some View {
         HStack{
@@ -121,7 +122,7 @@ struct AvatorBar: View {
             HStack {
                 HStack{
                     Image("ChildrenNumberIcon")
-                    Text(numberOfChildren)
+                    Text(String(self.addChildViewModel.children.count))
                 }
                 .padding(.horizontal, 8)
                 HStack{

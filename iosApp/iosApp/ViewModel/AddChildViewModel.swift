@@ -56,4 +56,10 @@ class AddChildViewModel: ObservableObject{
         guard theme != nil else{return false}
         return true
     }
+    
+    func relogin(){
+        
+        self.fetchChildren()
+        self.service.listenChildren(viewModel: self)
+    }
 }

@@ -17,7 +17,7 @@ class editUserInfoModel: ObservableObject {
     
     
     let service = EditChildInfoService()
-    @Published var currentChild : Child = Child(userID: "", name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: "")
+    @Published var currentChild : Child = Child(userID: "", name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: "", points: 0)
     @Published var success = false
     @Published var children  = [Child]()
     
@@ -57,7 +57,7 @@ class editUserInfoModel: ObservableObject {
         thread1.async {
             for child in self.children{
                 if child.userID == childID{
-                    self.currentChild = Child(userID: child.userID, name: child.name, dateOfBirth: child.dateOfBirth, chooseTheme: child.chooseTheme, avatarPic: "")
+                    self.currentChild = Child(userID: child.userID, name: child.name, dateOfBirth: child.dateOfBirth, chooseTheme: child.chooseTheme, avatarPic: "", points: 0)
                 }
             }
         }

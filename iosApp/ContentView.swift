@@ -28,8 +28,7 @@ struct ContentView: View{
             }
         }
         else{
-            NavigationBarView(childList: [])
-
+            NavigationBarView()
         }
     }
 }

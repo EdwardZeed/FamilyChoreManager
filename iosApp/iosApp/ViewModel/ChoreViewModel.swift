@@ -38,5 +38,12 @@ class ChoreViewModel: ObservableObject{
             self.addChoreImageSuccess = success
         }
     }
+    
+    func relogin(){
+        service.fetchChores { result in
+            self.chores = result
+        }
+        service.listenChores(viewModel: self)
+    }
 
 }
