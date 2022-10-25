@@ -303,7 +303,12 @@ struct Button_Label: View{
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 20, height: 20, alignment: .leading)
-                    Text("2/" + String(removeZero(pointArray: self.contractViewModel.contractResultDic[self.currentChild.userID] ?? []).count))
+                    if self.contractViewModel.contractResultDic[self.currentChild.userID] == nil{
+                        Text("0/0")
+                    }
+                    else{
+                        Text("2/" + String(removeZero(pointArray: self.contractViewModel.contractResultDic[self.currentChild.userID] ?? []).count))
+                    }
                 }
             }
         }.frame( width: 300)

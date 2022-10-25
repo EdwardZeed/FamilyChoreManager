@@ -23,6 +23,7 @@ class editUserInfoModel: ObservableObject {
     
     @Published var finishedObtainNewestChildInfo : Bool = false
     @Published var isEditSheetPresent = false
+    @Published var processing = false
     
     let thread1 = DispatchQueue(label: "queue1 for fetching update child info")
     let thread2 = DispatchQueue(label: "queue3 for telling update child info complete")
@@ -34,9 +35,10 @@ class editUserInfoModel: ObservableObject {
             print("DEBUG: failed to turn image to data")
             return
         }
-        
+        self.processing = true
         service.updateChildInfo(parentID: parentID, childID: childID, childName: childName, dateOfBirth: dateOfBirth, theme: theme, imageData: childImageData){ success, result in
             self.success = success
+            self.processing = false
             if success {
                 print("DEBUG: successfully update")
                 return

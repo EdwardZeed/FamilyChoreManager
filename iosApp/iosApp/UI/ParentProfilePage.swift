@@ -82,18 +82,18 @@ struct ParentProfilePage: View {
     }
 }
 
-struct ParentProfilePage_Previews: PreviewProvider {
-    static var previews: some View {
-        let achievement = Achievement(points: 1, message: "free three")
-        let chore = ChoreTask(taskID: "0", name: "Make bed", description: "Make bed", achievement: achievement, iconImage: "BedIcon")
-        Group {
-            ParentProfilePage()
-                .preferredColorScheme(.light)
-            ParentProfilePage()
-                .preferredColorScheme(.dark)
-        }
-    }
-}
+//struct ParentProfilePage_Previews: PreviewProvider {
+//    static var previews: some View {
+//        let achievement = Achievement(points: 1, message: "free three")
+//        let chore = ChoreTask(taskID: "0", name: "Make bed", description: "Make bed", achievement: achievement, iconImage: "BedIcon")
+//        Group {
+//            ParentProfilePage()
+//                .preferredColorScheme(.light)
+//            ParentProfilePage()
+//                .preferredColorScheme(.dark)
+//        }
+//    }
+//}
 
 
 struct AvatorBar: View {
@@ -151,22 +151,22 @@ struct ChoreCard: View {
                 Text(chore.name)
                     .font(.title)
                     .fontWeight(.semibold)
-                
+                    .padding(.top)
+                Spacer()
                 HStack{
-                    Text(chore.achievement.message + ":")
-                    Text(String(chore.achievement.points))
+//                    Text(chore.achievement.message + ":")
+//                    Text(String(chore.achievement.points))
                     
                     //                                    Image("PointIcon")
                 }
                 
                 
-                Text("2022/8/31")
+                Text(chore.createdDate)
                     .frame(width: UIScreen.main.bounds.width*0.85 - 59,  alignment: .trailing)
+                    .padding(.bottom)
             }
             
         }
-//        .frame(width: UIScreen.main.bounds.width*0.9, alignment: .leading)
-//        .background(Rectangle().fill(Color("AdaptiveColorForBackground")).shadow(color: Color.gray, radius: 10))
         
     }
 }

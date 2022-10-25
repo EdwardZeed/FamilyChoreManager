@@ -16,6 +16,7 @@ class AddChildViewModel: ObservableObject{
    
     @Published var parents = [Parent]()
     @Published var success = false
+    @Published var processing = false
     
     @Published var nameValid: Float = 0
     @Published var namePrompt = ""
@@ -33,13 +34,14 @@ class AddChildViewModel: ObservableObject{
         if !checkValid(name: name, date: dateOfBirth, theme: theme){
             return
         }
-        
+        self.processing = true
         service.addChild(name: name, dateOfBirth: dateOfBirth, theme: theme) { success, result in
             self.success = success
             if success {
                 self.children = result
             }
             print("DEBUG: \(self.children)")
+            self.processing = false
         }
         
     }

@@ -265,9 +265,9 @@
 				2BDE71F128C38D4B005821C6 /* KeyboardExtension.swift */,
 				37FD897D28C3C22E00B5ABFE /* PopUpWindowModifier.swift */,
 				2B57827028D835E900EFBB1C /* ApplicationUtil.swift */,
-				2B57827F28E1A62B00EFBB1C /* SignInWithAppleDelegates.swift */,
 				2B57827B28E19BD500EFBB1C /* EnvironmentWindowKey.swift */,
 				05EE617028E1FFAD007C1354 /* AppleLoginUtil.swift */,
+				2B57827F28E1A62B00EFBB1C /* SignInWithAppleDelegates.swift */,
 				05386DB028F514B400A28BF9 /* ImagePicker.swift */,
 			);
 			path = Util;

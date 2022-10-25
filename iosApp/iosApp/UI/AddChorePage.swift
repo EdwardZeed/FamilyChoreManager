@@ -53,7 +53,8 @@ struct AddChorePage: View {
                             Text("Name: ")
                                 .fontWeight(.thin)
                         }.frame(width: UIScreen.main.bounds.width*0.9,alignment: .leading)
-                        TextField("  name", text: $choreName)
+                        TextField("name", text: $choreName)
+                            .padding()
                             .frame(width: UIScreen.main.bounds.width*0.9,
                                    height:UIScreen.main.bounds.height*0.05,alignment: .leading)
                             .border(Color.gray, width: 2)
@@ -111,6 +112,9 @@ struct AddChorePage: View {
                 }.frame(width: UIScreen.main.bounds.width)
             }.frame(width: UIScreen.main.bounds.width, alignment: .center)
             
+        }
+        .overlay{
+            ProgressSpinner()
         }
         .fullScreenCover(isPresented: $showingLocalImage, content: {
             ImagePicker(image: $choreImage)

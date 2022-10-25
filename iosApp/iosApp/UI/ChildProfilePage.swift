@@ -250,22 +250,22 @@ extension View{
 }
 
 
-
-struct ChildProfilePage_Previews: PreviewProvider {
-    static var previews: some View {
-        
-        //These are the dummy data of chore cards which assigned to the children
-        let achievement = Achievement(points: 3, message: "well done")
-        
-        var singleChore1 = ChoreTask(taskID: "1", name: "Make the bed", description: "None", achievement: achievement, iconImage: "BedIcon-ChildProfilePage")
-        var singleChore2 = ChoreTask(taskID: "2", name: "Sweep the floor", description: "None", achievement: achievement, iconImage: "broom")
-        var singleChore3 = ChoreTask(taskID: "3", name: "Wash the dishes", description: "None", achievement: achievement, iconImage: "WashDishes")
-        
-        
-        
-//        ChildProfilePage(finishChoreList: [])
-    }
-}
+//
+//struct ChildProfilePage_Previews: PreviewProvider {
+//    static var previews: some View {
+//        
+//        //These are the dummy data of chore cards which assigned to the children
+//        let achievement = Achievement(points: 3, message: "well done")
+//        
+//        var singleChore1 = ChoreTask(taskID: "1", name: "Make the bed", description: "None", achievement: achievement, iconImage: "BedIcon-ChildProfilePage")
+//        var singleChore2 = ChoreTask(taskID: "2", name: "Sweep the floor", description: "None", achievement: achievement, iconImage: "broom")
+//        var singleChore3 = ChoreTask(taskID: "3", name: "Wash the dishes", description: "None", achievement: achievement, iconImage: "WashDishes")
+//        
+//        
+//        
+////        ChildProfilePage(finishChoreList: [])
+//    }
+//}
 
 
 

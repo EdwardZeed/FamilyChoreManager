@@ -87,7 +87,6 @@ struct DashBoardService{
             
             snapshot.documentChanges.forEach { changes in
                 if changes.type == .added {
-                    print("DEBUG: detected child added")
                     viewModel.fetchChildren()
                 }
                 if changes.type == .removed {
