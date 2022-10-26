@@ -13,7 +13,7 @@ struct ChildNavigationBarView: View {
 
 //    var childrenlist = [Child]()
 //    var currentChildID  = ""
-    var currentChild = Child(userID: "", name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: "")
+    var currentChild = Child(userID: "", name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: "", points: 0)
     var result: [Int] = []
     var contractResultDic: [String: Array<Int>] = [:]
     

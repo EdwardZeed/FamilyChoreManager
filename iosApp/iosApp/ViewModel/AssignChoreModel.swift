@@ -7,8 +7,8 @@
 //
 
 import Foundation
-
-import Firebase
+import FirebaseAuth
+import FirebaseFirestore
 import shared
 
 
@@ -18,6 +18,7 @@ class AssignChoreModel: ObservableObject {
     @Published var finishedChoreList = [FinishedChore]()
     @Published var userfinishedChoreList = [FinishedChore]()
     @Published var success = false
+    @Published var points = [String: Int]()
     let service = AssignChoreService()
     
     

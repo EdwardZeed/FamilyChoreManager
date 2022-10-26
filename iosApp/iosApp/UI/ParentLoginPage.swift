@@ -61,7 +61,6 @@ struct ParentLoginPage: View {
     }
                 
 
-    
     var body: some View {
 
         NavigationView {
@@ -76,20 +75,10 @@ struct ParentLoginPage: View {
                 })
                 .sheet(isPresented: $isPresentingScanner){
                     self.scannerSheet
-                    
                 }
                 .frame(width: UIScreen.main.bounds.width*0.9, height: UIScreen.main.bounds.height*0.9, alignment: .topTrailing)
                 .zIndex(100)
 
-//                NavigationLink(destination: ChildLoginPage(), isActive: $goToScan){
-//                    EmptyView()
-//                }
-//                .navigationBarHidden(true)
-                
-//                NavigationLink(destination: ChildNavigationBarView(), isActive: $goToChildDashboard){
-//                    EmptyView()
-//                }
-//                .navigationBarHidden(true)
 
                 VStack {
 
@@ -117,15 +106,12 @@ struct ParentLoginPage: View {
                         contractViewModel.setParentID(parentID: authViewModel.userSession?.uid ?? "Empty UID")
                         authViewModel.loginWithEmail(email: email, password: password)
                         
-                        
                     },
                            label: {
                         Image("loginBtn")
                     })
                     .padding(.bottom, UIScreen.main.bounds.height*0.03)
 
-
-//                    var li = [child1, child2, child3, child4, child5]
 
                     Image("separateLine")
                         .padding(.bottom, UIScreen.main.bounds.height*0.03)
@@ -135,7 +121,6 @@ struct ParentLoginPage: View {
             }
             .background(Image("Background").ignoresSafeArea().opacity(0.2))
             .onTapGesture {
-                print("DEBUG: tapped")
                 hideKeyboard()
             }
 
@@ -144,28 +129,16 @@ struct ParentLoginPage: View {
 
 
     }
-    
-    
+
 }
-
-
-//struct ParentLoginPage_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ParentLoginPage()
-//    }
-//}
 
 
 
 struct ProfilePhoto: View {
     var body: some View {
         ZStack{
-            
-            
             Image("photoframe")
                 .frame(alignment: .center)
-            
-            
             Image("userPhoto")
                 .frame(alignment: .center)
         }
@@ -200,6 +173,8 @@ struct WelcomeAndSignUpText: View {
 struct ThirdPartyLogo: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     @EnvironmentObject var contractViewModel: ContractViewModel
+    @EnvironmentObject var choreViewModel: ChoreViewModel
+    @EnvironmentObject var addChildViewModel: AddChildViewModel
     @State private var signInWithAppleDelegates: SignInWithAppleDelegates! = nil
     @Environment(\.window) private var window: UIWindow?
     var body: some View {
@@ -209,12 +184,15 @@ struct ThirdPartyLogo: View {
             Button(action: {
                 showAppleLogin()
                 contractViewModel.setParentID(parentID: authViewModel.userSession?.uid ?? "Empty ID")
+                choreViewModel.relogin()
+                addChildViewModel.relogin()
             }, label: {Image("AppleLoginBtn")})
             
             Spacer()
             
             Button(action: {
                 authViewModel.loginWithGoogle()
+                
                 contractViewModel.setParentID(parentID: authViewModel.userSession?.uid ?? "Empty ID")
             }, label: {Image("GoogleLoginBtn")})
             Spacer()
@@ -246,10 +224,11 @@ struct ThirdPartyLogo: View {
 //    }
     
     func performSignIn(using requests: [ASAuthorizationRequest], currentNonce: String){
-        signInWithAppleDelegates = SignInWithAppleDelegates(window: window, currentNonce, authViewModel: authViewModel, onSignedIn: { result in
+        signInWithAppleDelegates = SignInWithAppleDelegates(window: window, currentNonce, authViewModel: authViewModel, choreViewModel: choreViewModel, addChildViewModel: addChildViewModel,onSignedIn: { result in
             switch result{
             case .success(let userId):
                 print("DEBUG: sign in succeed \(userId)")
+
             case .failure(let error):
                 print("DEBUG: sign in with apple error \(error.localizedDescription)")
                 print("DEBUG: \(error)")

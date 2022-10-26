@@ -60,11 +60,11 @@ struct ChildProfilePage: View {
                     
                     
                     Image("Point-ChildProfilePage")
-                    Text("25").padding(.leading, -20)
+                    Text(String(self.currentChild.points)).padding(.leading, -20)
                     Image("Goal-ChildProfilePage")
                     Text(String(result[result.count - 1])).padding(.leading, -20)
-                    Image(" fIcon-ChildProfilePage")
-                    Text("2/" + String(result.count)).padding(.leading, -20)
+                    Image("RewardIcon-ChildProfilePage")
+                    Text("2/" + String(removeZero(pointArray: self.contractViewModel.contractResultDic[self.currentChild.userID] ?? []).count)).padding(.leading, -20)
                 }
                 
                 VStack(alignment: .leading){
@@ -128,7 +128,9 @@ struct ChildProfilePage: View {
             }.frame(width: UIScreen.main.bounds.width, alignment: .center)
             
             
-        }.PopUpWindow(currentChildID: currentChild.userID, isPresented: $isAddDialogShow) { item in
+        }
+        .background(Image("Background").ignoresSafeArea().opacity(0.2))
+        .PopUpWindow(currentChildID: currentChild.userID, isPresented: $isAddDialogShow) { item in
             if(!item.isEmpty) {
                 eventList.append(RandomItem(title: item))
             }
@@ -154,13 +156,13 @@ struct ChildProfilePage: View {
                 
             }
             NavigationLink(isActive: $goToChildQRCodePage) {
-                ChildQRCodePage(child: self.childAuthViewModel.currentChild)
+                ChildQRCodePage(child: self.currentChild)
             } label: {
                 EmptyView()
             }
         
             NavigationLink(isActive: $goToAddContract) {
-                SignContractPage(child: self.childAuthViewModel.currentChild)
+                SignContractPage(child: self.currentChild)
             } label: {
                 EmptyView()
             }
@@ -248,22 +250,22 @@ extension View{
 }
 
 
-
-struct ChildProfilePage_Previews: PreviewProvider {
-    static var previews: some View {
-        
-        //These are the dummy data of chore cards which assigned to the children
-        let achievement = Achievement(points: 3, message: "well done")
-        
-        var singleChore1 = ChoreTask(taskID: "1", name: "Make the bed", description: "None", achievement: achievement, iconImage: "BedIcon-ChildProfilePage")
-        var singleChore2 = ChoreTask(taskID: "2", name: "Sweep the floor", description: "None", achievement: achievement, iconImage: "broom")
-        var singleChore3 = ChoreTask(taskID: "3", name: "Wash the dishes", description: "None", achievement: achievement, iconImage: "WashDishes")
-        
-        
-        
-//        ChildProfilePage(finishChoreList: [])
-    }
-}
+//
+//struct ChildProfilePage_Previews: PreviewProvider {
+//    static var previews: some View {
+//        
+//        //These are the dummy data of chore cards which assigned to the children
+//        let achievement = Achievement(points: 3, message: "well done")
+//        
+//        var singleChore1 = ChoreTask(taskID: "1", name: "Make the bed", description: "None", achievement: achievement, iconImage: "BedIcon-ChildProfilePage")
+//        var singleChore2 = ChoreTask(taskID: "2", name: "Sweep the floor", description: "None", achievement: achievement, iconImage: "broom")
+//        var singleChore3 = ChoreTask(taskID: "3", name: "Wash the dishes", description: "None", achievement: achievement, iconImage: "WashDishes")
+//        
+//        
+//        
+////        ChildProfilePage(finishChoreList: [])
+//    }
+//}
 
 
 

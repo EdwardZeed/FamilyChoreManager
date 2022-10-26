@@ -91,6 +91,9 @@ struct AddChildPage: View {
             }
             
         }
+        .overlay{
+            ProgressSpinner()
+        }
         .background(Image("Background").ignoresSafeArea().opacity(0.2).onTapGesture {
             hideKeyboard()
         })

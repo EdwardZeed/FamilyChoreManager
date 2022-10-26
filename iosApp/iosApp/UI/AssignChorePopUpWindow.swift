@@ -12,14 +12,6 @@ import shared
 import Kingfisher
 
 
-let achievement1 = Achievement(points: 1, message: "weel done")
-let achievement2 = Achievement(points: 2, message: "good")
-let achievement3 = Achievement(points: 3, message: "done")
-
-var singleChore4 = ChoreTask(taskID: "4", name: "Make the bed", description: "None", achievement: achievement1, iconImage: "BedIcon-ChildProfilePage")
-var singleChore5 = ChoreTask(taskID: "5", name: "Sweep the floor", description: "None", achievement: achievement2, iconImage: "broom")
-var singleChore6 = ChoreTask(taskID: "6", name: "Wash the dishes", description: "None", achievement: achievement3, iconImage: "WashDishes")
-
 
 struct AssignChorePopUpWindow: View {
     
@@ -71,6 +63,7 @@ struct AssignChorePopUpWindow: View {
                                 if(i.achievement.points > 0){
                                     self.assignFinishChoresModel.assigneFinishdChore(currentChildID: currentChildID, choreName: i.name , StringImageData: i.iconImage , selectPoint: Int(i.achievement.points))
                                 }
+                                i.achievement.points = 0
                             }
                             withAnimation(.spring()){
                                 isPresented.toggle()

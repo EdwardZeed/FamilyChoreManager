@@ -19,7 +19,7 @@ struct ChildDashBoardPage: View {
     
     @State var goToChildProfilePage = false
     
-    @State var currentSelectChild: Child = Child(userID: "-1", name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: "")
+    @State var currentSelectChild: Child = Child(userID: "-1", name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: "", points: 0)
     @EnvironmentObject var childAuthViewModel: ChildAuthViewModel
     @EnvironmentObject var contractViewModel: ContractViewModel
 
@@ -50,8 +50,9 @@ struct ChildDashBoardPage: View {
                                 }
                                 Message_And_Name(username: self.childAuthViewModel.currentChild.name)
                                 
-                            }.frame(width: UIScreen.main.bounds.width*0.85, alignment: .leading)
-                                .padding(.top, 3)
+                            }
+                            .frame(width: UIScreen.main.bounds.width*0.85, alignment: .leading)
+                            .padding(.top, 3)
                             
                         }
                         
@@ -59,13 +60,14 @@ struct ChildDashBoardPage: View {
                             
                             //Spacer(minLength: 50)
                             Title_and_home_Page().frame(width: UIScreen.main.bounds.width*0.95,alignment: .leading)
-                            ForEach(self.childAuthViewModel.children, id: \.self){child in
-
-                                childCardforChild(child: child, currentContract: contractViewModel)
-
-
+                            LazyVStack{
+                                ForEach(self.childAuthViewModel.children, id: \.self){child in
+                                    
+                                    childCardforChild(child: child, currentContract: contractViewModel)
+                                    
+                                    
+                                }
                             }
-                            
                         }
                         
                     }

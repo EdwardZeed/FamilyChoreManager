@@ -32,7 +32,7 @@ struct EditChildInfoService{
             uid = String(childSession.split(separator: " ")[1])
         }
         
-        var newChild = Child(userID: "", name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: "")
+        var newChild = Child(userID: "", name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: "", points: 0)
         
         
         ref.putData(imageData!, metadata: nil) { _, error in
@@ -66,13 +66,13 @@ struct EditChildInfoService{
                                     print(uid)
                                     print(childID)
                                     print(newData)
-                                    try db.collection("users").document(uid!).collection("children").document(childID).setData(from: newData, merge: true)
+                                    try db.collection("users").document(uid!).collection("children").document(childID).setData(newData, merge: true)
                                     
                                     
                                 }catch{
                                     print(error)
                                 }
-                                newChild = Child(userID: childID, name: childName, dateOfBirth: birthday, chooseTheme: Theme(name: theme), avatarPic: "aaa")
+                                newChild = Child(userID: childID, name: childName, dateOfBirth: birthday, chooseTheme: Theme(name: theme), avatarPic: "aaa", points: 0)
                                 
                             }
                             else{
@@ -106,7 +106,7 @@ struct EditChildInfoService{
                 let dateOfBirth = doc["dateOfBirth"] as? String ?? ""
                 let theme = Theme(name: doc["theme"] as? String ?? "")
                                          
-                let child = Child(userID: doc.documentID, name: name, dateOfBirth: dateOfBirth, chooseTheme: theme, avatarPic: "")
+                    let child = Child(userID: doc.documentID, name: name, dateOfBirth: dateOfBirth, chooseTheme: theme, avatarPic: "", points: 0)
                 result.append(child)
                                          
                                          

@@ -7,20 +7,23 @@
 //
 
 import Foundation
-import Firebase
+import FirebaseAuth
+import FirebaseFirestore
 import shared
+import UIKit
 
 
 class editUserInfoModel: ObservableObject {
     
     
     let service = EditChildInfoService()
-    @Published var currentChild : Child = Child(userID: "", name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: "")
+    @Published var currentChild : Child = Child(userID: "", name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: "", points: 0)
     @Published var success = false
     @Published var children  = [Child]()
     
     @Published var finishedObtainNewestChildInfo : Bool = false
     @Published var isEditSheetPresent = false
+    @Published var processing = false
     
     let thread1 = DispatchQueue(label: "queue1 for fetching update child info")
     let thread2 = DispatchQueue(label: "queue3 for telling update child info complete")
@@ -32,9 +35,10 @@ class editUserInfoModel: ObservableObject {
             print("DEBUG: failed to turn image to data")
             return
         }
-        
+        self.processing = true
         service.updateChildInfo(parentID: parentID, childID: childID, childName: childName, dateOfBirth: dateOfBirth, theme: theme, imageData: childImageData){ success, result in
             self.success = success
+            self.processing = false
             if success {
                 print("DEBUG: successfully update")
                 return
@@ -55,7 +59,7 @@ class editUserInfoModel: ObservableObject {
         thread1.async {
             for child in self.children{
                 if child.userID == childID{
-                    self.currentChild = Child(userID: child.userID, name: child.name, dateOfBirth: child.dateOfBirth, chooseTheme: child.chooseTheme, avatarPic: "")
+                    self.currentChild = Child(userID: child.userID, name: child.name, dateOfBirth: child.dateOfBirth, chooseTheme: child.chooseTheme, avatarPic: "", points: 0)
                 }
             }
         }
