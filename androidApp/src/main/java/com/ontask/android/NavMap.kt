@@ -18,7 +18,7 @@ fun NavMap(navController: NavHostController, starDest:String, auth: FirebaseAuth
             dashboardPage(navController = navController, auth = auth)
         }
         composable(route = "addChildProfile_screen"){
-            addChildProfile(navController = navController)
+            addChildProfile(navController = navController, auth = auth)
         }
         composable(route = "parentProfile_screen"){
             AdultProfilePage(navController = navController)

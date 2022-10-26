@@ -51,6 +51,7 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:31.0.0"))
     implementation("com.google.firebase:firebase-firestore-ktx:24.4.0")
     implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation("androidx.databinding:databinding-runtime:7.3.1")
 
     debugImplementation("androidx.compose.ui:ui-tooling:1.2.1")
     debugImplementation("androidx.compose.ui:ui-test-manifest:1.1.0-beta01")
@@ -70,4 +71,3 @@ dependencies {
 }
 
 apply(plugin = "com.google.gms.google-services")
-
