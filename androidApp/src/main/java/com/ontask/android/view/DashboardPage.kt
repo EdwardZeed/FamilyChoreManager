@@ -17,21 +17,22 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.google.firebase.auth.FirebaseAuth
 import com.ontask.model.Child
 import com.ontask.model.Theme
 
 @Composable
-fun dashboardPage(navController: NavHostController) {
+fun dashboardPage(navController: NavHostController, auth: FirebaseAuth) {
     Scaffold(
         bottomBar = { BottomNavigationBar(navController) },
         content = {
-            dashboardPageContents(navController = navController)
+            dashboardPageContents(navController = navController, auth = auth)
         }
     )
 }
 
 @Composable
-fun dashboardPageContents(navController: NavHostController) {
+fun dashboardPageContents(navController: NavHostController, auth: FirebaseAuth) {
     // male/female icon
     Box(modifier = Modifier
         .fillMaxSize()
@@ -61,10 +62,26 @@ fun dashboardPageContents(navController: NavHostController) {
                             navController.navigate("parentProfile_screen")
                         }
                 )
+                val user = auth.currentUser
+                var u = ""
+                user?.let {
+                    // Name, email address, and profile photo Url
+                   u = user.displayName.toString()
+                    val email = user.email
+                    val photoUrl = user.photoUrl
+
+                    // Check if user's email is verified
+                    val emailVerified = user.isEmailVerified
+
+                    // The user's ID, unique to the Firebase project. Do NOT use this value to
+                    // authenticate with your backend server, if you have one. Use
+                    // FirebaseUser.getToken() instead.
+                    val uid = user.uid
+                }
 
                 Box(modifier = Modifier.padding(10.dp)) {
                     Text(
-                        text = "Welcome,\n{username}!", //TODO: put the parent's name here
+                        text = "Welcome,\n!"+u, //TODO: put the parent's name here
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold
                     )

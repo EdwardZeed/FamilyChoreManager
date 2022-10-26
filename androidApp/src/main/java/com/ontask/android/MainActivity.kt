@@ -1,6 +1,9 @@
 package com.ontask.android
 
+import android.content.ContentValues.TAG
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.*
@@ -19,11 +22,18 @@ class MainActivity: ComponentActivity() {
         super.onCreate(savedInstanceState)
         auth = FirebaseAuth.getInstance()
         //FirebaseApp.initializeApp(this)
+
+
         setContent {
             val navController = rememberNavController()
             NavMap(navController = navController, starDest = "Login_screen",auth = auth)
         }
     }
+
+
+
+
+
 }
 
 @Composable
