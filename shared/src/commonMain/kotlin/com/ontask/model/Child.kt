@@ -14,7 +14,8 @@ data class Child(
     var name: String,
     var dateOfBirth: String,
     var chooseTheme: Theme,
-    var avatarPic: String?){
+    var avatarPic: String?,
+    var points: Int){
     var qrCode: QRcode ?= null
     var totalCreditPoint: Int = 0
     var finishedChoreList:  List<ChoreTask> = emptyList<ChoreTask>()

@@ -29,12 +29,23 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
-            skipped = "NO">
+            skipped = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "37FD898628C45EC000B5ABFE"
                BuildableName = "ParentLoginUITest.xctest"
                BlueprintName = "ParentLoginUITest"
+               ReferencedContainer = "container:iosApp.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "2BDB3A052905249500214928"
+               BuildableName = "viewmodelTests.xctest"
+               BlueprintName = "viewmodelTests"
                ReferencedContainer = "container:iosApp.xcodeproj">
             </BuildableReference>
          </TestableReference>

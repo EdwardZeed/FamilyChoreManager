@@ -30,16 +30,16 @@ struct ParentProfilePage: View {
                         VStack {
                             
                             AvatorBar(numberOfChildren: $numberOfChildren, numberOfRelatives: $numberOfRelatives)
-                            Text("Date of Birth: 2002/07/05")
+                            Text("Date of Birth: \(self.authViewModel.currentUser?.dateOfBirth ?? "")")
                                 .frame(width: UIScreen.main.bounds.width*0.9, alignment: .leading)
-                            Text("Choosen theme: Marvel")
+                            Text("Choosen theme: \(self.authViewModel.currentUser?.chooseTheme?.name ?? "")")
                                 .frame(width: UIScreen.main.bounds.width*0.9, alignment: .leading)
                             
                         }
                         .padding(.top, 4)
                         
                         Button(action: {self.authViewModel.isEditSheetPresent.toggle()
-
+                            
                         }, label: {
                             Text("Edit profile").foregroundColor(Color("AdaptiveColorForText"))
                                 .frame(width: UIScreen.main.bounds.width*0.9, height: 27)
@@ -55,7 +55,7 @@ struct ParentProfilePage: View {
                         //                display all chores
                         LazyVStack {
                             ForEach(choreViewModel.chores, id: \.self){chore in
-
+                                
                                 ChoreCard(chore: chore)
                                     .frame(width: UIScreen.main.bounds.width*0.95, height: UIScreen.main.bounds.width*0.3)
                                     .background(Color("AdaptiveColorForBackground"))
@@ -66,7 +66,10 @@ struct ParentProfilePage: View {
                             }
                         }
                     }
-                }.navigationTitle(authViewModel.currentUser?.name ?? "")
+
+                }
+                .background(Image("Background").ignoresSafeArea().opacity(0.2))
+                .navigationTitle(authViewModel.currentUser?.name ?? "")
                     .toolbar{Menu {
                         Button(action: { authViewModel.signOut()}, label: {
                             Text("sign out")
@@ -79,24 +82,25 @@ struct ParentProfilePage: View {
     }
 }
 
-struct ParentProfilePage_Previews: PreviewProvider {
-    static var previews: some View {
-        let achievement = Achievement(points: 1, message: "free three")
-        let chore = ChoreTask(taskID: "0", name: "Make bed", description: "Make bed", achievement: achievement, iconImage: "BedIcon")
-        Group {
-            ParentProfilePage()
-                .preferredColorScheme(.light)
-            ParentProfilePage()
-                .preferredColorScheme(.dark)
-        }
-    }
-}
+//struct ParentProfilePage_Previews: PreviewProvider {
+//    static var previews: some View {
+//        let achievement = Achievement(points: 1, message: "free three")
+//        let chore = ChoreTask(taskID: "0", name: "Make bed", description: "Make bed", achievement: achievement, iconImage: "BedIcon")
+//        Group {
+//            ParentProfilePage()
+//                .preferredColorScheme(.light)
+//            ParentProfilePage()
+//                .preferredColorScheme(.dark)
+//        }
+//    }
+//}
 
 
 struct AvatorBar: View {
     @Binding var numberOfChildren: String
     @Binding var numberOfRelatives: String
     @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var addChildViewModel: AddChildViewModel
     
     var body: some View {
         HStack{
@@ -118,7 +122,7 @@ struct AvatorBar: View {
             HStack {
                 HStack{
                     Image("ChildrenNumberIcon")
-                    Text(numberOfChildren)
+                    Text(String(self.addChildViewModel.children.count))
                 }
                 .padding(.horizontal, 8)
                 HStack{
@@ -147,22 +151,22 @@ struct ChoreCard: View {
                 Text(chore.name)
                     .font(.title)
                     .fontWeight(.semibold)
-                
+                    .padding(.top)
+                Spacer()
                 HStack{
-                    Text(chore.achievement.message + ":")
-                    Text(String(chore.achievement.points))
+//                    Text(chore.achievement.message + ":")
+//                    Text(String(chore.achievement.points))
                     
                     //                                    Image("PointIcon")
                 }
                 
                 
-                Text("2022/8/31")
+                Text(chore.createdDate)
                     .frame(width: UIScreen.main.bounds.width*0.85 - 59,  alignment: .trailing)
+                    .padding(.bottom)
             }
             
         }
-//        .frame(width: UIScreen.main.bounds.width*0.9, alignment: .leading)
-//        .background(Rectangle().fill(Color("AdaptiveColorForBackground")).shadow(color: Color.gray, radius: 10))
         
     }
 }

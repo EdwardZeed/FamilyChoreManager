@@ -109,9 +109,10 @@ struct ChildAccountPage: View {
                     }
                     
                 }
-                
+                .background(Image("Background").ignoresSafeArea().opacity(0.2))
             }
             .navigationBarTitle(self.selectedChild!.name, displayMode: .inline)
+            
         }
         else{
             NavigationView {
@@ -227,19 +228,7 @@ struct ChildAccountPage: View {
                         
                         
                         
-                        VStack(alignment: .leading) {
-                            HStack{
-                                Image("ChoresIcon-ChildProfilePage")
-                                Text("Finished Chores")
-                                
-                            }.padding(.bottom, -1)
-                            
-                            
-                            ForEach(self.assignFinishChoresModel.userfinishedChoreList,id:\.self){choretask in
-                                SingleFinishChore_ChildProfilePage(singlefinishchore : choretask)
-                            }
-                            
-                        }
+                        
                         
                         VStack(alignment: .leading){
                             HStack{
@@ -292,27 +281,11 @@ struct ChildAccountPage: View {
                                 }}
                     
                 }
-                
+                .background(Image("Background").ignoresSafeArea().opacity(0.2))
             }
+            
         }
         
     }
     
-    
-    
-    struct ChildAccountPage_Previews: PreviewProvider {
-        static var previews: some View {
-            
-            //These are the dummy data of chore cards which assigned to the children
-            let achievement = Achievement(points: 3, message: "well done")
-            
-            var singleChore1 = ChoreTask(taskID: "1", name: "Make the bed", description: "None", achievement: achievement, iconImage: "BedIcon-ChildProfilePage")
-            var singleChore2 = ChoreTask(taskID: "2", name: "Sweep the floor", description: "None", achievement: achievement, iconImage: "broom")
-            var singleChore3 = ChoreTask(taskID: "3", name: "Wash the dishes", description: "None", achievement: achievement, iconImage: "WashDishes")
-            
-            
-            
-            //        ChildProfilePage(finishChoreList: [])
-        }
-    }
 }

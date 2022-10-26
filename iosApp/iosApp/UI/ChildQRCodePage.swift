@@ -72,7 +72,7 @@ struct ChildQRCodePage: View {
 
 struct ChildQRCodePage_Previews: PreviewProvider {
     static var previews: some View {
-        ChildQRCodePage(child: Child(userID: "0", name: "Chris", dateOfBirth: "1234/05/06", chooseTheme: Theme(name: "Devil May Cry"), avatarPic: "Nero"))
+        ChildQRCodePage(child: Child(userID: "0", name: "Chris", dateOfBirth: "1234/05/06", chooseTheme: Theme(name: "Devil May Cry"), avatarPic: "Nero", points: 0))
         
     }
 }

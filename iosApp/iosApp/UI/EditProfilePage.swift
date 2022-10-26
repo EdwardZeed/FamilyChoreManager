@@ -145,7 +145,7 @@ struct EditParentProfileSheet: View{
             }.underlinetextfield()
             
             Button(action: {
-                self.authViewModel.editParentInfo(newName: newUserName, newDateOfBirth: newDateOfBirth, newAvatarPic: userImage)
+                self.authViewModel.editParentInfo(newName: newUserName, newDateOfBirth: newDateOfBirth, newTheme: newTheme, newAvatarPic: userImage)
                 self.authViewModel.isEditSheetPresent = false
             },
                    label: {

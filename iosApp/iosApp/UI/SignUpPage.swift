@@ -23,7 +23,7 @@ struct SignUpPage: View {
     
     var body: some View {
         ZStack{
-            Image("Background").resizable().scaledToFill().ignoresSafeArea().opacity(0.2)
+//            Image("Background").resizable().scaledToFill().ignoresSafeArea().opacity(0.2)
             
             VStack{
                 
@@ -121,6 +121,7 @@ struct SignUpPage: View {
             }
             
         }
+        .background(Image("Background").ignoresSafeArea().opacity(0.2))
         .onTapGesture {
             hideKeyboard()
         }

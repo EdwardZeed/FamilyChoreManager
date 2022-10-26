@@ -7,13 +7,15 @@
 //
 
 import Foundation
-import Firebase
+import FirebaseAuth
+import FirebaseFirestore
 import shared
 import UIKit
 
 class ChoreViewModel: ObservableObject{
     @Published var addChoreImageSuccess = false
     @Published var chores = [ChoreTask]()
+    @Published var processing = false
     
     var service = ChoreService()
     
@@ -32,10 +34,18 @@ class ChoreViewModel: ObservableObject{
             return
             
         }
-        
+        self.processing = true
         service.addChore(choreName: choreName, imageData: imageData) { success in
             self.addChoreImageSuccess = success
+            self.processing = false
         }
+    }
+    
+    func relogin(){
+        service.fetchChores { result in
+            self.chores = result
+        }
+        service.listenChores(viewModel: self)
     }
 
 }

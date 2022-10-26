@@ -12,8 +12,6 @@ import AuthenticationServices
 
 struct NavigationBarView: View {
 
-    var childrenlist : [Child]
-
     @State private var selection: Tab = .exclusion
 
         enum Tab {
@@ -24,9 +22,6 @@ struct NavigationBarView: View {
 
         }
     
-    init(childList: [Child]){
-        self.childrenlist = childList
-    }
     
     var body: some View {
             NavigationView { //整体设置，下级页面不会在出现底部tabbar

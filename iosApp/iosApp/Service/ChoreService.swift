@@ -7,7 +7,8 @@
 //
 
 import Foundation
-import Firebase
+import FirebaseAuth
+import FirebaseFirestore
 import FirebaseStorage
 import shared
 
@@ -18,6 +19,11 @@ struct ChoreService{
         let fileName = UUID().uuidString
         let path = "choreImages/\(fileName).jpg"
         let ref = Storage.storage().reference().child(path)
+        
+        let date = Date.now
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/YYYY"
+        let now = dateFormatter.string(from: date)
         
         ref.putData(imageData!, metadata: nil) { _, error in
             if let error = error{
@@ -32,7 +38,7 @@ struct ChoreService{
                 ref.downloadURL { url, error in
                     if error == nil && url != nil {
                         let urlString = url!.absoluteString
-                        let data = ["Name": choreName, "PicturePath": urlString] as [String : Any]
+                        let data = ["Name": choreName, "PicturePath": urlString, "createdDate": now] as [String : Any]
                         choreDocument.addDocument(data: data as [String : Any]){ error in
                             if let error = error {
                                 print("DEBUG: add chorefailed \(error.localizedDescription)")
@@ -70,8 +76,9 @@ struct ChoreService{
                 let choreName = doc["Name"] as? String ?? ""
                 let choreImageUrl = doc["PicturePath"] as? String ?? ""
                 let achievement = Achievement(points: 0, message: "")
+                let createdDate = doc["createdDate"] as? String ?? ""
                 
-                let chore = ChoreTask(taskID: doc.documentID, name: choreName, description: nil, achievement: achievement, iconImage: choreImageUrl)
+                let chore = ChoreTask(taskID: doc.documentID, name: choreName, description: nil, achievement: achievement, iconImage: choreImageUrl, createdDate: createdDate)
                 result.append(chore)
             }
             completion(result)

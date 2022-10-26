@@ -7,7 +7,8 @@
 //
 
 import Foundation
-import Firebase
+import FirebaseAuth
+import FirebaseFirestore
 import shared
 import SwiftUI
 
@@ -33,7 +34,7 @@ struct ChildrenDashBoardService{
                 let theme = Theme(name: doc["theme"] as? String ?? "")
                 let avatarPic = doc["avatarPic"] as? String? ?? nil
                 
-                let child = Child(userID: doc.documentID, name: name, dateOfBirth: dateOfBirth, chooseTheme: theme, avatarPic: avatarPic)
+                let child = Child(userID: doc.documentID, name: name, dateOfBirth: dateOfBirth, chooseTheme: theme, avatarPic: avatarPic, points: 0)
                 result.append(child)
                 print("Number of children in this parent is " + String(result.count))
                 
@@ -46,7 +47,7 @@ struct ChildrenDashBoardService{
     
     func listenChildren(viewModel: ChildAuthViewModel, currentUserID : String){
         //var childID : String = String(currentUserID.split(separator: " ")[0])
-        if currentUserID == ""{
+        if currentUserID == "nil nil"{
             return
         }
         let parentID : String = String(currentUserID.split(separator: " ")[1])
@@ -66,6 +67,7 @@ struct ChildrenDashBoardService{
                     viewModel.fetchChildren()
                 }
                 if changes.type == .modified{
+                    print("DEBUG: hey")
                     viewModel.fetchChildren()
                 }
             }

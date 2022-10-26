@@ -7,24 +7,26 @@
 //
 
 import Foundation
-import Firebase
+import FirebaseAuth
+import FirebaseFirestore
 import shared
 import SwiftUI
 
 class ChildAuthViewModel: ObservableObject{
     @Published var children = [Child]()
     @Published var success = false
-    @Published var currentChild: Child = Child(userID: "", name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: nil)
+    @Published var currentChild: Child = Child(userID: "", name: "", dateOfBirth: "", chooseTheme: Theme(name: ""), avatarPic: nil, points: 0)
     
 //    @Published var childSession : String
     
-    @AppStorage("childSession") var childSession = ""
+    @AppStorage("childSession") var childSession = "nil nil"
     
     let service = ChildrenDashBoardService()
     
     init() {
 //        self.childSession = "nil nil"
         print("DEBUG: dashboard view model initializing")
+        print("DEBUG: \(childSession)")
         self.fetchChildren()
         self.fetchChild()
         //add listener to children collection
@@ -35,7 +37,7 @@ class ChildAuthViewModel: ObservableObject{
     func fetchChildren(){
 //        guard let parentID : String = String(childSession.split(separator: " ")[0]) else{return}
 //        print(parentID)
-        if childSession == ""{
+        if childSession == "nil nil"{
             return
         }
         service.fetchChildren(currentUserID: childSession) { result in
@@ -63,8 +65,8 @@ class ChildAuthViewModel: ObservableObject{
     }
     
     func signOut(){
-        self.childSession = ""
+        self.childSession = "nil nil"
         print("DEBUG: \(childSession)")
-        UserDefaults.standard.set("", forKey: "childSession")
+        UserDefaults.standard.set("nil nil", forKey: "childSession")
     }
 }

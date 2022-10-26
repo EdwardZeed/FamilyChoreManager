@@ -10,8 +10,10 @@ import SwiftUI
 
 struct ProgressSpinner: View {
     @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var addChoreViewModel: ChoreViewModel
+    @EnvironmentObject var addChildViewModel: AddChildViewModel
     var body: some View {
-        if authViewModel.progressing{
+        if authViewModel.progressing || addChoreViewModel.processing || addChoreViewModel.processing{
             ProgressView()
         }
     }

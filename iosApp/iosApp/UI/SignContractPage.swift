@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 import shared
 import Combine
-
+import Kingfisher
 
 
 
@@ -33,7 +33,7 @@ struct SignContractPage: View {
                     }
                 ScrollView{
                     VStack{
-                        Username_and_Avator(username: authViewModel.currentUser?.name ?? "")
+                        Username_and_Avator(username: child.name ?? "", currentChild: self.child)
                         
                         
                     }.frame(width: UIScreen.main.bounds.width*0.8, height: UIScreen.main.bounds.height*0.2, alignment: .leading)
@@ -45,6 +45,7 @@ struct SignContractPage: View {
                 }
             }
             .navigationBarHidden(true)
+            .background(Image("Background").ignoresSafeArea().opacity(0.2))
             
         }
     }
@@ -53,11 +54,12 @@ struct SignContractPage: View {
 struct Username_and_Avator: View {
     
     var username: String
+    @State var currentChild: Child
     
     
-    init(username: String){
-        self.username = username
-    }
+//    init(username: String){
+//        self.username = username
+//    }
     
     var body: some View{
         VStack(alignment: .leading){
@@ -65,7 +67,16 @@ struct Username_and_Avator: View {
                 Text(username)
             }
             HStack{
-                UserPhoto_AddContractPage()
+                if currentChild.avatarPic != nil{
+                    KFImage(URL(string: currentChild.avatarPic!))
+                        .resizable()
+                        .frame(width: 80, height: 80, alignment: .center)
+                        .clipShape(Circle())
+                        .aspectRatio(contentMode: .fit)
+                }
+                else{
+                    UserPhoto_AddContractPage()
+                }
             }
         }
     }
@@ -249,8 +260,7 @@ struct Contarct_Detail_View: View{
                 var rewardArray = contractCreator.get_rewardArray()
                 var UploadContract = UploafContract()
                 
-                print("Debug: ",pointArray)
-                print("Debug: ",rewardArray)
+                
                 
                 var checkMaxPoint = checkMaxpoint(maxPoint: maxpoint)
                 var checkRewardarrayLength = checkRewardarrayLength(rewardArray: rewardArray)
