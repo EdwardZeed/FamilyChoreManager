@@ -12,7 +12,7 @@ fun NavMap(navController: NavHostController, starDest:String, auth: FirebaseAuth
             Register(navController = navController, auth = auth)
         }
         composable(route = "Login_screen"){
-            parentLoginPage(navController = navController,viewModel = LoginScreenViewModel(),auth = auth)
+            parentLoginPage(navController = navController, viewModel = LoginScreenViewModel(), auth = auth)
         }
         composable(route = "dashboard_screen"){
             dashboardPage(navController = navController, auth = auth)
