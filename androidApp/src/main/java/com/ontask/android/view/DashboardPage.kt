@@ -1,7 +1,5 @@
 package com.ontask.android
 
-import android.annotation.SuppressLint
-import android.widget.Toast
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -20,11 +18,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import com.ontask.model.Child
 import com.ontask.model.Theme
-import kotlinx.coroutines.launch
 
 @Composable
 fun dashboardPage(navController: NavHostController, auth: FirebaseAuth) {
@@ -36,37 +31,8 @@ fun dashboardPage(navController: NavHostController, auth: FirebaseAuth) {
     )
 }
 
-suspend fun getUsername(auth: FirebaseAuth): String {
-    var username = "user"
-    val user = auth.currentUser // get current user
-    val db = Firebase.firestore
-
-    db.collection("users")
-        .document((user?.getUid() ?: "").toString())
-        .get()
-        .addOnSuccessListener {
-            // Toast.makeText(context, "Able to retrieve username!", Toast.LENGTH_SHORT).show()
-            username = it.get("name").toString()
-            // Toast.makeText(context, username, Toast.LENGTH_SHORT).show()
-        }
-        .addOnFailureListener { exception ->
-            // Toast.makeText(context, "Unable to retrieve username!", Toast.LENGTH_SHORT).show()
-        }
-
-    return username
-}
-
-@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun dashboardPageContents(navController: NavHostController, auth: FirebaseAuth) {
-    val context = LocalContext.current
-    val coroutineScope = rememberCoroutineScope()
-    var username = "user"
-
-    coroutineScope.launch {
-        username = getUsername(auth)
-    }
-
     // male/female icon
     Box(modifier = Modifier
         .fillMaxSize()
@@ -98,9 +64,8 @@ fun dashboardPageContents(navController: NavHostController, auth: FirebaseAuth) 
                 )
 
                 Box(modifier = Modifier.padding(10.dp)) {
-                    val welcomeTextField = Text(
-                        // text = "Welcome,\n{username}!", //TODO: put the parent's name here
-                        text = "Welcome,\n" + username + "!",
+                    Text(
+                        text = "Welcome,\n{username}!", //TODO: put the parent's name here
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold
                     )
