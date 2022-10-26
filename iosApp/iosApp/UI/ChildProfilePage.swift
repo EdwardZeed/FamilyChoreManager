@@ -99,7 +99,7 @@ struct ChildProfilePage: View {
                         
                         ScrollView(.horizontal){
                             HStack{
-                                SingleReward_ChildProfilePage()
+                                //SingleReward_ChildProfilePage()
                             }.padding(.horizontal, 7)
                         }
                         

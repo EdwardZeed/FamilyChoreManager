@@ -242,7 +242,7 @@ struct ChildAccountPage: View {
                                 
                                 ScrollView(.horizontal){
                                     HStack{
-                                        SingleReward_ChildProfilePage()
+                                        //SingleReward_ChildProfilePage()
                                         
                                         
                                         

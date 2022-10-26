@@ -48,13 +48,14 @@ struct ParentLoginPage: View {
                     self.scannedCode = code.string
                     self.isPresentingScanner = false
                     
+                    print("current qr code is :" + self.scannedCode)
                     if(scannedCode != "scan qr code"){
-//                        childAuthViewModel.childSession = scannedCode
-//                        childAuthViewModel.fetchChildren()
-                        self.childAuthViewModel.signIn(childSession: scannedCode)
-                        self.assignFinishChoresModel.fetchUserFinishedChoresInChildVer(currentChildID: String(self.childAuthViewModel.childSession.split(separator: " ")[0]), currentparentID: String(self.childAuthViewModel.childSession.split(separator: " ")[1]))
-                        goToChildDashboard = true
-                       
+
+                        if(scannedCode != ""){
+                            self.childAuthViewModel.signIn(childSession: scannedCode)
+                            self.assignFinishChoresModel.fetchUserFinishedChoresInChildVer(currentChildID: String(self.childAuthViewModel.childSession.split(separator: " ")[0]), currentparentID: String(self.childAuthViewModel.childSession.split(separator: " ")[1]))
+                            goToChildDashboard = true
+                        }
                     }
                 }
             })
