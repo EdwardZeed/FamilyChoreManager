@@ -17,7 +17,7 @@ struct ContentView: View{
     @AppStorage("childSession") var childSession = " "
     
     var body: some View{
-        if authViewModel.userSession == nil{
+        if authViewModel.userSession == nil || authViewModel.currentUser == nil{
             if self.childSession != "nil nil"{
                 ChildNavigationBarView()
             }else{
