@@ -1,7 +1,9 @@
 package com.ontask.android
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.widget.DatePicker
+import android.widget.Toast
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.*
@@ -34,25 +36,40 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.google.firebase.auth.FirebaseAuth
+import viewModel.AddChildProfileViewModel
 import java.util.*
 
 @Composable
-fun addChildProfile(navController: NavHostController) {
+fun addChildProfile(navController: NavHostController, auth: FirebaseAuth) {
     Scaffold(
         bottomBar = { BottomNavigationBar(navController) },
         content = {
-            addChildProfileContents(navController = navController)
+            addChildProfileContents(navController = navController, auth = auth)
         }
     )
 }
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
-fun addChildProfileContents(navController: NavHostController) {
+fun addChildProfileContents(navController: NavHostController, auth: FirebaseAuth) {
+    var child_name: String by remember { mutableStateOf("") }
+    var child_birthdate: String by remember { mutableStateOf("") }
+
     var paddingState by remember { mutableStateOf(16.dp) }
     val padding by animateDpAsState(
         targetValue = paddingState,
         tween(durationMillis = 1000)
     )
+
+    val context = LocalContext.current
+    val addChildProfileViewModel = AddChildProfileViewModel()
+
+//    val coroutineScope = rememberCoroutineScope()
+//    var user = "user"
+//    coroutineScope.launch {
+//        user = addChildProfileViewModel.getUserId(auth)
+//    }
 
     Box(modifier = Modifier
         .fillMaxSize()
@@ -95,14 +112,20 @@ fun addChildProfileContents(navController: NavHostController) {
             Modifier.padding(3.dp)
                 .fillMaxWidth(0.72f)
                 .apply {
-                    childNameInput(this, localFocusManager)
-                    childDateOfBirth(this, localFocusManager)
+                    child_name = childNameInput(this, localFocusManager)
+                    child_birthdate = childDateOfBirth(this, localFocusManager)
                     //themesDropDown(this) // TODO: uncomment this for the themes dropdown menu
                 }
 
             Button(
                 onClick = {
-                    //TODO: make this button do something
+                    // add child to firestore database
+                    addChildProfileViewModel.addChild(auth, child_name, child_birthdate, "", context)
+                    Toast.makeText(context, "child successfully added", Toast.LENGTH_SHORT).show()
+
+                    // Then move to the dashboard.
+                    navController.navigate("dashboard_screen")
+
                 },
                 modifier = Modifier
                     .fillMaxWidth(0.71f)
@@ -208,7 +231,7 @@ fun childNameInput(modifier: Modifier, localFocusManager: FocusManager): String 
             )
         },
         singleLine = true,
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone, imeAction = ImeAction.Next),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
         keyboardActions = KeyboardActions(onNext = { localFocusManager.moveFocus(FocusDirection.Down) }),
         modifier = modifier,
         leadingIcon = {
