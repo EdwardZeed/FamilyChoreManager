@@ -65,12 +65,6 @@ fun addChildProfileContents(navController: NavHostController, auth: FirebaseAuth
     val context = LocalContext.current
     val addChildProfileViewModel = AddChildProfileViewModel()
 
-//    val coroutineScope = rememberCoroutineScope()
-//    var user = "user"
-//    coroutineScope.launch {
-//        user = addChildProfileViewModel.getUserId(auth)
-//    }
-
     Box(modifier = Modifier
         .fillMaxSize()
         .focusable()
